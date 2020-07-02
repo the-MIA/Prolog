@@ -12,11 +12,11 @@ procedure Demo is
 
    procedure Write_List (L : List_Of_Clauses) is
    begin
-       for I in 1 .. Length (L) loop
-           Put (I, width => 3); Put(" : ");
-           Put (Dump_Clause (Get_Item (L,I)).all);
-           Put_Line (".");
-       end loop;
+      for I in 1 .. Length (L) loop
+         Put (I, Width => 3); Put (" : ");
+         Put (Dump_Clause (Get_Item (L, I)).all);
+         Put_Line (".");
+      end loop;
    end Write_List;
 
 
@@ -35,8 +35,8 @@ procedure Demo is
 
    File  : File_Type;
 
-   Filename     : String (1..100);
-   Query_String : String (1..100);
+   Filename     : String (1 .. 100);
+   Query_String : String (1 .. 100);
 
    Last  : Natural;
 
@@ -47,7 +47,7 @@ begin
 
 
    --  Load the list of facts & rules from the file
-   L := Read_File (Filename (1..Last));
+   L := Read_File (Filename (1 .. Last));
 
    --  show the user what was read in
    Write_List (L);
@@ -73,11 +73,11 @@ begin
          Query_String (Last) := '.';
       end if;
 
-      Put ("Query string is '" & Query_String (1..Last) & ''');
+      Put ("Query string is '" & Query_String (1 .. Last) & ''');
 
 
       --  Convert the input into a query
-      Q := Read_Clause (Query_String (1..Last));
+      Q := Read_Clause (Query_String (1 .. Last));
 
 
       --  Apply the query to the List of clauses
@@ -95,14 +95,14 @@ begin
 
       --  Examine each response, and display it to the screen
 
-      for i in 1..Length (Answers) loop
+      for i in 1 .. Length (Answers) loop
          Ans := Get_Answer (Answers, i);
 
          Result := Get_Binding (Ans, "X");
          Put (Dump_Clause (Result).all);
          New_Line;
       end loop;
-         
+
    end loop;
 
 exception
@@ -110,7 +110,7 @@ exception
       Put ("Couldn't open that file");
       New_Line;
 
-   when Others =>
+   when others =>
       Error := Prolog.Errors.Kind_Of_Error;
 
       Put (Error_Type'Image (Error));
@@ -118,4 +118,4 @@ exception
       Put (Help_Error (Error));
       New_Line;
 
-end;
+end Demo;

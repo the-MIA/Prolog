@@ -1,0 +1,93 @@
+		ANNA GENERAL PUBLIC LICENSE
+
+Copyright (C) 1986, 1987, 1988, 1989, 1990, 1991, 1992 by the Program
+Analysis and Verification Group, Leland Stanford Junior University.
+All Rights Reserved.
+
+Anna and the Anna tools were developed by the Program Analysis and
+Verification Group, headed by David C. Luckham, at Stanford
+University.  The purpose of this license is to make the Anna tools and
+their source code freely available, and to encourage commercial and
+entrepreneurial use of the Anna tools.  You may copy, modify, and
+distribute the Anna tools provided that (1) the Program Analysis and
+Verification Group is acknowledged in your product literature and
+notified in writing, and (2) all copies are accompanied by this
+agreement.
+
+Also, there is no warranty for the Anna tools.  If the tools are
+modified by someone else and distributed, recipients must be told that
+what they have is a modification by your organization of the Stanford
+Anna tools.
+
+
+			COPYING POLICIES
+
+  1. You may copy and distribute verbatim copies of the Anna tools
+source code as you receive it, in any medium, provided that you
+conspicuously and appropriately publish on each copy a valid copyright
+notice "Copyright (C) 1992 by the Program Analysis and Verification
+Group, Leland Stanford Junior University" (or with whatever year is
+appropriate); keep intact the notices on all files that refer to this
+License Agreement and to the absence of any warranty; and give any
+other recipients of the Anna tools a copy of this License Agreement
+along with the program.
+
+  2. You may modify your copy or copies of the Anna tools source code
+or any portion of it, and copy and distribute such modifications.
+Your modifications are not subject to this License Agreement; your
+modifications are owned by you.
+
+  3. You may incorporate parts of the Anna tools into other programs
+provided you perform both of the following:
+
+    a) acknowledge the Program Analysis and Verification Group in
+    the documentation of the program, and
+
+    b) send a copy of the documentation of the program to
+
+       Professor David C. Luckham      or    Anna-Request@Anna.Stanford.EDU
+       Computer Systems Lab
+       Stanford University
+       Stanford CA, 94305
+       U.S.A.
+
+The Program Analysis and Verification Group also requests, but does
+not require, that any improvements or extensions to the Anna tools be
+returned to one of these addresses, so that they may be shared with
+other Anna users.
+
+Source code for the Anna tools can be obtained by contacting the above
+addresses.
+
+
+			   NO WARRANTY
+
+  BECAUSE THE ANNA TOOLS ARE LICENSED FREE OF CHARGE, WE PROVIDE
+ABSOLUTELY NO WARRANTY.  THE TOOLS ARE PROVIDED "AS IS" WITHOUT
+WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+LIMITED TO, ANY IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND
+PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE ANNA TOOLS PROVE
+DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR
+CORRECTION.
+
+  IN NO EVENT WILL LELAND STANFORD JUNIOR UNIVERSITY BE LIABLE TO YOU
+FOR ANY DAMAGES, ANY LOST PROFITS, LOST MONIES, OR OTHER SPECIAL,
+INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR
+INABILITY TO USE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA
+BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY THIRD PARTIES) THE
+ANNA TOOLS, EVEN IF YOU HAVE ADVISED US OF THE POSSIBILITY OF SUCH
+DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY.
+
+--------------------------------------------------------------------------
+Copyright notice by Dale Stanbrough (dale@cs.rmit.edu.au)
+
+All modifications to convert the code to Ada95 (such as child packages, 
+unbounded_strings, aliased strings ) are by me.
+Other modifications have not been individually noted out, as they are
+rather pervasive throughout the code.
+
+These changes are made available free of charge to anyone who wants to
+use them. This notice is to remain with the code.
+This does not remove any rights that the original copyright
+holders have on this code.

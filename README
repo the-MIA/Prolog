@@ -1,0 +1,111 @@
+This prolog package (which has been hacked about a bit by me to get it working
+with comments & blank lines in input files) was originally developed by
+the ANNA tools group (ANNotation language for Ada - high powered assertions).
+
+In it's current form it can accept a sequence of prolog facts, which you
+can then query.
+
+For example the following series of facts...
+
+    subject  (cs108).
+    year     (cs108, 1).
+    semester (cs108, 1).
+
+    subject  (cs109).
+    year     (cs109, 1).
+    semester (cs109, 2).
+
+    subject  (cs208).
+    year     (cs208, 2).
+    semester (cs208, 1).
+
+    subject  (cs209).
+    year     (cs209, 2).
+    semester (cs209, 2).
+
+lend themselves to questions such as...
+
+    What subjects were run in 1st year?
+    What subjects were run in 2nd semester?
+
+These would be handled by entering a query with an 'unbound'
+variable in the place of the missing value. An unbound variable
+(not bound to any particular answer) starts with a capital 
+letter.
+
+E.g.
+
+What subjects were run in 1st year?
+Query   year (X, 1).
+Answer  cs108
+        cs109
+
+
+What subjects were run in 2nd semester?
+Query   semester (X, 2).
+Answer  cs109
+        cs209
+
+
+What semester was cs209 run in?
+Query   semester (cs209, X).
+Answer  2
+
+
+What subjects are there?
+Query   subject (X).
+Answer  cs108
+        cs109
+        cs208
+        cs209
+
+
+More complex queries can be constructed by creating rules, which
+are then queried
+
+What subjects that start in 1st semester are run in 2nd year?
+Rule    solution (X) :- semester (X,1), year (X,2).
+Query   solution (X).
+Answer  cs208
+
+
+
+-------------------------
+--  Using the program  --
+-------------------------
+
+The program
+
+	demo.adb
+
+gives an example of how to use this package.
+
+As well the file
+
+	demo.pro
+	course.pro
+
+contain example Prolog programs
+
+Note that the file
+
+	intlibc.pro
+
+is required to be available, and contains various rules that the
+packages use to solve queries.
+
+Prolog is a wonderfully powerful language, and this interpreter brings
+*some* of that power to you.
+
+
+
+All bug reports should be sent to 
+Dale Stanbrough
+dale@cs.rmit.edu.au
+
+Tue 19/May/1998
+
+COPYRIGHT NOTICE
+
+Read the file COPYING for details of the current copyright status 
+of this code.

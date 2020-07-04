@@ -138,11 +138,11 @@ package Prolog.Ada_Logic is
                     Success   :    out Boolean;
                     Bindings  :    out Answer); --  One single answer.
 
-    --  procedure Next_Answer (Success : out Boolean; Bindings : out Answer);
+   --  procedure Next_Answer (Success : out Boolean; Bindings : out Answer);
 
-    --  Interrupts: ^C
+   --  Interrupts: ^C
 
-    User_Interrupt : exception;
+   User_Interrupt : exception;
 
 private
    type Clause_List_Record;
@@ -180,5 +180,5 @@ private
            Value : Answer;
            Next  : List_Of_Answers;
        end record;
-       
+
 end Prolog.Ada_Logic;

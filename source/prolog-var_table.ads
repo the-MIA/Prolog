@@ -16,7 +16,7 @@
 --  This generic package implements a facility for variable length strings
 --  in a table.
 --  Each string is built up character by character in a special string
---  variable. When KeepVar is called, the information about the start 
+--  variable. When KeepVar is called, the information about the start
 --  position and length of the variable is inserted into a table of
 --  strings.
 --  This implies that only one string can be built at a time, per
@@ -39,32 +39,32 @@ generic
 
 package Prolog.Var_Table is
 
-    type Varstring is private;
+   type Varstring is private;
 
-    Anon_String : constant Varstring;
+   Anon_String : constant Varstring;
 
-    Null_String : constant Varstring;
+   Null_String : constant Varstring;
 
-    Varcount    : Natural range 0 .. Maxvars := 0;
-    --  Number of variable length strings stored
+   Varcount    : Natural range 0 .. MaxVars := 0;
+   --  Number of variable length strings stored
 
-    procedure Startvar;
-    --  Start a new variable.
+   procedure Startvar;
+   --  Start a new variable.
 
-    procedure Varchar (C: Character);
-    --  Add a character to the variable name.
+   procedure Varchar (C : Character);
+   --  Add a character to the variable name.
 
-    function Keepvar return Varstring;
+   function Keepvar return Varstring;
 
-    function To_String (V : Varstring) return String;
+   function To_String (V : Varstring) return String;
 
 private
-    type Varstring is record
-        Index : Integer range 0 .. Var_Table_Size;
-        Length : Integer;
-    end record;
+   type Varstring is record
+      Index : Integer range 0 .. Var_Table_Size;
+      Length : Integer;
+   end record;
 
-    Anon_String : constant Varstring := (0,1);
-    Null_String : constant Varstring := (0,0);
+   Anon_String : constant Varstring := (0, 1);
+   Null_String : constant Varstring := (0, 0);
 
 end Prolog.Var_Table;

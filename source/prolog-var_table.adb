@@ -18,68 +18,69 @@ with Prolog.Errors;    use Prolog.Errors;
 
 package body Prolog.Var_Table is
 
-    --  INPUT_OUTPUT;
+   --  INPUT_OUTPUT;
 
-    Varbuf : String (1 .. Var_Table_Size);
-    Varhwm : Integer range 0 .. Var_Table_Size;
+   Varbuf : String (1 .. Var_Table_Size);
+   Varhwm : Integer range 0 .. Var_Table_Size;
 
-    Newvar : Varstring;
+   Newvar : Varstring;
 
-    Vartable : array  (1 .. Maxvars) of Varstring;
+   Vartable : array  (1 .. MaxVars) of Varstring;
 
-    procedure Startvar is
-    --  Prepare to accept characters of a variable.
-    begin
+   procedure Startvar is
+      --  Prepare to accept characters of a variable.
+   begin
       Newvar.Index := Varhwm;
       Newvar.Length := 0;
-    end Startvar;
+   end Startvar;
 
-    procedure Varchar (C: Character) is
-    --  Store c as the next character of a variable.
-    begin
-        if Newvar.Index + Newvar.Length >= Var_Table_Size then
-            Moan (Var_Space_Error, Abortz);
-        end if;
+   procedure Varchar (C : Character) is
+      --  Store c as the next character of a variable.
+   begin
+      if Newvar.Index + Newvar.Length >= Var_Table_Size then
+         Moan (Var_Space_Error, Abortz);
+      end if;
 
-        Newvar.Length := Newvar.Length + 1;
-        Varbuf (Newvar.Index + Newvar.Length) := C;
-    end Varchar;
+      Newvar.Length := Newvar.Length + 1;
+      Varbuf (Newvar.Index + Newvar.Length) := C;
+   end Varchar;
 
+   function Samestring (V1, V2 : Varstring) return Boolean;
    function Samestring (V1, V2 : Varstring) return Boolean is
    begin
-       if V1.Length /= V2.Length then
-           return False;
-       else
-           for I in 1 .. V1.Length loop
-               if Varbuf (V1.Index+I) /= Varbuf(V2.Index+I) then
-                   return False;
-               end if;
-           end loop;
-           return True;
-       end if;
+      if V1.Length /= V2.Length then
+         return False;
+      else
+         for I in 1 .. V1.Length loop
+            if Varbuf (V1.Index + I) /= Varbuf (V2.Index + I) then
+               return False;
+            end if;
+         end loop;
+         return True;
+      end if;
    end Samestring;
-  
-   function Keepvar return Varstring is
-   --  Mark the latest variable name permanent.
-   begin
-       for N in 1 .. Varcount loop
-           if Samestring (Newvar,Vartable(N)) then
-               return Vartable (N);
-           end if;
-       end loop;
 
-       Varhwm := Varhwm + Newvar.Length;
-       Varcount := Varcount + 1;
-       Vartable (Varcount) := Newvar;
-       return Newvar;
+   function Keepvar return Varstring is
+      --  Mark the latest variable name permanent.
+   begin
+      for N in 1 .. Varcount loop
+         if Samestring (Newvar, Vartable (N)) then
+            return Vartable (N);
+         end if;
+      end loop;
+
+      Varhwm := Varhwm + Newvar.Length;
+      Varcount := Varcount + 1;
+      Vartable (Varcount) := Newvar;
+      return Newvar;
    end Keepvar;
 
    function To_String (V : Varstring) return String is
    begin
-       return Varbuf (V.Index+1 .. V.Index+V.Length);
+      return Varbuf (V.Index + 1 .. V.Index + V.Length);
    end To_String;
 
 begin
-    Varbuf (1) := '_';
-    Varhwm := 1;
+   Varbuf (1) := '_';
+   Varhwm := 1;
 end Prolog.Var_Table;

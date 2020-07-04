@@ -1,18 +1,19 @@
 
--- Copyright (C) 1986, 1987, 1988, 1989, 1990, 1991, 1992 by the Program
--- Analysis and Verification Group, Leland Stanford Junior University.
--- All Rights Reserved.
+--  Copyright (C) 1986, 1987, 1988, 1989, 1990, 1991, 1992 by the Program
+--  Analysis and Verification Group, Leland Stanford Junior University.
+--  All Rights Reserved.
 --
--- This file is part of the Anna tools.  You may copy, modify, and
--- distribute the Anna tools under the conditions described in the Anna
--- General Public License.  A copy of this license should be in a file
--- named COPYING.
+--  This file is part of the Anna tools.  You may copy, modify, and
+--  distribute the Anna tools under the conditions described in the Anna
+--  General Public License.  A copy of this license should be in a file
+--  named COPYING.
 --
--- LELAND STANFORD JUNIOR UNIVERSITY ALLOWS FREE USE OF THIS SOFTWARE IN
--- ITS "AS IS" CONDITION.  LELAND STANFORD JUNIOR UNIVERSITY DISCLAIMS
--- ANY LIABILITY OF ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM
--- THE USE OF THIS SOFTWARE.
+--  LELAND STANFORD JUNIOR UNIVERSITY ALLOWS FREE USE OF THIS SOFTWARE IN
+--  ITS "AS IS" CONDITION.  LELAND STANFORD JUNIOR UNIVERSITY DISCLAIMS
+--  ANY LIABILITY OF ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM
+--  THE USE OF THIS SOFTWARE.
 ----------------------------------------------------------------------
+
 package Prolog.Errors is
 
    Syntax_Error : exception;
@@ -24,8 +25,9 @@ package Prolog.Errors is
    --  Once one of these exceptions has been raised, the type and the
    --  operations described in the rest of the package can be used to
    --  pin-point the error.  See below for more details.
-   
-   type Error_Type is (
+
+   type Error_Type is
+     (
       Arity_Error,          --  evaluable predicate called with wrong arity.
       Assert_Error,         --  asserting unsuitable term.
       Atom_Space_Error,     --  out of atom space.
@@ -64,19 +66,19 @@ package Prolog.Errors is
       File_Name_Error,      --  name_error raised
       File_Status_Error,    --  status_error raised.
       Init_Error            --  Error during initialization.
-      );
+     );
 
-    procedure Set_Kind_Of_Error(E: Error_Type);
-    --  error reporting
-    --  This procedure is used by the underlying Prolog
-    --  reasoning tool to set the kind of error so that function
-    --  KIND_OF_ERROR knows what to return.
+   procedure Set_Kind_Of_Error (E : Error_Type);
+   --  error reporting
+   --  This procedure is used by the underlying Prolog
+   --  reasoning tool to set the kind of error so that function
+   --  KIND_OF_ERROR knows what to return.
 
    function Kind_Of_Error return Error_Type;
    --  This function returns a value of the above type.  It can
    --  be used to pin-point any error that occurs when the
    --  Ada--Prolog interface routines are called.
 
-   function Help_Error(E: Error_Type) return String;
+   function Help_Error (E : Error_Type) return String;
 
 end Prolog.Errors;

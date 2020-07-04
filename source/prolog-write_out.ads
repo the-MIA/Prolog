@@ -24,7 +24,6 @@ package Prolog.Write_Out is
    --  version does not quote atoms, even if they contain spaces or wierd
    --  characters. Of course, this is sometimes just what is needed!
 
-   
    use Prolog.Term_Pkg.Atom_Pkg;
    use Prolog.Transformations.Local;
 
@@ -39,10 +38,13 @@ package Prolog.Write_Out is
 
    type Tracemessage is (Goald, Provedd);
 
-   procedure Writeout(X: Term; E: Env);
+   procedure Writeout (X : Term; E : Env);
    --  Write a term.
 
-   procedure Trace(M: Tracemessage; X: Term; E: Env; Indent : Integer := 0);
+   procedure Trace (M      : Tracemessage;
+                    X      : Term;
+                    E      : Env;
+                    Indent : Integer      := 0);
    --  Output a trace message.
 
 end Prolog.Write_Out;

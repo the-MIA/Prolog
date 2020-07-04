@@ -33,16 +33,16 @@ package Prolog.Evaluable_Predicates is
 --  To each of the directly implemented evaluable predicates corresponds a
 --  value of the enumerated type 'evalpred'.
 
-    use Local;
-    use Atom_Pkg;
+   use Local;
+   use Atom_Pkg;
 
-    function Call_Eval_Pred (
-       Call    : Term;
-       E       : Env;
-       Routine : Evalpred;
-       Arity   : Integer;
-       Dbase   : Integer_List) return Boolean;
-    --  Call an evaluable predicate.
+   function Call_Eval_Pred
+     (Call    : Term;
+      E       : Env;
+      Routine : Evalpred;
+      Arity   : Integer;
+      Dbase   : Integer_List) return Boolean;
+   --  Call an evaluable predicate.
 
 end Prolog.Evaluable_Predicates;
 

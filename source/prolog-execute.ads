@@ -31,22 +31,22 @@ package Prolog.Execute is
 --  clauses in the database.
 
 
-    procedure First_Answer (
-       Goalp   : in      Term;
-       Envp    : in      Integer;
-       Dbase   : in      Integer_List;
-       Ans     :     out Solution;
-       Success :     out Boolean);
-    --  Execute a goal.
-   
-    procedure Next_Answer (
-       Ans     :     out Solution;
-       Success :     out Boolean);
+   procedure First_Answer
+     (Goalp   : in      Term;
+      Envp    : in      Integer;
+      Dbase   : in      Integer_List;
+      Ans     :     out Solution;
+      Success :     out Boolean);
+   --  Execute a goal.
 
-    function Unify (
-       X1, X2 : Term;
-       E1, E2 : Integer;
-       Depth  : Integer) return Boolean;
-    --  Unify x1 and x2.  Perform the matching substitution by binding variables.
+   procedure Next_Answer
+     (Ans     :     out Solution;
+      Success :     out Boolean);
+
+   function Unify
+     (X1, X2 : Term;
+      E1, E2 : Integer;
+      Depth  : Integer) return Boolean;
+   --  Unify x1 and x2.  Perform the matching substitution by binding variables.
 
 end Prolog.Execute;

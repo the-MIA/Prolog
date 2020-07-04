@@ -14,7 +14,7 @@
 --  THE USE OF THIS SOFTWARE.
 ----------------------------------------------------------------------
 
---  This generic package deals with physical input and output to the 
+--  This generic package deals with physical input and output to the
 --  terminal and to files.
 --  There are two 'modes' of input/output : the user mode and the system mode.
 --  These two modes are exclusive, i.e. No user file can be accessed in the
@@ -32,92 +32,91 @@
 --                           OUT_FILE_DEPTH_ERROR
 --                           FILE_STATUS_ERROR
 --                           FILE_NAME_ERROR
---                           
 
 with Prolog.Global_Objects; use Prolog.Global_Objects;
 
 package Prolog.Input_Output is
 
-    --  File Stuff :
+   --  File Stuff :
 
-    In_File_Depth  : Integer range 1 .. Maxindepth := 1;
-    Out_File_Depth : Integer range 1 .. Maxoutdepth := 1;
-    --  The current depth.
+   In_File_Depth  : Integer range 1 .. Maxindepth := 1;
+   Out_File_Depth : Integer range 1 .. Maxoutdepth := 1;
+   --  The current depth.
 
-    function Seesystemfile (Filename : String) return Boolean;
-    --  Open the system file 'filename' and connect to it.
+   function Seesystemfile (Filename : String) return Boolean;
+   --  Open the system file 'filename' and connect to it.
 
-    function Seefile (Filename : String) return Boolean;
-    function Tellfile (Filename : String) return Boolean;
-    --  Change depth by 1 and connect to this file.
+   function SeeFile (Filename : String) return Boolean;
+   function TellFile (Filename : String) return Boolean;
+   --  Change depth by 1 and connect to this file.
 
-    --  Seeing (Filename) and Telling(filename) are not implemented.
-    --  The functions below give some idea about whether a file is
-    --  being seen/told.
+   --  Seeing (Filename) and Telling(filename) are not implemented.
+   --  The functions below give some idea about whether a file is
+   --  being seen/told.
 
-    function Seeingsystemfile return Boolean;
-    --  Is the system file being read?
+   function Seeingsystemfile return Boolean;
+   --  Is the system file being read?
 
-    function Seeingfile return Boolean;
-    --  Is a file being 'seen' at present?
+   function Seeingfile return Boolean;
+   --  Is a file being 'seen' at present?
 
-    function Tellingfile return Boolean;
-    --  Is a file being 'told' at present?
+   function Tellingfile return Boolean;
+   --  Is a file being 'told' at present?
 
-    function Seensystemfile return Boolean;
-    --  Close the system file.
+   function Seensystemfile return Boolean;
+   --  Close the system file.
 
-    function Seenfile return Boolean;
-    function Toldfile return Boolean;
-    --  Change depth back by 1 and connect to previous file.
-    --  The functions return true if a file was actually being seen/told.
+   function Seenfile return Boolean;
+   function Toldfile return Boolean;
+   --  Change depth back by 1 and connect to previous file.
+   --  The functions return true if a file was actually being seen/told.
 
-    --  Write out :
+   --  Write out :
 
-    Rightmargin : Natural := 78;
-    --  The number of characters written on an output line before a newline 
-    --  is automatically written.
+   Rightmargin : Natural := 78;
+   --  The number of characters written on an output line before a newline
+   --  is automatically written.
 
-    Listing : Boolean;
-    --  Listing of the input text is controlled by the
-    --  variable 'listing'.
+   Listing : Boolean;
+   --  Listing of the input text is controlled by the
+   --  variable 'listing'.
 
-    procedure Wrcheck;
-    --check if buffer full and output.
+   procedure Wrcheck;
+   --  Check if buffer full and output.
 
-    procedure Wrln;
-    --  <newline> and output buffer.
+   procedure Wrln;
+   --  <newline> and output buffer.
 
-    procedure Wr (Ch: Character);
-    --  put character in buffer.
+   procedure Wr (Ch : Character);
+   --  Put character in buffer.
 
-    procedure Wrint (N: Integer);
-    --put integer in buffer.
+   procedure Wrint (N : Integer);
+   --  Put integer in buffer.
 
-    procedure Wrstring (S : String);
-    --put string in buffer.
+   procedure Wrstring (S : String);
+   --  Put string in buffer.
 
-    --  Read in :
+   --  Read in :
 
-    procedure Init_Input;
+   procedure Init_Input;
 
-    function Getchar return Character;
-    --get character from input buffer.
+   function Getchar return Character;
+   --  Get character from input buffer.
 
-    function Line_Ended	return Boolean;
-    --  Is next character the end-of-line character?
+   function Line_Ended return Boolean;
+   --  Is next character the end-of-line character?
 
-    function File_Ended	return Boolean;
-    --  Is next character the end-of-file character?
+   function File_Ended return Boolean;
+   --  Is next character the end-of-file character?
 
-    procedure Set_String (S : String);
-    --  Sets the input buffer to the string entered. 
-    --  Parsing can then work on this string
+   procedure Set_String (S : String);
+   --  Sets the input buffer to the string entered.
+   --  Parsing can then work on this string
 
-    procedure Init_String;
-    --  Sets the Collected_Output (ptr to string) to null.
+   procedure Init_String;
+   --  Sets the Collected_Output (ptr to string) to null.
 
-    function Get_String return String;
-    --  Returns the Collected_Output string
+   function Get_String return String;
+   --  Returns the Collected_Output string
 
 end Prolog.Input_Output;

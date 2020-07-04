@@ -19,17 +19,17 @@ generic
 
 package Prolog.Garbage_Collection is
 
-    --  Doug Bryan, Aug. 85
+   --  Doug Bryan, Aug. 85
 
-    procedure Free (Item : in out Link);
-    --| out (item = null);
-    --  if item = null, then do nothing.
-    --  may raise storage_error;
+   procedure Free (Item : in out Link);
+   --  | out (item = null);
+   --  if item = null, then do nothing.
+   --  may raise storage_error;
 
-    procedure Get (New_Item : in out Link);
-    --| out (new_item /= null);
-    --  if new_item /= null then do nothing.
-    --  may raise storage_error;
+   procedure Get (New_Item : in out Link);
+   --  | out (new_item /= null);
+   --  if new_item /= null then do nothing.
+   --  may raise storage_error;
 
 end Prolog.Garbage_Collection;
 

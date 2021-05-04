@@ -17,6 +17,7 @@ with Prolog.Atom_Table;
 with Prolog.Global_Objects;     use Prolog.Global_Objects;
 with Prolog.Vars;               use Prolog.Vars;
 with Prolog.Garbage_Collection;
+with Prolog.Variant_Garbage_Collection;
 
 package Prolog.Term_Pkg is
 
@@ -124,21 +125,26 @@ package Prolog.Term_Pkg is
 
    subtype Skelt_Node is Node (Skelt);
    subtype Skelt_Term is Term (Skelt);
-   package Skel_Garb is new Garbage_Collection (Skelt_Node, Skelt_Term);
+   package Skel_Garb is
+     new Variant_Garbage_Collection (Nodetag, Skelt, Node, Term);
 
    subtype Vart_Node is Node (Vart);
    subtype Vart_Term is Term (Vart);
-   package Var_Garb is new Garbage_Collection (Vart_Node, Vart_Term);
+   package Var_Garb is
+     new Variant_Garbage_Collection (Nodetag, Vart, Node, Term);
 
    subtype Intt_Node is Node (Intt);
    subtype Intt_Term is Term (Intt);
-   package Int_Garb is new Garbage_Collection (Intt_Node, Intt_Term);
+   package Int_Garb is
+     new Variant_Garbage_Collection (Nodetag, Intt, Node, Term);
 
    subtype Funct_Node is Node (Funct);
    subtype Funct_Term is Term (Funct);
-   package Func_Garb is new Garbage_Collection (Funct_Node, Funct_Term);
+   package Func_Garb is
+     new Variant_Garbage_Collection (Nodetag, Funct, Node, Term);
 
-   package Clause_Garb is new Garbage_Collection (Cls, Clptr);
+   package Clause_Garb is
+     new Garbage_Collection (Cls, Clptr);
 
    --  Clauses transparent to cut.
    Andg, Or1g, Or2g : Clptr;

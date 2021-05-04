@@ -13,8 +13,8 @@
 --  ANY LIABILITY OF ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM
 --  THE USE OF THIS SOFTWARE.
 ----------------------------------------------------------------------
+
 with Ada.Text_IO;            use Ada.Text_IO;
-with Ada.Integer_Text_IO;    use Ada.Integer_Text_IO;
 
 with Prolog.Error_Pkg;       use Prolog.Error_Pkg;
 with Prolog.Errors;          use Prolog.Errors;
@@ -604,9 +604,9 @@ package body Prolog.Read_In is
                    when -1 =>
                        Top := Top - 1;
                        case Get_Info(A).Oclass is
-                           when Fxo ! Fyo =>
+                           when Fxo | Fyo =>
                                X := Makefunc(A, 1, X);
-                           when Xfxo ! Xfyo ! Yfxo =>
+                           when Xfxo | Xfyo | Yfxo =>
                                Y := Pop;
                                Y.Brother := X;
                                X := Makefunc(A, 2, Y);

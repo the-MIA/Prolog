@@ -152,7 +152,6 @@ function Call_Eval_Pred (
             Moan (Call_Error, Abortz);
         end if;
 
-        E1 := 0;
         E1 := Newenv (Call, E, null, Dbase, 1, Glotop,Present_Trail);
         X := Envref (1, E1);
         Bind (X, Argval(1), E, 0);

@@ -146,7 +146,7 @@ package body Prolog.Transformations is
         end if;
     end Bindvars;
 
-    procedure Bind(V: in out Term; X: Term; E: Env; Depth: Integer) is
+    procedure Bind (V: in out Term; X: Term; E: Env; Depth: Integer) is
 
         -- Bind v to the value of x.  Usually it suffices to copy the 'info'
         -- field of the value, but if x is a functor in a clause, its arguments

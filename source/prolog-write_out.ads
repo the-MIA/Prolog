@@ -24,7 +24,6 @@ package Prolog.Write_Out is
    --  version does not quote atoms, even if they contain spaces or wierd
    --  characters. Of course, this is sometimes just what is needed!
 
-   use Prolog.Term_Pkg.Atom_Pkg;
    use Prolog.Transformations.Local;
 
    Writelength : Natural := 100;

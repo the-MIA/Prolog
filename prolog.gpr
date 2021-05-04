@@ -1,27 +1,17 @@
---
---
---
 
 project Prolog is
-  
-  for Source_Dirs use ("source/",
-                       "demo/",
-                       "test/");
-  for Object_Dir  use "object/";
-  for Exec_Dir    use "binary/";
-  for Main        use ("demo.adb",
-                       "test_interface.adb");
-  package Builder is
-     for Default_Switches ("Ada")    use
-       ("-g",
-        "-gnatf",
-        "-gnatwa",
-        "-gnatwj",
-        "-gnatw.x",
-        "-gnat2012",
-        "-gnaty",
-        "-gnatyM99");
-  end Builder;
 
-  for Create_Missing_Dirs use "True";
+   for Source_Dirs use ("source/",
+                        "demo/",
+                        "test/");
+   for Object_Dir  use "object/";
+   for Exec_Dir    use "binary/";
+   for Main        use ("demo.adb",
+                        "test_interface.adb");
+   package Builder is
+      for Default_Switches ("Ada") use
+        ("-gnatwa");
+   end Builder;
+
+   for Create_Missing_Dirs use "True";
 end Prolog;

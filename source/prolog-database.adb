@@ -14,8 +14,6 @@
 --  THE USE OF THIS SOFTWARE.
 -- --------------------------------------------------------------------
 
-
-with Ada.Text_IO;
 with Prolog.Error_Pkg;      use Prolog.Error_Pkg;
 with Prolog.Global_Objects; use Prolog.Global_Objects;
 with Prolog.Errors;         use Prolog.Errors;
@@ -48,7 +46,8 @@ package body Prolog.Database is
     Framesize : Integer;
     --  Number of non anon vars.
 
-    C         : Clptr;
+   Clause_X : Clptr;
+   pragma Unreferenced (Clause_X);
 
    --  The clauses which constitute the Prolog program are stored in skeletal
    --  Form, with each variable replaced either by an anonymous
@@ -100,7 +99,7 @@ begin --  findclause
     elsif Dbase = null then
         Value := False;
     else
-        C := Get_Info(Cl.Head.Name).Proc;
+        Clause_X := Get_Info(Cl.Head.Name).Proc;
         loop
             Findclause(X,E,Dbase.I,Cl,Ok);
             exit when Ok or (Dbase.Next = null);
@@ -119,7 +118,7 @@ procedure Findclause(X : Term;
     --  Advance cl to the first applicable clause. Hash is used to compare
     --  clause heads with the goal x. If either has hash function zero, a
     --  variable is present and a match is always possible.
-    K: Integer := Hash(X,E);
+    K : constant Integer := Hash(X,E);
     Ok: Boolean := False;
     C : Clptr;
 
@@ -158,7 +157,6 @@ function Makeclause(P : Term; E : Env; Claus : Boolean) return Clptr is
         --  'varmap' entry. If a second occurrence is encountered, the
         --  anonymous variable is changed to a skeletal reference.
         N: Integer range 0 .. Maxvars;
-        W: Term;
         Found: Boolean;
         Id1, Id2 : Varstring;
     begin
@@ -211,7 +209,7 @@ function Makeclause(P : Term; E : Env; Claus : Boolean) return Clptr is
         else
             --  This is the first occurrence - make an anonymous
             --  variable and keep a pointer to it.
-            if Varcount >= Maxvars then
+            if Varcount = Maxvars then
                 Moan(Nvars_Error, Abortz);
             end if;
             Varcount := Varcount + 1;
@@ -238,7 +236,6 @@ function Makeclause(P : Term; E : Env; Claus : Boolean) return Clptr is
         function Skelargs(S: Term) return Term is
             --  Produce a skeleton for the arguments of a functor node.
             T, U, V: Term;
-            Value  : Term;
         begin --  skelargs
             if S = null then
                 return null;
@@ -425,16 +422,16 @@ begin
 end Addclause;
 
 
------------------
---  Addclause  --
------------------
+   -----------------
+   --  Addclause  --
+   -----------------
 
-procedure Addclause(C       : in out Clptr;
-                    Dbase   : in     Integer;
-                    Asserta : in     Boolean) is
-    Cl : Clptr;
+   procedure Addclause (C       : in out Clptr;
+                        Dbase   : in     Integer;
+                        Asserta : in     Boolean)
+   is
 
-    procedure Pluga(Cp, C : in out Clptr) is
+    procedure Pluga(Cp : in out Clptr; C: Clptr) is
         --  Insert the new clause at the beginning of chain cp.
     begin
         if Cp = null then
@@ -450,7 +447,7 @@ procedure Addclause(C       : in out Clptr;
         end if;
     end Pluga;
 
-    procedure Plugz(Cp, C : in out Clptr) is
+    procedure Plugz(Cp : in out Clptr; C : Clptr) is
         --  Insert the new clause at the end of chain cp.
     begin
         if Cp = null then

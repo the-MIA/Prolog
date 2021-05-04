@@ -12,7 +12,7 @@
 -- ANY LIABILITY OF ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM
 -- THE USE OF THIS SOFTWARE.
 ----------------------------------------------------------------------
-with Ada.Text_Io;           use Ada.Text_IO;
+
 with Prolog.Evaluable_Predicates;  use Prolog.Evaluable_Predicates;
 with Prolog.Vars;                  use Prolog.Vars;
 
@@ -28,8 +28,6 @@ package body Prolog.Execute is
 
     use Local;
     use Atom_Pkg;
-
-    Temp : Term;
 
     type State_Type is
              (Callq, Procq, Bodyq, Returnq, Failq, Finalq);
@@ -50,29 +48,27 @@ package body Prolog.Execute is
     State: State_Type;
     This_Dbase : Integer_List;
 
-    Indent : Integer := 0;
-
     User_Interrupt_Active : Boolean := False;
     -- Has ^C been pressed?
 
     -- task to handle interrupts.
 
-    task Interrupt is
-        entry Control_C;
---        for CONTROL_C use at address'ref(IFACE_INTR.SIGINT);
-    end;
-    task body Interrupt is
-    begin
-       loop
-          select
-	     accept Control_C do
-		 -- TEXT_IO.PUT_LINE("Got the interrupt");
-		 User_Interrupt_Active := True;
-	     end;
-          or terminate;
-          end select;
-       end loop;
-    end;
+--      task Interrupt is
+--          entry Control_C;
+--  --        for CONTROL_C use at address'ref(IFACE_INTR.SIGINT);
+--      end;
+--      task body Interrupt is
+--      begin
+--         loop
+--            select
+--  	     accept Control_C do
+--  		 -- TEXT_IO.PUT_LINE("Got the interrupt");
+--  		 User_Interrupt_Active := True;
+--  	     end;
+--            or terminate;
+--            end select;
+--         end loop;
+--      end;
 
     procedure Killstacks(E : Integer) is
         T : Term;
@@ -381,7 +377,7 @@ package body Prolog.Execute is
                                        Dbase: Integer_List; Ans : out Solution;
                                                             Success : out Boolean) is
       -- Execute a goal.
-      G : Term := Deref(Goalp,Envp);
+      G : constant Term := Deref (Goalp, Envp);
    begin
       Killstacks(0);
       Callp := Makefunc(G.Name,G.Arity,G.Son);

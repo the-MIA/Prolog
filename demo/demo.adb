@@ -32,9 +32,6 @@ procedure Demo is
 
    Success : Boolean;
 
-
-   File  : File_Type;
-
    Filename     : String (1 .. 100);
    Query_String : String (1 .. 100);
 

@@ -23,21 +23,24 @@ with Prolog.Read_In;        use Prolog.Read_In;
 package body Prolog.Input_Output is
 
 
-    System_Mode : Boolean := False;
-    --  Is a system file being seen at present?
+   System_Mode : Boolean := False;
+   pragma Unreferenced (System_Mode);
+   --  Is a system file being seen at present?
 
-    Linelisted : Boolean := False;
-    --  Has the current line been listed?
+   Linelisted : Boolean := False;
+   pragma Unreferenced (Linelisted);
+   --  Has the current line been listed?
 
-    Maxlength : constant := 200;
-    --  Maximum length of an input line and output buffer.
+   Maxlength : constant := 200;
+   --  Maximum length of an input line and output buffer.
 
-    type Input_File_Array  is array (1 .. Maxindepth)  of Unbounded_String;
-    type Output_File_Array is array (1 .. Maxoutdepth) of File_Type;
+   type Input_File_Array  is array (1 .. Maxindepth)  of Unbounded_String;
+   type Output_File_Array is array (1 .. Maxoutdepth) of File_Type;
 
-    Input  : Input_File_Array;
-    Output : Output_File_Array;
-    --  Input and output files.
+   Input  : Input_File_Array;
+   Output : Output_File_Array;
+   pragma Unreferenced (Input);
+   --  Input and output files.
 
     Prolib : File_Type;
     --  Input files for system.
@@ -51,19 +54,21 @@ package body Prolog.Input_Output is
     --  the 'file' pointer for in_line_buf
 
 
-    Charpos : array (1 .. Maxindepth) of Inrange := (others => 0);
-    --  Position in current input line.
+   Charpos : array (1 .. Maxindepth) of Inrange := (others => 0);
+   pragma Unreferenced (Charpos);
+   --  Position in current input line.
   
 
     Inlinelength : array (1 .. Maxindepth) of Inrange := (others => 0);
     --  Length of current input line.
 
 
-    type Acc is access String;
-    Remaining_Input  : Acc := null;
-    Collected_Output : Acc := null;
-
-    subtype Outrange is Natural range 0 .. Rightmargin;
+   type Acc is access String;
+   Remaining_Input  : Acc := null;
+   Collected_Output : Acc := null;
+   pragma Unreferenced (Remaining_Input);
+   
+   subtype Outrange is Natural range 0 .. Rightmargin;
 
     Outlinelength : array (1 .. Maxoutdepth) of Outrange := (others => 0);
     --  Positions in the current output lines. One value for each file
@@ -83,8 +88,9 @@ package body Prolog.Input_Output is
                             := (others => Inbufftype'(others => ' '));
     --  The output buffer.
 
-    Seeflag, Tellflag : Boolean;
-    --  Is a file being seen/told?
+   Seeflag  : constant Boolean := False;
+   Tellflag : Boolean := False;
+   --  Is a file being seen/told?
 
 
 --  Input files are double buffered so that helpful syntax error messages 
@@ -228,23 +234,24 @@ begin
 end Wrstring;
 
 
-procedure Listline is
-   --  List the current line.
-   --  the input line may be larger than output line, hence the tricks.
-   --  max input line length is maxlength
-   --  max output line length is rightmargin
-begin
-    for I in 1 .. Inlinelength(In_File_Depth) - 1 loop
-        if ((I mod Rightmargin) = 0) then
+   procedure Listline is
+      --  List the current line.
+      --  the input line may be larger than output line, hence the tricks.
+      --  max input line length is maxlength
+      --  max output line length is rightmargin
+   begin
+      for I in 1 .. Inlinelength(In_File_Depth) - 1 loop
+         if ((I mod Rightmargin) = 0) then
             Wrln;
-        end if;
-        --  write out each time output buffer line i.e.tempbuff becomes full.
---        Wr (In_Line_Buff (In_File_Depth)(I));
-    end loop;
-    Wrln;
-    Linelisted := True;
-    --  linelisted is a boolean showing whether the present line has been listed.
-end Listline;
+         end if;
+         --  write out each time output buffer line i.e.tempbuff becomes full.
+         --        Wr (In_Line_Buff (In_File_Depth)(I));
+      end loop;
+      Wrln;
+      Linelisted := True;
+      --  linelisted is a boolean showing whether the present line has been listed.
+   end Listline;
+   pragma Unreferenced (Listline);
 
 
 --  Read in : -------------------------------------------------------
@@ -254,7 +261,6 @@ end Listline;
 ------------------
 
 procedure Set_String(S : String) is
-    Length : Integer;
 begin
     In_Line_Buffer := To_Unbounded_String (S);
 
@@ -384,9 +390,6 @@ exception
         Moan(File_Name_Error,Abortz);
         pragma Assert (False);
         raise Program_Error;
-
-    when others =>
-        raise;
 
 end Seefile;
 

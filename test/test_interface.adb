@@ -138,12 +138,6 @@ procedure Test_Interface is
       end loop;
    end Write_List_List;
 
-
-   procedure Spaces is
-   begin
-      Put ("     ");
-   end Spaces;
-
 begin
    Put_Line ("Welcome to the test interface program");
    New_Line;

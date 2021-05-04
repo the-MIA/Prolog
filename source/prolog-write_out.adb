@@ -17,11 +17,12 @@
 with Ada.Text_Io;           use Ada.Text_Io;
 with Prolog.Input_Output;   use Prolog.Input_Output;
 with Prolog.Global_Objects; use Prolog.Global_Objects;
-with Prolog.Read_In;        use Prolog.Read_In;
+--with Prolog.Read_In;        use Prolog.Read_In;
 with Prolog.Vars;           use Prolog.Vars;
 
 package body Prolog.Write_Out is
 
+   use Prolog.Term_Pkg.Atom_Pkg;
 
     --  WriteOut writes a term to the text file 'OUTPUT', using operator
     --  information in atom entries to select the best syntax.  The current
@@ -100,7 +101,7 @@ procedure Writeout(X: Term; E: Env) is
             --  Write an operator expression.
         begin
             case Get_Info(Y.Name).Oclass is
-                when Fxo ! Fyo =>
+                when Fxo | Fyo =>
                     if Quoteflag and not(Get_Info(Y.Name).Sys) then
                         Wrstring(Makequote(Writeatom(Y.Name)));
                     else
@@ -109,7 +110,7 @@ procedure Writeout(X: Term; E: Env) is
                     Wrcheck;
                     Wr(' ');
                     Writeterm(Y.Son, Rprec(Y.Name), Depth + 1);
-                when Xfo ! Yfo =>
+                when Xfo | Yfo =>
                     Writeterm(Y.Son, Lprec(Y.Name), Depth + 1);
                     Wrcheck;
                     Wr(' ');
@@ -118,7 +119,7 @@ procedure Writeout(X: Term; E: Env) is
                     else
                         Wrstring(Writeatom(Y.Name));
                     end if;
-                when Xfxo ! Xfyo ! Yfxo =>
+                when Xfxo | Xfyo | Yfxo =>
                     Writeterm(Y.Son, Lprec(Y.Name), Depth + 1);
                     if (Y.Name /= Commaa) and
                        (Y.Name /= Semia) then
@@ -150,11 +151,11 @@ procedure Writeout(X: Term; E: Env) is
             Wrcheck;
         end Writeexp;
 
-        procedure Writelist_Old is
+         procedure Writelist_Old is
             --  Write a list in square bracket notation.
             N: Integer;
             Z: Term;
-        begin
+         begin
             Wr('[');
             Writeterm(Y.Son, Subprec, Depth + 1);
             N := 1;
@@ -184,6 +185,7 @@ procedure Writeout(X: Term; E: Env) is
             Wr(']');
             Wrcheck;
         end Writelist_Old;
+        pragma Unreferenced (Writelist_Old);
 
         procedure Writelist is
             --  Write a list in pointed notation.
@@ -286,7 +288,7 @@ procedure Writeout(X: Term; E: Env) is
                     elsif Y.Ival = Integer'First then
                         declare
                            type Acc_String is access String;
-                           Last_Int : Acc_String :=
+                           Last_Int : constant Acc_String :=
                               new String'(Integer'Image(Integer'First));
                         begin
                            Wr('^');
@@ -313,7 +315,9 @@ procedure Trace(M: Tracemessage; X: Term; E: Env; Indent : Integer := 0) is
     --  Output a trace message.
     Y: Term;
 
-   procedure Write_Term(X: Term; P: Prec; Depth: Integer) is
+      procedure Write_Term(X: Term; P: Prec; Depth: Integer)
+      is
+         pragma Unreferenced (P);
 
          Y : Term;
 

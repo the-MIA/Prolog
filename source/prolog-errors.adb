@@ -63,7 +63,7 @@ package body Prolog.Errors is
    File_Status_Str    : aliased constant String := "status error";
    Init_Str           : aliased constant String := "error during initialization";
 
-   Err_Array : array (Error_Type) of Acc_String := (
+   Err_Array : constant array (Error_Type) of Acc_String := (
                 Arity_Error          => Arity_Str'Access,
                 Assert_Error         => Assert_Str'Access,
                 Atom_Space_Error     => Atom_Space_Str'Access,

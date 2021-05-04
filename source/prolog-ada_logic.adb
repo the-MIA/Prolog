@@ -13,7 +13,6 @@
 --  ANY LIABILITY OF ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM
 --  THE USE OF THIS SOFTWARE.
 ----------------------------------------------------------------------
-with Ada.Text_IO;             use Ada.Text_IO;
 
 with Prolog.Database;         use Prolog.Database;
 with Prolog.Error_Pkg;        use Prolog.Error_Pkg;
@@ -72,8 +71,9 @@ package body Prolog.Ada_Logic is
 
    List_Count : Integer := 0; --  Present (unique) # of lists.
 
-   Dummy : Boolean;
-   C : Clause;
+   Dummy    : Boolean;
+   Clause_X : Clause;
+   pragma Unreferenced (Clause_X);
 
    function Is_Rule (C : Clause) return Boolean is
    begin
@@ -713,7 +713,6 @@ package body Prolog.Ada_Logic is
    end Arity;
 
    function Get_Son_List (C : Clause) return List_Of_Sons is
-      Ptr : List_Of_Clauses;
    begin
       if C.The_Body /= null then
          raise Attr_Error;
@@ -829,7 +828,6 @@ package body Prolog.Ada_Logic is
 
    function Build_Rule (Head_Of_Clause : Clause;
                         Tail : List_Of_Sons) return Clause is
-      Ptr  : Clause;
       Temp : Clptr;
    begin
       Clause_Garb.Get (Temp);
@@ -876,8 +874,8 @@ package body Prolog.Ada_Logic is
    end Copy_Clause;
 
    function Read_Clause (Text : String) return Clause is
-      T : Term;
-      T1, Temp : Term;
+      T  : Term;
+      T1 : Term;
    begin
       Set_String (Text);
       T1 := Glotop;
@@ -1100,7 +1098,7 @@ package body Prolog.Ada_Logic is
 
    procedure Write_Fast_File (File : String; List : List_Of_Clauses) is
       F : Term_Rec_Io.File_Type;
-      S : Speed_Node;
+--      S : Speed_Node;
       L : Clause_List;
       T : Term;
 
@@ -1355,7 +1353,7 @@ package body Prolog.Ada_Logic is
       end if;
 
       while not File_Ended loop
-         C := Clause (Addclause (Read_In.Read_In, 0, 0, False));
+         Clause_X := Clause (Addclause (Read_In.Read_In, 0, 0, False));
 
       end loop;
 

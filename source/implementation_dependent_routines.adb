@@ -47,15 +47,12 @@ package body Implementation_Dependent_Routines is
    begin
      --if (file_names.exists(a_strings.to_a(in_directory & "/" & xform_files_subdirectory))) then
      raise Program_Error;
-     if False then
-       return(True);
-     else
-       return(False);
-     end if;
+     return False;
    end Anna_Mklib_Done;
    --
 
-   function Make_File_Name(Directory,File_Name:String) return String is
+   function Make_File_Name (Directory, File_Name : String) return String is
+      pragma Unreferenced (Directory);
    begin
       return File_Name;
       -- Given the directory and file name, this routine must create a
@@ -72,7 +69,8 @@ package body Implementation_Dependent_Routines is
    end Make_Xform_File_Name;
    --
 
-   function Get_Directory(File_Name:String) return String is
+   function Get_Directory (File_Name : String) return String is
+      pragma Unreferenced (File_Name);
    begin
       return "";
       -- Given a file name, this function must return the name of the
@@ -91,7 +89,8 @@ package body Implementation_Dependent_Routines is
    end Get_Directory;
    --
 
-   function Library_Directory(Directory:String) return Boolean is
+   function Library_Directory (Directory : String) return Boolean is
+      pragma Unreferenced (Directory);
    begin
       return False;
       -- Should return TRUE if DIRECTORY corresponds to a library directory,
@@ -101,7 +100,8 @@ package body Implementation_Dependent_Routines is
    end Library_Directory;
    --
 
-   function Ada_Path(Directory:String) return String is
+   function Ada_Path (Directory : String) return String is
+      pragma Unreferenced (Directory);
    begin
       return "" & Ascii.Nul;
       -- Should return the list of directories in the Ada search list of
@@ -204,7 +204,9 @@ package body Implementation_Dependent_Routines is
       return "intlibc.pro";
    end;
 
-   function Spawn_Process( Command : String ) return Integer is
+   function Spawn_Process (Command : String ) return Integer
+   is
+      pragma Unreferenced (Command);
    begin
       return 1;
    end;

@@ -77,13 +77,13 @@ package body Prolog.Execute is
    --  Kill_Stacks  --
    -------------------
 
-   procedure Killstacks (E : Integer) is
+   procedure Kill_Stacks (E : Integer) is
       T : Term;
    begin
       T := Getglobal (E + 1);
       Killlocal (E);
       Kill_Global (T);
-   end Killstacks;
+   end Kill_Stacks;
 
    ---------------
    --  Execute  --
@@ -258,7 +258,7 @@ package body Prolog.Execute is
                   else
                      Clausep := Clausep.Next;
                   end if;
-                  Killstacks (Choicepoint - 1);
+                  Kill_Stacks (Choicepoint - 1);
                   State := Procq;
                else
                   Value := False;
@@ -440,7 +440,7 @@ package body Prolog.Execute is
       --  Execute a goal.
       G : constant Term := Deref (Goalp, Envp);
    begin
-      Killstacks (0);
+      Kill_Stacks (0);
       Callp   := Make_Func (G.Name, G.Arity, G.Son);
       Callenv := Envp;
       Goalenv := Envp;

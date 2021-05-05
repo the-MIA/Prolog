@@ -273,7 +273,7 @@ package body Prolog.Evaluable_Predicates is
       begin --  doname
          if Isatom (Argval (1)) then
             Result := Unify (Argval (2),
-                             Listrep (Writeatom (Argval (1).Name)), E, 0, 0);
+                             List_Rep (Writeatom (Argval (1).Name)), E, 0, 0);
          else
             Startatom;
             X := Argval (2);

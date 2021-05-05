@@ -143,7 +143,7 @@ package Prolog.Transformations is
                    E     :        Env;
                    Depth :        Integer);
 
-   function Listrep (S : String) return Term;
+   function List_Rep (S : String) return Term;
 
    procedure Get_Body (V : in out Term;
                        B :        Term;

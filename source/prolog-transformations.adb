@@ -291,7 +291,7 @@ package body Prolog.Transformations is
    --  List_Rep  --
    ----------------
 
-   function Listrep (S : String) return Term is
+   function List_Rep (S : String) return Term is
       --  A Prolog list of the characters of s: cf. 'atom'.
       X, Y : Term;
    begin
@@ -302,6 +302,6 @@ package body Prolog.Transformations is
          X := Make_Func (Consa, 2, Y);
       end loop;
       return X;
-   end Listrep;
+   end List_Rep;
 
 end Prolog.Transformations;

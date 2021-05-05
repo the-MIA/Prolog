@@ -522,8 +522,9 @@ package body Prolog.Evaluable_Predicates is
          when Ltr => Result :=  (Evaluate (Argval (1), E, 0) <
                                    Evaluate (Argval (2), E, 0)); --  Right here
 
-         when Assertar | Assertzr => Dummy := Addclause (Argval (1), E, 0,
-                                                         Routine = Assertar);
+         when Assertar | Assertzr =>
+            Dummy := Add_Clause (Argval (1), E, 0,
+                                 Routine = Assertar);
             --  In DATABASE
 
          when Retractr => Doretract; --  Right here

@@ -29,14 +29,14 @@ package Prolog.Database is
    use Prolog.Transformations.Local;
    --  For type Env.
 
-   function Addclause (P      : Term;
-                       E       : Env;
-                       Dbase   : Integer;
-                       Asserta : Boolean) return Clptr;
+   function Add_Clause (P      : Term;
+                        E       : Env;
+                        Dbase   : Integer;
+                        Asserta : Boolean) return Clptr;
 
-   procedure Addclause (C      : in out Clptr;
-                        Dbase   : in     Integer;
-                        Asserta : in     Boolean);
+   procedure Add_Clause (C       : in out Clptr;
+                         Dbase   : in     Integer;
+                         Asserta : in     Boolean);
 
    --  Produce a skeleton for p and add it to the database.  The new clause
    --  is added at the front of the clause chain if asserta is true,

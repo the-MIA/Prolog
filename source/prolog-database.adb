@@ -463,29 +463,29 @@ package body Prolog.Database is
       end if;
    end Makeclause;
 
-   -----------------
-   --  Addclause  --
-   -----------------
+   ------------------
+   --  Add_Clause  --
+   ------------------
 
-   function Addclause (P       : Term;
-                       E       : Env;
-                       Dbase   : Integer;
-                       Asserta : Boolean) return Clptr
+   function Add_Clause (P       : Term;
+                        E       : Env;
+                        Dbase   : Integer;
+                        Asserta : Boolean) return Clptr
    is
       Cl : Clptr;
    begin
       Cl := Makeclause (P, E);
-      Addclause (Cl, Dbase, Asserta);
+      Add_Clause (Cl, Dbase, Asserta);
       return Cl;
-   end Addclause;
+   end Add_Clause;
 
-   -----------------
-   --  Addclause  --
-   -----------------
+   ------------------
+   --  Add_Clause  --
+   ------------------
 
-   procedure Addclause (C       : in out Clptr;
-                        Dbase   : in     Integer;
-                        Asserta : in     Boolean)
+   procedure Add_Clause (C       : in out Clptr;
+                         Dbase   : in     Integer;
+                         Asserta : in     Boolean)
    is
 
       procedure Pluga (Cp : in out Clptr; C : Clptr) is
@@ -524,7 +524,7 @@ package body Prolog.Database is
       else
          Plugz (Get_Info (C.Head.Name).Proc, C);
       end if;
-   end Addclause;
+   end Add_Clause;
 
    ------------------
    --  Zap_Clause  --

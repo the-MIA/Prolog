@@ -391,14 +391,14 @@ package body Prolog.Ada_Logic is
       else
          Ltemp := new List_Of_Clauses_Record;
          Copy_Clause (L1.List.Value, Cl, Number, Heapf);
-         Addclause (Clptr (Cl), Number, False);
+         Add_Clause (Clptr (Cl), Number, False);
          Ptr2 := new Clause_List_Record;
          Ltemp.all.List := Ptr2;
          Ptr2.Value := Cl;
          Ptr1 := Ptr1.Next;
          while Ptr1 /= null loop
             Copy_Clause (Ptr1.Value, Cl, Number, Heapf);
-            Addclause (Clptr (Cl), Number, False);
+            Add_Clause (Clptr (Cl), Number, False);
             Ptr2.Next  := new Clause_List_Record;
             Ptr2       := Ptr2.Next;
             Ptr2.Value := Cl;
@@ -482,7 +482,7 @@ package body Prolog.Ada_Logic is
          when Madec =>
             Ptr.Value := C;
       end case;
-      Addclause (Clptr (Ptr.Value), L.Number, True);
+      Add_Clause (Clptr (Ptr.Value), L.Number, True);
       Ptr.Next := L.List;
       L.List   := Ptr;
       L.Arity := L.Arity + 1;
@@ -546,7 +546,7 @@ package body Prolog.Ada_Logic is
             when Madec =>
                Ptr.Next := new Clause_List_Record'(C, null);
          end case;
-         Addclause (Clptr (Ptr.Next.Value), L.Number, False);
+         Add_Clause (Clptr (Ptr.Next.Value), L.Number, False);
          L.Arity := L.Arity + 1;
       end if;
    end Append;
@@ -1590,7 +1590,7 @@ package body Prolog.Ada_Logic is
       end if;
 
       while not File_Ended loop
-         Clause_X := Clause (Addclause (Read_In.Read_In, 0, 0, False));
+         Clause_X := Clause (Add_Clause (Read_In.Read_In, 0, 0, False));
 
       end loop;
 

@@ -1,4 +1,3 @@
-
 --  Copyright (C) 1986, 1987, 1988, 1989, 1990, 1991, 1992 by the Program
 --  Analysis and Verification Group, Leland Stanford Junior University.
 --  All Rights Reserved.
@@ -55,6 +54,10 @@ package body Prolog.Database is
    --  the local stack.  The body of a clause is represented by a collection
    --  of terms chained together by the 'brother' fields of their root nodes.
 
+   ------------
+   --  Hash  --
+   ------------
+
    function Hash (X : Term; E : Env) return Integer is
 
       --  Hash function for terms.  The value of Hash depends on the root
@@ -79,6 +82,10 @@ package body Prolog.Database is
       end if;
       return Value;
    end Hash;
+
+   -------------------
+   --  Find_Clause  --
+   -------------------
 
    procedure Findclause (X     : Term;
                          E     : Env;
@@ -107,6 +114,10 @@ package body Prolog.Database is
          Value := Ok;
       end if;
    end Findclause;
+
+   -------------------
+   --  Find_Clause  --
+   -------------------
 
    procedure Findclause (X     : Term;
                          E     : Env;
@@ -141,6 +152,10 @@ package body Prolog.Database is
       end if;
    end Findclause;
 
+   -------------------
+   --  Make_Clause  --
+   -------------------
+
    function Makeclause (P : Term; E : Env; Claus : Boolean) return Clptr is
       --  Produce a skeleton for p and add it to the database.  The new clause
       --  is added at the front of the clause chain if asserta is true,
@@ -151,6 +166,10 @@ package body Prolog.Database is
       Newbody : Term;
       Newkey  : Integer;
       Tempcls : Clptr;
+
+      ----------------
+      --  Skel_Var  --
+      ----------------
 
       procedure Skelvar (V1 : Term; V2 : in out Term) is
          --  Produce a skeleton for a variable v. When the first occurrence of
@@ -231,6 +250,10 @@ package body Prolog.Database is
          end if;
       end Skelvar;
 
+      ----------------
+      --  Skeleton  --
+      ----------------
+
       function Skeleton (X : Term; Depth : Integer) return Term is
          --  Produce a skeleton for x.
          Y, Z : Term;
@@ -291,6 +314,10 @@ package body Prolog.Database is
          end case;
       end Skeleton;
 
+      -----------------
+      --  Skel_Call  --
+      -----------------
+
       function Skelcall (X : Term) return Term is
          --  Produce a skeleton for a goal in a clause body. A variable
          --  a is mapped onto call(X).
@@ -326,6 +353,10 @@ package body Prolog.Database is
          raise Program_Error;
       end Skelcall;
 
+      -----------------
+      --  Skel_Head  --
+      -----------------
+
       function Skelhead (X : Term) return Term is
          --  Produce a skeleton for the clause head X.
          Y     : Term;
@@ -339,6 +370,10 @@ package body Prolog.Database is
          Newkey := Hash (Y, E);
          return Value;
       end Skelhead;
+
+      -----------------
+      --  Skel_Bode  --
+      -----------------
 
       function Skelbody (X : Term; Depth : Integer) return Term is
          --  Produce a skeleton for a clause body.
@@ -402,10 +437,18 @@ package body Prolog.Database is
       return Tempcls;
    end Makeclause;
 
+   -------------------
+   --  Make_Clause  --
+   -------------------
+
    function Makeclause (P : Term; E : Env) return Clptr is
    begin
       return Makeclause (P, E, False);
    end Makeclause;
+
+   -------------------
+   --  Make_Clause  --
+   -------------------
 
    function Makeclause (Head : Term; Tail : Term; E : Env) return Clptr is
       Temp : Term;
@@ -482,6 +525,10 @@ package body Prolog.Database is
          Plugz (Get_Info (C.Head.Name).Proc, C);
       end if;
    end Addclause;
+
+   ------------------
+   --  Zap_Clause  --
+   ------------------
 
    procedure Zapclause (Cl : Clptr) is
       --  Delete the clause entry pointed to by CL.

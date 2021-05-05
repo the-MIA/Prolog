@@ -449,6 +449,10 @@ package body Prolog.Read_In is
       end loop;
    end Lexan;
 
+   ---------------
+   --  Read_In  --
+   ---------------
+
    function Read_In return Term is
       --  Input and parse a Prolog sentence and build a term from it.  The
       --  finite state part of the parser is characterized by the variables
@@ -678,7 +682,6 @@ package body Prolog.Read_In is
          Hiprec := H;
 
       end Entercontext;
-
 
       -------------------
       --  Exitcontext  --

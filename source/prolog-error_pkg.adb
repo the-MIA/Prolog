@@ -16,6 +16,10 @@
 
 package body Prolog.Error_Pkg is
 
+   ------------
+   --  Moan  --
+   ------------
+
    procedure Moan (E : Error; A : Moanaction) is
       --  Output an error message.
    begin

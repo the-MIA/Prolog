@@ -21,6 +21,9 @@ package body Prolog.Transformations is
    --  This module contains an assortment of useful functions and procedures
    --  for handling terms and stacks.
 
+   -----------------
+   --  Make_Func  --
+   -----------------
 
    function Makefunc (A : Atom; M : Integer; S : Term) return Term is
       --  Construct a functor node on the global stack.
@@ -33,6 +36,10 @@ package body Prolog.Transformations is
       return X;
    end Makefunc;
 
+   ----------------
+   --  Make_Int  --
+   ----------------
+
    function Makeint (I : Integer) return Term is
       --  Construct an integer node on the global stack.
       X : Term;
@@ -44,6 +51,10 @@ package body Prolog.Transformations is
       return X;
    end Makeint;
 
+   ----------------
+   --  Make_Var  --
+   ----------------
+
    function Makevar (V : Term; S : Varstring) return Term is
       --  Construct a variable node on the global stack.
       X : Term;
@@ -54,6 +65,10 @@ package body Prolog.Transformations is
       Glosize := Glosize + 1;
       return X;
    end Makevar;
+
+   -------------------
+   --  Kill_Global  --
+   -------------------
 
    procedure Killglobal (Newptr : Term) is
       Temp : Term;
@@ -71,6 +86,10 @@ package body Prolog.Transformations is
       end loop;
    end Killglobal;
 
+   ---------------
+   --  Is_Func  --
+   ---------------
+
    function Isfunc (X : Term; A : Atom; M : Integer) return Boolean is
       --  True if x is a functor node with name a and arity m.
    begin
@@ -81,6 +100,10 @@ package body Prolog.Transformations is
       end if;
    end Isfunc;
 
+   ---------------
+   --  Is_Atom  --
+   ---------------
+
    function Isatom (X : Term) return Boolean is
       --  True if x is an atom.
    begin
@@ -90,6 +113,10 @@ package body Prolog.Transformations is
          return X.Arity = 0;
       end if;
    end Isatom;
+
+   -------------
+   --  Deref  --
+   -------------
 
    function Deref (X : Term; E : Env) return Term is
 
@@ -120,6 +147,10 @@ package body Prolog.Transformations is
       return Y;
    end Deref;
 
+   -----------------
+   --  Bind_Vars  --
+   -----------------
+
    procedure Bindvars (V1, V2 : Term) is
 
       --  Bind variables v1 and v2 by assigning to one of them.  The following
@@ -148,6 +179,10 @@ package body Prolog.Transformations is
       end if;
    end Bindvars;
 
+   ------------
+   --  Bind  --
+   ------------
+
    procedure Bind (V : in out Term; X : Term; E : Env; Depth : Integer) is
 
       --  Bind v to the value of x.  Usually it suffices to copy the 'info'
@@ -158,6 +193,10 @@ package body Prolog.Transformations is
       Y : Term;
 
       function Copyargs (S : Term) return Term;
+
+      ------------
+      --  Copy  --
+      ------------
 
       function Copy (X : Term) return Term is
          --  Copy x onto the heap.
@@ -185,6 +224,10 @@ package body Prolog.Transformations is
          end case;
          return Z;
       end Copy;
+
+      -----------------
+      --  Copy_Args  --
+      -----------------
 
       function Copyargs (S : Term) return Term is
          --  Copy the arguments of a functor node.
@@ -223,6 +266,10 @@ package body Prolog.Transformations is
       end if;
    end Bind;
 
+   ----------------
+   --  Get_Body  --
+   ----------------
+
    procedure Getbody (V : in out Term; B : Term; E : Env) is
       --  Bind v to a term representing the clause body b.
       --  b must not be the empty body.
@@ -239,6 +286,10 @@ package body Prolog.Transformations is
          Getbody (R, B.Brother, E);
       end if;
    end Getbody;
+
+   ----------------
+   --  List_Rep  --
+   ----------------
 
    function Listrep (S : String) return Term is
       --  A Prolog list of the characters of s: cf. 'atom'.

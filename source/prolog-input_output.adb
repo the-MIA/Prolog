@@ -120,6 +120,9 @@ package body Prolog.Input_Output is
    --  This implies user,program(init) or system mode.
    --  online is on when the input is being given online.
 
+   ------------------
+   --  Init_Input  --
+   ------------------
 
    procedure Init_Input is
    begin
@@ -130,15 +133,27 @@ package body Prolog.Input_Output is
 
    --  Write out : ------------------------------------------------------
 
+   -------------------
+   --  Init_String  --
+   -------------------
+
    procedure Init_String is
    begin
       Collected_Output := null;
    end Init_String;
 
+   ------------------
+   --  Get_String  --
+   ------------------
+
    function Get_String return String is
    begin
       return Collected_Output.all;
    end Get_String;
+
+   ----------------
+   --  Put_Line  --
+   ----------------
 
    procedure Putline is
       --  simply puts line physically on the output file given by
@@ -171,7 +186,9 @@ package body Prolog.Input_Output is
 
    end Putline;
 
-
+   ----------------
+   --  Wr_Check  --
+   ----------------
 
    procedure Wrcheck is
       --  Checks if tempbuff is overflowing and outputs if it is.
@@ -193,12 +210,20 @@ package body Prolog.Input_Output is
 
    end Wrcheck;
 
+   -------------
+   --  Wr_Ln  --
+   -------------
+
    procedure Wrln is
       --  Output present line
    begin
       Wrcheck;
       Putline;
    end Wrln;
+
+   ----------
+   --  Wr  --
+   ----------
 
    procedure Wr (Ch : Character) is
       --  Put character in output buffer
@@ -211,6 +236,10 @@ package body Prolog.Input_Output is
       Templength (Out_File_Depth) := Templength (Out_File_Depth) + 1;
       Tempbuff   (Out_File_Depth) (Templength (Out_File_Depth)) := Ch;
    end Wr;
+
+   --------------
+   --  Wr_Int  --
+   --------------
 
    procedure Wrint (N : Integer) is
       --  Put an integer in the output buffer
@@ -226,6 +255,10 @@ package body Prolog.Input_Output is
       end if;
    end Wrint;
 
+   -----------------
+   --  Wr_String  --
+   -----------------
+
    procedure Wrstring (S : String) is
       --  This just outputs a string character by character
    begin
@@ -234,6 +267,9 @@ package body Prolog.Input_Output is
       end loop;
    end Wrstring;
 
+   -----------------
+   --  List_Line  --
+   -----------------
 
    procedure Listline is
       --  List the current line.
@@ -312,6 +348,9 @@ package body Prolog.Input_Output is
       return Element (In_Line_Buffer, Pos) = ASCII.LF;
    end Line_Ended;
 
+   ------------------
+   --  File_Ended  --
+   ------------------
 
    function File_Ended return Boolean is
    begin
@@ -362,9 +401,9 @@ package body Prolog.Input_Output is
       Pos := 1;
    end Load_File;
 
-   ---------------
-   --  Seefile  --
-   ---------------
+   ----------------
+   --  See_File  --
+   ----------------
 
    function See_File (Filename : String) return Boolean is
       --  Evaluable predicate 'see'. Open a file for reading.
@@ -395,6 +434,10 @@ package body Prolog.Input_Output is
 
    end See_File;
 
+   -----------------
+   --  Tell_File  --
+   -----------------
+
    function Tell_File (Filename : String) return Boolean is
       --  Evaluable predicate 'tell'. Open a file for writing.
    begin
@@ -403,17 +446,27 @@ package body Prolog.Input_Output is
       return True;
    end Tell_File;
 
+   -------------------
+   --  Seeing_File  --
+   -------------------
 
    function Seeingfile return Boolean is
    begin
       return Seeflag;
    end Seeingfile;
 
+   --------------------
+   --  Telling_File  --
+   --------------------
+
    function Tellingfile return Boolean is
    begin
       return Tellflag;
    end Tellingfile;
 
+   -------------------
+   --  Seen_File  --
+   -------------------
 
    function Seenfile return Boolean is
    begin
@@ -422,6 +475,9 @@ package body Prolog.Input_Output is
       return True;
    end Seenfile;
 
+   -----------------
+   --  Told_File  --
+   -----------------
 
    function Toldfile return Boolean is
    begin
@@ -439,6 +495,10 @@ package body Prolog.Input_Output is
       end if;
    end Toldfile;
 
+   -----------------------
+   --  See_System_File  --
+   -----------------------
+
    function Seesystemfile (Filename : String) return Boolean is
       --  Open a systemfile for reading.
    begin
@@ -450,10 +510,18 @@ package body Prolog.Input_Output is
          return False;
    end Seesystemfile;
 
+   --------------------------
+   --  Seeing_System_File  --
+   --------------------------
+
    function Seeingsystemfile return Boolean is
    begin
       return Is_Open (Prolib);
    end Seeingsystemfile;
+
+   ------------------------
+   --  Seen_System_File  --
+   ------------------------
 
    function Seensystemfile return Boolean is
    begin

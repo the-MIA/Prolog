@@ -57,7 +57,6 @@ package Prolog.Local_Stack is
       Nvars   : Integer;
       Glblptr : Term;
       Trlptr  : Trail) return Env;
-
    --  Create a new environment with :
    --       Invoking goal : callp
    --       Environment for the goal : envp

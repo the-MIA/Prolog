@@ -15,6 +15,10 @@
 
 package body Prolog.Term_Pkg is
 
+   --------------------
+   --  Default_Info  --
+   --------------------
+
    function Default_Info return Atom_Info is
    begin
       return new Atom_Record'(Normp, Nono, 0, False, null);

@@ -28,6 +28,10 @@ package body Prolog.Write_Out is
     --  version does not quote atoms, even if they contain spaces or wierd
     --  characters. Of course, this is sometimes just what is needed!
 
+   -------------
+   --  Lprec  --
+   -------------
+
    function Lprec (A : Atom) return Prec is
       --  The precedence for a left operand of a.
       Tf : Boolean;
@@ -38,6 +42,10 @@ package body Prolog.Write_Out is
 
       return Get_Info (A).Oprec - Boolean'Pos (Tf);
    end Lprec;
+
+   -------------
+   --  Rprec  --
+   -------------
 
    function Rprec (A : Atom) return Prec is
       --  The precedence for a right operand of a.
@@ -50,8 +58,16 @@ package body Prolog.Write_Out is
       return Get_Info (A).Oprec - Boolean'Pos (Tf);
    end Rprec;
 
+   ----------------
+   --  Writeout  --
+   ----------------
+
    procedure Writeout (X : Term; E : Env) is
       --  Write a term.
+
+      ------------------
+      --  Make_Quote  --
+      ------------------
 
       function Makequote (S : String) return String is
       begin
@@ -73,9 +89,17 @@ package body Prolog.Write_Out is
          return S;
       end Makequote;
 
+      ------------------
+      --  Write_Term  --
+      ------------------
+
       procedure Writeterm (X : Term; P : Prec; Depth : Integer) is
          --  Write a term with maximum precedence p.
          Y : Term;
+
+         -------------------
+         --  Write_Stand  --
+         -------------------
 
          procedure Writestand is
             --  Write a complex term in standard notation.
@@ -99,6 +123,10 @@ package body Prolog.Write_Out is
             Wr (')');
             Wrcheck;
          end Writestand;
+
+         ----------------
+         --  Write_Op  --
+         ----------------
 
          procedure Writeop is
             --  Write an operator expression.
@@ -142,6 +170,10 @@ package body Prolog.Write_Out is
             end case;
          end Writeop;
 
+         -----------------
+         --  Write_Exp  --
+         -----------------
+
          procedure Writeexp is
             --  Write an operator expression, using parentheses if higher
             --  precedence is needed.
@@ -155,6 +187,10 @@ package body Prolog.Write_Out is
             end if;
             Wrcheck;
          end Writeexp;
+
+         ---------------------
+         --  Writelist_Old  --
+         ---------------------
 
          procedure Writelist_Old is
             --  Write a list in square bracket notation.
@@ -192,6 +228,10 @@ package body Prolog.Write_Out is
          end Writelist_Old;
          pragma Unreferenced (Writelist_Old);
 
+         -----------------
+         --  Writelist  --
+         -----------------
+
          procedure Writelist is
             --  Write a list in pointed notation.
             N : Integer;
@@ -217,6 +257,9 @@ package body Prolog.Write_Out is
             Wr (')'); Wrcheck;
          end Writelist;
 
+         ------------------
+         --  Write_Func  --
+         ------------------
 
          procedure Writefunc is
             --  Write a complex term.
@@ -259,6 +302,10 @@ package body Prolog.Write_Out is
                end case;
             end if;
          end Writefunc;
+
+         -----------------
+         --  Write_Var  --
+         -----------------
 
          procedure Writevar is
          begin
@@ -315,6 +362,10 @@ package body Prolog.Write_Out is
       Varcount := 0;
       Writeterm (X, Maxprec, 0);
    end Writeout;
+
+   -------------
+   --  Trace  --
+   -------------
 
    procedure Trace (M      : Tracemessage;
                     X      : Term;

@@ -18,6 +18,10 @@ with Implementation_Dependent_Routines;
 
 package body Anna_Filename_Utilities is
 
+   -------------------
+   --  Is_Readable  --
+   -------------------
+
    function Is_Readable (Name : String) return Boolean is
       F : File_Type;
    begin
@@ -29,6 +33,10 @@ package body Anna_Filename_Utilities is
          return False;
    end Is_Readable;
 
+   ------------------------
+   --  Readable_Or_Moan  --
+   ------------------------
+
    function Readable_Or_Moan (Name : String) return String is
    begin
       if Is_Readable (Name) then
@@ -38,6 +46,10 @@ package body Anna_Filename_Utilities is
          raise File_Not_Found;
       end if;
    end Readable_Or_Moan;
+
+   ---------------------
+   --  Is_Createable  --
+   ---------------------
 
    function Is_Createable (Name : String) return Boolean is
       F : File_Type;
@@ -50,6 +62,9 @@ package body Anna_Filename_Utilities is
          return False;
    end Is_Createable;
 
+   --------------------------
+   --  Createable_Or_Moan  --
+   --------------------------
 
    function Createable_Or_Moan (Name : String) return String is
    begin
@@ -60,6 +75,10 @@ package body Anna_Filename_Utilities is
          raise File_Not_Found;
       end if;
    end Createable_Or_Moan;
+
+   ------------
+   --  Find  --
+   ------------
 
    function Find (Basename         : String;
                   Default_Dir_Name : String;
@@ -88,6 +107,10 @@ package body Anna_Filename_Utilities is
          return "";
       end if;
    end Find;
+
+   --------------------
+   --  Find_Or_Moan  --
+   --------------------
 
    function Find_Or_Moan (Basename         : String;
                           Default_Dir_Name : String;

@@ -73,6 +73,10 @@ package body Prolog.Execute is
    --         end loop;
    --      end;
 
+   -------------------
+   --  Kill_Stacks  --
+   -------------------
+
    procedure Killstacks (E : Integer) is
       T : Term;
    begin
@@ -80,6 +84,10 @@ package body Prolog.Execute is
       Killlocal (E);
       Killglobal (T);
    end Killstacks;
+
+   ---------------
+   --  Execute  --
+   ---------------
 
    function Execute return Boolean is
       --  Execute a goal.
@@ -266,6 +274,10 @@ package body Prolog.Execute is
       return Value;
    end Execute;
 
+   -------------
+   --  Unify  --
+   -------------
+
    function Unify (X1, X2 : Term;
                    E1, E2 : Integer;
                    Depth  : Integer)
@@ -337,6 +349,10 @@ package body Prolog.Execute is
       end case;
       return Value;
    end Unify;
+
+   ---------------------
+   --  Get_Solutions  --
+   ---------------------
 
    function Get_Solutions (Q : Term; E : Integer) return Solution
    is
@@ -411,6 +427,10 @@ package body Prolog.Execute is
       return A1;
    end Get_Solutions;
 
+   --------------------
+   --  First_Answer  --
+   --------------------
+
    procedure First_Answer (Goalp : Term;
                            Envp  : Integer;
                            Dbase : Integer_List;
@@ -441,6 +461,10 @@ package body Prolog.Execute is
          raise;
    end First_Answer;
 
+   -------------------
+   --  Next_Answer  --
+   -------------------
+
    procedure Next_Answer (Ans     : out Solution;
                           Success : out Boolean) is
    begin
@@ -458,6 +482,10 @@ package body Prolog.Execute is
          Ans := null;
          raise;
    end Next_Answer;
+
+   -----------------
+   --  Init_Unify --
+   -----------------
 
    procedure Initunify is
       --  Set up table of actions for Unify.

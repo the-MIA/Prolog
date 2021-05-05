@@ -30,6 +30,9 @@ with Prolog.Write_Out;      use Prolog.Write_Out;
 
 package body Prolog.Evaluable_Predicates is
 
+   ----------------
+   --  Evaluate  --
+   ----------------
 
    function Evaluate (X : Term; E : Env; Depth : Integer) return Integer is
       --  Evaluate x as an arithmetic expression.
@@ -90,6 +93,10 @@ package body Prolog.Evaluable_Predicates is
       return Value;
    end Evaluate;
 
+   ------------------
+   --  Int_Result  --
+   ------------------
+
    function Intresult (X : Term; E : Env; I : Integer) return Boolean is
       --  Specialized unification algorithm for returning integer results.
       --  IntResult (x, e, i) is equivalent to Unify(x, MakeInt(i), e, 0, 0)
@@ -114,6 +121,10 @@ package body Prolog.Evaluable_Predicates is
       return Value;
    end Intresult;
 
+   ----------------------
+   --  Call_Eval_Pred  --
+   ----------------------
+
    function Call_Eval_Pred
      (Call    : Term;
       E       : Env;
@@ -127,6 +138,10 @@ package body Prolog.Evaluable_Predicates is
       Argval : array  (1 .. Maxevalarity) of Term;
       Ans    : Solution;
       Dummy  : Clptr;
+
+      ----------------
+      --  Get_Args  --
+      ----------------
 
       procedure Getargs is
          --  Fill in argval with the tfm.dereferenced arguments.
@@ -142,6 +157,10 @@ package body Prolog.Evaluable_Predicates is
             A := A.Brother;
          end loop;
       end Getargs;
+
+      ---------------
+      --  Do_Call  --
+      ---------------
 
       procedure Docall is
          --  Evaluable predicate 'call'. This code is tricky.
@@ -163,6 +182,10 @@ package body Prolog.Evaluable_Predicates is
 
       end Docall;
 
+      ---------------
+      --  Do_Get0  --
+      ---------------
+
       procedure Doget0 is
          --  Evaluable predicate 'get0'.
          Ch : Character;
@@ -178,6 +201,10 @@ package body Prolog.Evaluable_Predicates is
          Result := Intresult (Argval (1), E, Character'Pos (Ch));
       end Doget0;
 
+      --------------
+      --  Do_Put  --
+      --------------
+
       procedure Doput is
          --  Evaluable predicate 'put'.
          Ch : Integer;
@@ -189,6 +216,10 @@ package body Prolog.Evaluable_Predicates is
             Wr (Character'Val (Ch));
          end if;
       end Doput;
+
+      -------------
+      --  Do_Op  --
+      -------------
 
       procedure Doop is
          --  Evaluable predicate 'op'.
@@ -231,6 +262,10 @@ package body Prolog.Evaluable_Predicates is
          Set_Info (Argval (3).Name, Info);
       end Doop;
 
+      ---------------
+      --  Do_Name  --
+      ---------------
+
       procedure Doname is
          --  Evaluable predicate 'name'.
          X, Y : Term;
@@ -264,10 +299,18 @@ package body Prolog.Evaluable_Predicates is
          end if;
       end Doname;
 
+      --------------
+      --  Aabort  --
+      --------------
+
       procedure Aabort is
       begin
          Moan (Fault_Error, Abortz);
       end Aabort;
+
+      ------------------
+      --  Do_Retract  --
+      ------------------
 
       procedure Doretract is
          Cl    : Clptr;
@@ -334,6 +377,9 @@ package body Prolog.Evaluable_Predicates is
          Trimtrail (Trl);
       end Doretract;
 
+      ------------------
+      --  Do_Functor  --
+      ------------------
 
       procedure Dofunctor is
          --  Evaluable predicate 'functor'.
@@ -388,6 +434,10 @@ package body Prolog.Evaluable_Predicates is
 
       end Dofunctor;
 
+      --------------
+      --  Do_Arg  --
+      --------------
+
       procedure Doarg is
          --  Evaluable predicate 'arg'.
          --  First argument has to be an Integer, 2nd a function.
@@ -411,6 +461,10 @@ package body Prolog.Evaluable_Predicates is
             end if;
          end if;
       end Doarg;
+
+      -------------------
+      --  Do_Same_Var  --
+      -------------------
 
       procedure Dosamevar is
       begin

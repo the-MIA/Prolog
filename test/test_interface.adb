@@ -45,7 +45,10 @@ procedure Test_Interface is
    This_Answer : Answer;
    All_Answers : List_Of_Answers;
 
-   ----------------------------------------
+   ----------------
+   --  Get_List  --
+   ----------------
+
    function Get_List (Msg : String := "") return Integer is
       L : Integer range 1 .. Nlists;
    begin
@@ -54,7 +57,10 @@ procedure Test_Interface is
       return L;
    end Get_List;
 
-   ----------------------------------------
+   --------------------
+   --  Get_Son_List  --
+   --------------------
+
    function Get_Son_List (Msg : String := "") return Integer is
       S : Integer range 1 .. Nsonlists;
    begin
@@ -65,7 +71,10 @@ procedure Test_Interface is
       return S;
    end Get_Son_List;
 
-   ----------------------------------------
+   ---------------------
+   --  Get_List_List  --
+   ---------------------
+
    function Get_List_List (Msg : String := "") return Integer is
       S : Integer range 1 .. Nlistlists;
    begin
@@ -76,7 +85,10 @@ procedure Test_Interface is
       return S;
    end Get_List_List;
 
-   ----------------------------------------
+   -------------------
+   --  Get_Clauses  --
+   -------------------
+
    function Getclause (Msg : String := "") return Integer is
       C : Integer range 1 .. Nclauses;
    begin
@@ -85,7 +97,10 @@ procedure Test_Interface is
       return C;
    end Getclause;
 
-   ----------------------------------------
+   -------------------
+   --  Get_Integer  --
+   -------------------
+
    function Getinteger (Msg : String := "") return Integer is
       I : Integer;
    begin
@@ -94,7 +109,10 @@ procedure Test_Interface is
       return I;
    end Getinteger;
 
-   ----------------------------------------
+   --------------
+   --  Get_Id  --
+   --------------
+
    function Getid (Msg : String := "") return Identifier is
       S : String (1 .. 100);
       Len : Integer := 1;
@@ -108,7 +126,10 @@ procedure Test_Interface is
       return new String'(S (1 .. Len));
    end Getid;
 
-   ----------------------------------------
+   ------------------
+   --  Write_List  --
+   ------------------
+
    procedure Write_List (L : List_Of_Clauses) is
    begin
       for I in 1 .. Length (L) loop
@@ -118,7 +139,10 @@ procedure Test_Interface is
       end loop;
    end Write_List;
 
-   ----------------------------------------
+   ----------------------
+   --  Write_Son_List  --
+   ----------------------
+
    procedure Write_Son_List (L : List_Of_Sons) is
    begin
       for I in 1 .. Length (L) loop
@@ -128,7 +152,10 @@ procedure Test_Interface is
       end loop;
    end Write_Son_List;
 
-   ----------------------------------------
+   -----------------------
+   --  Write_List_List  --
+   -----------------------
+
    procedure Write_List_List (L : List_Of_Lists) is
    begin
       for I in 1 .. Length (L) loop

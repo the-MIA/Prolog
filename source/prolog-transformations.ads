@@ -126,7 +126,7 @@ package Prolog.Transformations is
    Glotop   : Term := null;
    Glosize  : Natural := 0;
 
-   function Makefunc (A : Atom; M : Integer; S : Term) return Term;
+   function Make_Func (A : Atom; M : Integer; S : Term) return Term;
    function Makeint (I : Integer) return Term;
    function Makevar (V : Term; S : Varstring) return Term;
 

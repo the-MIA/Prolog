@@ -609,11 +609,11 @@ package body Prolog.Read_In is
                   Top := Top - 1;
                   case Get_Info (A).Oclass is
                      when Fxo | Fyo =>
-                        X := Makefunc (A, 1, X);
+                        X := Make_Func (A, 1, X);
                      when Xfxo | Xfyo | Yfxo =>
                         Y := Pop;
                         Y.Brother := X;
-                        X := Makefunc (A, 2, Y);
+                        X := Make_Func (A, 2, Y);
                      when others => null;
                   end case;
                when others => null;
@@ -649,7 +649,7 @@ package body Prolog.Read_In is
             end if;
 
             Top := Top - 1;
-            Shiftterm (Makefunc (A, 0, null));
+            Shiftterm (Make_Func (A, 0, null));
          end if;
 
          if not S (Context) then
@@ -719,7 +719,7 @@ package body Prolog.Read_In is
             X := Y;
             N := N + 1;
          end loop;
-         return Makefunc (Stack (Top).Aval, N, X);
+         return Make_Func (Stack (Top).Aval, N, X);
       end Getfunc;
 
       --------------
@@ -738,7 +738,7 @@ package body Prolog.Read_In is
          loop
             Y := Pop;
             Y.Brother := X;
-            X := Makefunc (Consa, 2, Y);
+            X := Make_Func (Consa, 2, Y);
             exit when Stack (Top).Tag /= Terml;
          end loop;
 
@@ -787,7 +787,7 @@ package body Prolog.Read_In is
                   Expected := Randx;
                   Hiprec   := Rprec (A);
                else
-                  Shiftterm (Makefunc (A, 0, null));
+                  Shiftterm (Make_Func (A, 0, null));
                   Expected := Opx;
                   Loprec   := 0;
                end if;
@@ -796,7 +796,7 @@ package body Prolog.Read_In is
                case Get_Info (A).Oclass is
                   when Xfo | Yfo =>
                      Squashrand (A);
-                     Shiftterm (Makefunc (A, 1, Pop));
+                     Shiftterm (Make_Func (A, 1, Pop));
                      Expected := Opx;
                      Loprec   := Get_Info (A).Oprec;
 
@@ -831,7 +831,7 @@ package body Prolog.Read_In is
             if Top = 1 then
                --  End of file - represented by "?- end".
 
-               Value := Makefunc (Enda, 0, null);
+               Value   := Make_Func (Enda, 0, null);
                Context := Finalk;
 
             else
@@ -892,7 +892,7 @@ package body Prolog.Read_In is
                                  others => False);
                   Checkdelim (S);
                   if Context = Listk then
-                     Shiftterm (Makefunc (Nila, 0, null));
+                     Shiftterm (Make_Func (Nila, 0, null));
                   end if;
                   Exitcontext (Getlist);
                   Tkn := Lexan;
@@ -908,7 +908,7 @@ package body Prolog.Read_In is
                when Rcurly =>
                   S := Stateset'(Curlyk => True, others => False);
                   Checkdelim (S);
-                  Exitcontext (Makefunc (Curlya, 1, Pop));
+                  Exitcontext (Make_Func (Curlya, 1, Pop));
                   Tkn := Lexan;
 
                when Comma =>

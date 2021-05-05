@@ -25,7 +25,7 @@ package body Prolog.Transformations is
    --  Make_Func  --
    -----------------
 
-   function Makefunc (A : Atom; M : Integer; S : Term) return Term is
+   function Make_Func (A : Atom; M : Integer; S : Term) return Term is
       --  Construct a functor node on the global stack.
       X : Term;
    begin
@@ -34,7 +34,7 @@ package body Prolog.Transformations is
       Glotop  := X;
       Glosize := Glosize + 1;
       return X;
-   end Makefunc;
+   end Make_Func;
 
    ----------------
    --  Make_Int  --
@@ -206,9 +206,9 @@ package body Prolog.Transformations is
          case Y.Tag is
             when Funct =>
                if Y.Field = Heapf then
-                  Z := Makefunc (Y.Name, Y.Arity, Copyargs (Y.Son));
+                  Z := Make_Func (Y.Name, Y.Arity, Copyargs (Y.Son));
                else
-                  Z := Makefunc (Y.Name, Y.Arity, Y.Son);
+                  Z := Make_Func (Y.Name, Y.Arity, Y.Son);
                end if;
             when Intt =>
                Z := Makeint (Y.Ival);
@@ -278,10 +278,10 @@ package body Prolog.Transformations is
       if B.Brother = null then
          Bind (V, B, E, 0);
       else
-         L := Makefunc (Null_Atom, 0, null);
-         R := Makefunc (Null_Atom, 0, null);
+         L := Make_Func (Null_Atom, 0, null);
+         R := Make_Func (Null_Atom, 0, null);
          L.Brother := R;
-         V := Makefunc (Commaa, 2, L);
+         V := Make_Func (Commaa, 2, L);
          Bind (L, B, E, 0);
          Getbody (R, B.Brother, E);
       end if;
@@ -295,11 +295,11 @@ package body Prolog.Transformations is
       --  A Prolog list of the characters of s: cf. 'atom'.
       X, Y : Term;
    begin
-      X := Makefunc (Nila, 0, null);
+      X := Make_Func (Nila, 0, null);
       for N in reverse S'Range loop
          Y := Makeint (Character'Pos (S (N)));
          Y.Brother := X;
-         X := Makefunc (Consa, 2, Y);
+         X := Make_Func (Consa, 2, Y);
       end loop;
       return X;
    end Listrep;

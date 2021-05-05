@@ -295,7 +295,7 @@ package body Prolog.Evaluable_Predicates is
                Moan (Name_Arg_Error, Abortz);
             end if;
             Result := Unify (Argval (1),
-                             Makefunc (Lookup, 0, null), E, 0, 0);
+                             Make_Func (Lookup, 0, null), E, 0, 0);
          end if;
       end Doname;
 
@@ -394,8 +394,8 @@ package body Prolog.Evaluable_Predicates is
                if not Intresult (Argval (3), E, Argval (1).Arity) then
                   Result := False;
                else
-                  Result := Unify (Argval (2), Makefunc (Argval (1).Name,
-                                                       0, null), E, 0, 0);
+                  Result := Unify (Argval (2), Make_Func (Argval (1).Name,
+                                                          0, null), E, 0, 0);
                end if;
 
             when Intt =>
@@ -420,8 +420,8 @@ package body Prolog.Evaluable_Predicates is
                         Y.Brother := X;
                         X := Y;
                      end loop;
-                     Result := Unify (Argval (1), Makefunc (Argval (2).Name,
-                                                            M, X),
+                     Result := Unify (Argval (1), Make_Func (Argval (2).Name,
+                                                             M, X),
                                       E, 0, 0);
                   elsif  (Argval (2).Tag = Intt) and (M = 0) then
                      Result := Intresult (Argval (1), E,

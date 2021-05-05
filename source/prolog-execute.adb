@@ -120,8 +120,8 @@ package body Prolog.Execute is
                      if Callp.Name = Calla then
                         Temp1 := Callp.Brother;
                         Temp2 := Deref (Callp.Son, Callenv);
-                        Callp := Makefunc (Temp2.Name, Temp2.Arity,
-                                           Temp2.Son);
+                        Callp := Make_Func (Temp2.Name, Temp2.Arity,
+                                            Temp2.Son);
                         Callp.Brother := Temp1;
                         State := Callq;
 
@@ -441,7 +441,7 @@ package body Prolog.Execute is
       G : constant Term := Deref (Goalp, Envp);
    begin
       Killstacks (0);
-      Callp   := Makefunc (G.Name, G.Arity, G.Son);
+      Callp   := Make_Func (G.Name, G.Arity, G.Son);
       Callenv := Envp;
       Goalenv := Envp;
       Baseenv := Envtop;

@@ -74,7 +74,7 @@ package body Prolog.Database is
       else
          Z := Deref (Y.Son, E);
          case Z.Tag is
-            when Funct => Value := Infinity + Get_Atomno (Z.Name);
+            when Funct => Value := Infinity + Get_Atom_No (Z.Name);
             when Intt  => Value := Z.Ival - Boolean'Pos (Z.Ival <= 0);
             when Vart  => Value := 0;
             when Skelt => Value := 0;

@@ -74,7 +74,7 @@ package Prolog.Atom_Table is
 
    --  All the four integers above are changed by LOOKUP.
 
-   function Get_Atomno (A : Atom) return Integer;
+   function Get_Atom_No (A : Atom) return Integer;
    --  Return the atom number.
 
    function Write_Atom (A : Atom) return String;

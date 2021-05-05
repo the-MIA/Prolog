@@ -200,10 +200,10 @@ package body Prolog.Atom_Table is
    --  Get_Atom_No  --
    -------------------
 
-   function Get_Atomno (A : Atom) return Integer is
+   function Get_Atom_No (A : Atom) return Integer is
    begin
       return A.Number;
-   end Get_Atomno;
+   end Get_Atom_No;
 
    ------------------
    --  First_Atom  --

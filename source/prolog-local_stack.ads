@@ -97,7 +97,7 @@ package Prolog.Local_Stack is
    procedure Cut (E : Env);
    --  Cut. This accesses the trail too.
 
-   procedure Killlocal (Newtop : Env);
+   procedure Kill_Local (Newtop : Env);
    --  Recover all environments over newtop. Accesses trail.
 
    procedure Trailvar (V : Term);

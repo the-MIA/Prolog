@@ -1604,7 +1604,7 @@ package body Prolog.Ada_Logic is
 
    exception
       when others =>
-         Killlocal (0);
+         Kill_Local (0);
          Kill_Global (null);
          Init_Input;
          raise;

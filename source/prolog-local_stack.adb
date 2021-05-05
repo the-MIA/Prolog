@@ -218,7 +218,7 @@ package body Prolog.Local_Stack is
    --  Kill_Local  --
    ------------------
 
-   procedure Killlocal (Newtop : Env) is
+   procedure Kill_Local (Newtop : Env) is
       --  Dispose of all environments after newtop, together with all
       --  associated global storage, and undo critical variable bindings.
    begin
@@ -231,7 +231,7 @@ package body Prolog.Local_Stack is
       for I in reverse Newtop + 1 .. Envtop loop
          Dispose_Env;
       end loop;
-   end Killlocal;
+   end Kill_Local;
 
    ----------------
    --  Critical  --

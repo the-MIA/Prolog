@@ -70,7 +70,7 @@ package body Prolog.Transformations is
    --  Kill_Global  --
    -------------------
 
-   procedure Killglobal (Newptr : Term) is
+   procedure Kill_Global (Newptr : Term) is
       Temp : Term;
    begin
       while Glotop /= Newptr loop
@@ -84,7 +84,7 @@ package body Prolog.Transformations is
          Glotop  := Temp;
          Glosize := Glosize - 1;
       end loop;
-   end Killglobal;
+   end Kill_Global;
 
    ---------------
    --  Is_Func  --

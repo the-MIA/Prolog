@@ -82,7 +82,7 @@ package body Prolog.Execute is
    begin
       T := Getglobal (E + 1);
       Killlocal (E);
-      Killglobal (T);
+      Kill_Global (T);
    end Killstacks;
 
    ---------------

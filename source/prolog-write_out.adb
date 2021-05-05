@@ -201,7 +201,7 @@ package body Prolog.Write_Out is
             Writeterm (Y.Son, Subprec, Depth + 1);
             N := 1;
             Z := Deref (Y.Son.Brother, E);
-            while (N /= Writelength) and Isfunc (Z, Consa, 2) loop
+            while (N /= Writelength) and Is_Func (Z, Consa, 2) loop
                Wr (',');
                Wrcheck;
                Wr (' ');
@@ -209,7 +209,7 @@ package body Prolog.Write_Out is
                Z := Deref (Z.Son.Brother, E);
                N := N + 1;
             end loop;
-            if not Isfunc (Z, Nila, 0) then
+            if not Is_Func (Z, Nila, 0) then
                if N < Writelength then
                   Wr (' ');
                   Wr ('|');
@@ -241,7 +241,7 @@ package body Prolog.Write_Out is
             Writeterm (Y.Son, Subprec, Depth + 1);
             N := 1;
             Z := Deref (Y.Son.Brother, E);
-            while (N /= Writelength) and Isfunc (Z, Consa, 2) loop
+            while (N /= Writelength) and Is_Func (Z, Consa, 2) loop
                Wrcheck; Wr ('.');
                Writeterm (Z.Son, Subprec, Depth + 1);
                Z := Deref (Z.Son.Brother, E);

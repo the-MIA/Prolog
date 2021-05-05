@@ -393,7 +393,7 @@ package body Prolog.Database is
             end if;
             Value := Z;
          else
-            if Isfunc (Y, Commaa, 2) then
+            if Is_Func (Y, Commaa, 2) then
                Z := Skel_Call (Y.Son);
                Z.Brother := Skel_Body (Y.Son.Brother, Depth + 1);
                Value := Z;
@@ -409,7 +409,7 @@ package body Prolog.Database is
       Framesize := 0;
       Q := Deref (P, E);
 
-      if Isfunc (Q, Arrowa, 2) then
+      if Is_Func (Q, Arrowa, 2) then
          Newhead := Skel_Head (Q.Son);
          Newbody := Skel_Body (Q.Son.Brother, 0);
       else

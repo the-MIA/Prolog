@@ -277,7 +277,7 @@ package body Prolog.Evaluable_Predicates is
          else
             Startatom;
             X := Argval (2);
-            while Isfunc (X, Consa, 2) loop
+            while Is_Func (X, Consa, 2) loop
                Y := Deref (X.Son, E);
                if Y.Tag /= Intt then
                   Moan (Name_Arg_Error, Abortz);
@@ -291,7 +291,7 @@ package body Prolog.Evaluable_Predicates is
                Atomchar (Character'Val (Ch));
                X := Deref (X.Son.Brother, E);
             end loop;
-            if not Isfunc (X, Nila, 0) then
+            if not Is_Func (X, Nila, 0) then
                Moan (Name_Arg_Error, Abortz);
             end if;
             Result := Unify (Argval (1),

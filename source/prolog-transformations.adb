@@ -90,7 +90,7 @@ package body Prolog.Transformations is
    --  Is_Func  --
    ---------------
 
-   function Isfunc (X : Term; A : Atom; M : Integer) return Boolean is
+   function Is_Func (X : Term; A : Atom; M : Integer) return Boolean is
       --  True if x is a functor node with name a and arity m.
    begin
       if X.Tag /= Funct then
@@ -98,7 +98,7 @@ package body Prolog.Transformations is
       else
          return (X.Name = A) and (X.Arity = M);
       end if;
-   end Isfunc;
+   end Is_Func;
 
    ---------------
    --  Is_Atom  --

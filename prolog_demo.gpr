@@ -1,0 +1,18 @@
+
+with "prolog";
+
+project Prolog_Demo is
+
+   for Source_Dirs use ("demo/");
+   for Object_Dir  use "object/";
+   for Exec_Dir    use "binary/";
+   for Main        use ("demo.adb");
+   for Create_Missing_Dirs use "True";
+
+   package Builder is
+      for Default_Switches ("Ada") use
+        ("-gnatwa",
+         "-gnatyyx-s");
+   end Builder;
+
+end Prolog_Demo;

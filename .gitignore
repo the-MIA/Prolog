@@ -1,3 +1,4 @@
 .gitignore
 object/
 binary/
+library/

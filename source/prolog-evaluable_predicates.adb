@@ -492,7 +492,7 @@ package body Prolog.Evaluable_Predicates is
 
          when Putr => Doput; --  Right Here
 
-         when Nlr => Wrln; --  In IO
+         when Nlr => Wr_Ln; --  In IO
 
          when Eolnr => Result := Line_Ended; --  In IO
 

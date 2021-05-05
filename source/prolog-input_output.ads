@@ -84,7 +84,7 @@ package Prolog.Input_Output is
    procedure Wr_Check;
    --  Check if buffer full and output.
 
-   procedure Wrln;
+   procedure Wr_Ln;
    --  <newline> and output buffer.
 
    procedure Wr (Ch : Character);

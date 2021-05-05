@@ -1088,7 +1088,7 @@ package body Prolog.Ada_Logic is
       begin
          Init_String;
          Writeout (T, 0);
-         Wrln;
+         Wr_Ln;
          return new String'(Get_String);
       end Dump_Term;
    begin
@@ -1279,7 +1279,7 @@ package body Prolog.Ada_Logic is
             Write_Tail (Ptr.Value.The_Body);
          end if;
          Wr ('.');
-         Wrln;
+         Wr_Ln;
          Ptr := Ptr.Next;
       end loop;
       Dummy := Told_File;

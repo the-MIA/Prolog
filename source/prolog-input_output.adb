@@ -214,12 +214,12 @@ package body Prolog.Input_Output is
    --  Wr_Ln  --
    -------------
 
-   procedure Wrln is
+   procedure Wr_Ln is
       --  Output present line
    begin
       Wr_Check;
       Putline;
-   end Wrln;
+   end Wr_Ln;
 
    ----------
    --  Wr  --
@@ -279,12 +279,12 @@ package body Prolog.Input_Output is
    begin
       for I in 1 .. Inlinelength (In_File_Depth) - 1 loop
          if (I mod Rightmargin) = 0 then
-            Wrln;
+            Wr_Ln;
          end if;
          --  write out each time output buffer line i.e.tempbuff becomes full.
          --        Wr (In_Line_Buff (In_File_Depth)(I));
       end loop;
-      Wrln;
+      Wr_Ln;
       Linelisted := True;
       --  Linelisted is a boolean showing whether the present line has been
       --  listed.
@@ -482,7 +482,7 @@ package body Prolog.Input_Output is
    function Told_File return Boolean is
    begin
       if Out_File_Depth > 1 then
-         Wrln;
+         Wr_Ln;
          if Is_Open (Output (Out_File_Depth)) then
             Close (Output (Out_File_Depth));
          end if;

@@ -190,7 +190,7 @@ package body Prolog.Input_Output is
    --  Wr_Check  --
    ----------------
 
-   procedure Wrcheck is
+   procedure Wr_Check is
       --  Checks if tempbuff is overflowing and outputs if it is.
       Len      : Integer renames Outlinelength (Out_File_Depth);
       Temp_Len : Integer renames Templength    (Out_File_Depth);
@@ -208,7 +208,7 @@ package body Prolog.Input_Output is
 
       Temp_Len := 0;
 
-   end Wrcheck;
+   end Wr_Check;
 
    -------------
    --  Wr_Ln  --
@@ -217,7 +217,7 @@ package body Prolog.Input_Output is
    procedure Wrln is
       --  Output present line
    begin
-      Wrcheck;
+      Wr_Check;
       Putline;
    end Wrln;
 

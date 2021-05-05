@@ -115,13 +115,13 @@ package body Prolog.Write_Out is
             S := Y.Son.Brother;
             while S /= null loop
                Wr (',');
-               Wrcheck;
+               Wr_Check;
                Wr (' ');
                Writeterm (S, Subprec, Depth + 1);
                S := S.Brother;
             end loop;
             Wr (')');
-            Wrcheck;
+            Wr_Check;
          end Writestand;
 
          ----------------
@@ -138,12 +138,12 @@ package body Prolog.Write_Out is
                   else
                      Wr_String (Writeatom (Y.Name));
                   end if;
-                  Wrcheck;
+                  Wr_Check;
                   Wr (' ');
                   Writeterm (Y.Son, Rprec (Y.Name), Depth + 1);
                when Xfo | Yfo =>
                   Writeterm (Y.Son, Lprec (Y.Name), Depth + 1);
-                  Wrcheck;
+                  Wr_Check;
                   Wr (' ');
                   if Quoteflag and not (Get_Info (Y.Name).Sys) then
                      Wr_String (Makequote (Writeatom (Y.Name)));
@@ -163,7 +163,7 @@ package body Prolog.Write_Out is
                   else
                      Wr_String (Writeatom (Y.Name));
                   end if;
-                  Wrcheck;
+                  Wr_Check;
                   Wr (' ');
                   Writeterm (Y.Son.Brother, Rprec (Y.Name), Depth + 1);
                when Nono => null;
@@ -185,7 +185,7 @@ package body Prolog.Write_Out is
             else
                Writeop;
             end if;
-            Wrcheck;
+            Wr_Check;
          end Writeexp;
 
          ---------------------
@@ -203,7 +203,7 @@ package body Prolog.Write_Out is
             Z := Deref (Y.Son.Brother, E);
             while (N /= Writelength) and Is_Func (Z, Consa, 2) loop
                Wr (',');
-               Wrcheck;
+               Wr_Check;
                Wr (' ');
                Writeterm (Z.Son, Subprec, Depth + 1);
                Z := Deref (Z.Son.Brother, E);
@@ -213,7 +213,7 @@ package body Prolog.Write_Out is
                if N < Writelength then
                   Wr (' ');
                   Wr ('|');
-                  Wrcheck;
+                  Wr_Check;
                   Wr (' ');
                   Writeterm (Z, Subprec, Depth + 1);
                else
@@ -224,7 +224,7 @@ package body Prolog.Write_Out is
                end if;
             end if;
             Wr (']');
-            Wrcheck;
+            Wr_Check;
          end Writelist_Old;
          pragma Unreferenced (Writelist_Old);
 
@@ -242,19 +242,19 @@ package body Prolog.Write_Out is
             N := 1;
             Z := Deref (Y.Son.Brother, E);
             while (N /= Writelength) and Is_Func (Z, Consa, 2) loop
-               Wrcheck; Wr ('.');
+               Wr_Check; Wr ('.');
                Writeterm (Z.Son, Subprec, Depth + 1);
                Z := Deref (Z.Son.Brother, E);
                N := N + 1;
             end loop;
             if N < Writelength then
-               Wrcheck; Wr ('.');
+               Wr_Check; Wr ('.');
                Writeterm (Z, Subprec, Depth + 1);
-               Wrcheck;
+               Wr_Check;
             else
                Wr (' '); Wr ('.'); Wr ('.'); Wr ('.');
             end if;
-            Wr (')'); Wrcheck;
+            Wr (')'); Wr_Check;
          end Writelist;
 
          ------------------
@@ -274,13 +274,13 @@ package body Prolog.Write_Out is
                      else
                         Wr_String (Writeatom (Y.Name));
                      end if;
-                     Wrcheck;
+                     Wr_Check;
                   when 1 =>
                      if Y.Name = Curlya then
                         Wr ('}');
                         Writeterm (Y.Son, Maxprec, Depth + 1);
                         Wr ('K');
-                        Wrcheck;
+                        Wr_Check;
                      else
                         if Get_Info (Y.Name).Oclass in Fxo .. Yfo then
                            Writeexp;
@@ -311,10 +311,10 @@ package body Prolog.Write_Out is
          begin
             if Y.Tag = Skelt then
                Wr_String (To_String (Y.St));
-               Wrcheck;
+               Wr_Check;
             else
                Wr_String (To_String (Y.Id));
-               Wrcheck;
+               Wr_Check;
             end if;
          end Writevar;
 
@@ -355,7 +355,7 @@ package body Prolog.Write_Out is
                   Writevar;
             end case;
          end if;
-         Wrcheck;
+         Wr_Check;
       end Writeterm;
 
    begin --  WriteOut

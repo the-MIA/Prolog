@@ -81,7 +81,7 @@ package Prolog.Input_Output is
    --  Listing of the input text is controlled by the
    --  variable 'listing'.
 
-   procedure Wrcheck;
+   procedure Wr_Check;
    --  Check if buffer full and output.
 
    procedure Wrln;

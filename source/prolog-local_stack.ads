@@ -106,7 +106,7 @@ package Prolog.Local_Stack is
    function Present_Trail return Trail;
    --  Value of the trail at the current time.
 
-   function Returnvar (T : Trail) return Term;
+   function Return_Var (T : Trail) return Term;
    --  Return the most immediate var from trail.
 
    procedure Trimtrail (Base : Trail);

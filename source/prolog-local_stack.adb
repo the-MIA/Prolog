@@ -352,11 +352,11 @@ package body Prolog.Local_Stack is
    --  Return_Var  --
    ------------------
 
-   function Returnvar (T : Trail) return Term is
+   function Return_Var (T : Trail) return Term is
       --  Return the most immediate var from trail.
    begin
       return T.Boundvar;
-   end Returnvar;
+   end Return_Var;
 
 begin
    Inittrail;

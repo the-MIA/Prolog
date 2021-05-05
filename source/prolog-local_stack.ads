@@ -49,7 +49,7 @@ package Prolog.Local_Stack is
    Loctop : Integer range 0 .. Maxlocsize;
    --  Local vars at the present time.
 
-   function Newenv
+   function New_Env
      (Callp   : Term;
       Envp    : Env;
       Clausep : Clptr;

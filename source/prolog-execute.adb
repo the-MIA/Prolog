@@ -142,8 +142,8 @@ package body Prolog.Execute is
                --  for the goal in 'callp'.
                Find_Clause (Callp, Callenv, Listp, Clausep, Dummy);
                if Dummy then
-                  Envp := Newenv (Callp, Callenv, Clausep, Listp,
-                                 Clausep.Nvars, Glotop, Present_Trail);
+                  Envp := New_Env (Callp, Callenv, Clausep, Listp,
+                                   Clausep.Nvars, Glotop, Present_Trail);
                   if Clausep.Next /= Get_Info (Clausep.Head.Name).Proc
                   then
                      Choicepoint := Envp;

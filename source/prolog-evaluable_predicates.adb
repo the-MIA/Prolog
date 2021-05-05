@@ -171,7 +171,7 @@ package body Prolog.Evaluable_Predicates is
             Moan (Call_Error, Abortz);
          end if;
 
-         E1 := Newenv (Call, E, null, Dbase, 1, Glotop, Present_Trail);
+         E1 := New_Env (Call, E, null, Dbase, 1, Glotop, Present_Trail);
          X  := Envref (1, E1);
          Bind (X, Argval (1), E, 0);
          First_Answer (X, E1, Dbase, Ans, Result);

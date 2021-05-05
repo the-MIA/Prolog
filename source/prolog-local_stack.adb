@@ -52,13 +52,13 @@ package body Prolog.Local_Stack is
    --  New_Env  --
    ---------------
 
-   function Newenv (Callp   : Term;
-                    Envp    : Env;
-                    Clausep : Clptr;
-                    Listp   : Integer_List;
-                    Nvars   : Integer;
-                    Glblptr : Term;
-                    Trlptr  : Trail) return Env
+   function New_Env (Callp   : Term;
+                     Envp    : Env;
+                     Clausep : Clptr;
+                     Listp   : Integer_List;
+                     Nvars   : Integer;
+                     Glblptr : Term;
+                     Trlptr  : Trail) return Env
    is
       --  Create a new environment e.
       E : Env;
@@ -90,7 +90,7 @@ package body Prolog.Local_Stack is
       end loop;
       Loctop := Loctop + Nvars;
       return E;
-   end Newenv;
+   end New_Env;
 
    ----------------
    --  Get_Call  --

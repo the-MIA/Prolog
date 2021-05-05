@@ -210,7 +210,7 @@ package body Prolog.Execute is
                --  environment for the clause.
                if Callp = null then
                   Envp    := Callenv;
-                  Callp   := Getcall (Envp);
+                  Callp   := Get_Call (Envp);
                   Callenv := Getenv (Envp);
                   Clausep := Getclause (Envp);
                   Listp   := Getlist (Envp);
@@ -239,7 +239,7 @@ package body Prolog.Execute is
                --  Failure has occurred.  'choicepoint' is the newest
                --  environment with a nondeterminate choice.
                if Choicepoint > Baseenv then
-                  Callp   := Getcall (Choicepoint);
+                  Callp   := Get_Call (Choicepoint);
                   Callenv := Getenv (Choicepoint);
                   Clausep := Getclause (Choicepoint);
                   Listp   := Getlist (Choicepoint);

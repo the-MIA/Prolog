@@ -67,7 +67,7 @@ package Prolog.Local_Stack is
    --  Also sets : present choicepoint,present envtop.
    --  Creates space for NVARS variables on the local stack.
 
-   function Getcall (E : Env) return Term;
+   function Get_Call (E : Env) return Term;
    --  Return invoking goal.
 
    function Getenv (E : Env) return Env;

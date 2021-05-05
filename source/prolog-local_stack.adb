@@ -96,11 +96,11 @@ package body Prolog.Local_Stack is
    --  Get_Call  --
    ----------------
 
-   function Getcall (E : Env) return Term is
+   function Get_Call (E : Env) return Term is
       --  Return invoking goal.
    begin
       return Display (E).Fcall;
-   end Getcall;
+   end Get_Call;
 
    ---------------
    --  Get_Env  --

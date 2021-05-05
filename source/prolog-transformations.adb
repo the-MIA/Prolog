@@ -136,7 +136,7 @@ package body Prolog.Transformations is
       Y := X;
       if (Y.Tag = Skelt) and then (not (Y.Anont)) and then (E /= 0) then
          S := Y.St;
-         Y := Envref (Y.Offset, E);
+         Y := Env_Ref (Y.Offset, E);
          if Y /= null and then Y.Tag = Vart then Y.Id := S; end if;
       end if;
       while Y.Tag = Vart loop

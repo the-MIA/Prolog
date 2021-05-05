@@ -88,7 +88,7 @@ package Prolog.Local_Stack is
    function Get_Trail (E : Env) return Trail;
    --  Return trail.
 
-   function Envref (Offset : Integer; E : Env) return Term;
+   function Env_Ref (Offset : Integer; E : Env) return Term;
    --  Return the OFFSETth variable in environment E.
 
    procedure Disposeenv;

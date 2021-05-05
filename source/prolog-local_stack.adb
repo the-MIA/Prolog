@@ -166,11 +166,11 @@ package body Prolog.Local_Stack is
    --  Env_Ref  --
    ---------------
 
-   function Envref (Offset : Integer; E : Env) return Term is
+   function Env_Ref (Offset : Integer; E : Env) return Term is
       --  Return the OFFSETth variable in environment E
    begin
       return Locstack (Display (E).Fbase + Offset);
-   end Envref;
+   end Env_Ref;
 
    -------------------
    --  Dispose_Env  --

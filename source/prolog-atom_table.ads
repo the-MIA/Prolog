@@ -41,7 +41,7 @@ package Prolog.Atom_Table is
 
    Null_Atom : constant Atom;
 
-   procedure Startatom;
+   procedure Start_Atom;
    --  Start an atom. All the characters passed to AtomChar
    --  are considered part of this atom till a Lookup is done.
 

@@ -275,7 +275,7 @@ package body Prolog.Evaluable_Predicates is
             Result := Unify (Argval (2),
                              List_Rep (Write_Atom (Argval (1).Name)), E, 0, 0);
          else
-            Startatom;
+            Start_Atom;
             X := Argval (2);
             while Is_Func (X, Consa, 2) loop
                Y := Deref (X.Son, E);

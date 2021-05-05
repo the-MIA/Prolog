@@ -32,13 +32,13 @@ package body Prolog.Atom_Table is
    --  Start_Atom  --
    ------------------
 
-   procedure Startatom is
+   procedure Start_Atom is
       --  Prepare to accept characters of an atom.
    begin
       Newatom := new Atomentry;
       Newatom.Index := Atomhwm;
       Newatom.Length := 0;
-   end Startatom;
+   end Start_Atom;
 
    -----------------
    --  Atom_Char  --
@@ -132,7 +132,7 @@ package body Prolog.Atom_Table is
 
    function Lookup (S : String) return Atom is
    begin
-      Startatom;
+      Start_Atom;
       for I in S'Range loop
          Atom_Char (S (I));
       end loop;
@@ -158,7 +158,7 @@ package body Prolog.Atom_Table is
    function Lookup (S : String; Info : Atom_Info) return Atom is
       A : Atom;
    begin
-      Startatom;
+      Start_Atom;
       for I in S'Range loop
          Atom_Char (S (I));
       end loop;

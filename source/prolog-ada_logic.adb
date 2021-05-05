@@ -931,7 +931,7 @@ package body Prolog.Ada_Logic is
                             Next => null));
          return Clause (Temp);
       else
-         Startatom;
+         Start_Atom;
          for I in Attr'Range loop
             Atom_Char (Attr (I));
          end loop;
@@ -1164,7 +1164,7 @@ package body Prolog.Ada_Logic is
                   Son, Prev : Term;
                   Dummy1, Dummy2 : Natural;
                begin
-                  Startatom;
+                  Start_Atom;
                   for I in 1 .. S.Len loop
                      Atom_Char (S.Name (I));
                   end loop;

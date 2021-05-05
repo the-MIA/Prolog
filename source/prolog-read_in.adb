@@ -208,7 +208,7 @@ package body Prolog.Read_In is
 
                when 'a' .. 'z' =>
                   --  Pick up an identifier
-                  Startatom;
+                  Start_Atom;
 
                   loop
                      Atom_Char (Ch);
@@ -231,7 +231,7 @@ package body Prolog.Read_In is
 
                when ''' =>
                   --  Quoted string 'hello'
-                  Startatom;
+                  Start_Atom;
                   loop
                      if Line_Ended then
                         Moan (Need_Quote_Error, Syntaxz);
@@ -253,7 +253,7 @@ package body Prolog.Read_In is
                   return Atom_Token;
 
                when '"' =>
-                  Startatom;
+                  Start_Atom;
                   loop
                      if Line_Ended then
                         Moan (Need_Quote_Error, Syntaxz);
@@ -424,7 +424,7 @@ package body Prolog.Read_In is
                         return Fullstop;
 
                      else
-                        Startatom;
+                        Start_Atom;
                         Atom_Char (Lastch);
 
                         while Charclass (Ch) = Specialc loop

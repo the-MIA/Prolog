@@ -171,7 +171,7 @@ package body Prolog.Database is
       --  Skel_Var  --
       ----------------
 
-      procedure Skelvar (V1 : Term; V2 : in out Term) is
+      procedure Skel_Var (V1 : Term; V2 : in out Term) is
          --  Produce a skeleton for a variable v. When the first occurrence of
          --  v is encountered, it is tentatively translated as an anonymous
          --  variable, and a pointer to this variable is stored in the
@@ -248,7 +248,7 @@ package body Prolog.Database is
                Varmap (Varcount).Firstref  := V2;
             end if;
          end if;
-      end Skelvar;
+      end Skel_Var;
 
       ----------------
       --  Skeleton  --
@@ -259,7 +259,7 @@ package body Prolog.Database is
          Y, Z : Term;
          Temp : Term;
 
-         function Skelargs (S : Term) return Term is
+         function Skel_Args (S : Term) return Term is
             --  Produce a skeleton for the arguments of a functor node.
             T, U, V : Term;
          begin --  skelargs
@@ -276,7 +276,7 @@ package body Prolog.Database is
                end loop;
                return U;
             end if;
-         end Skelargs;
+         end Skel_Args;
 
       begin --  Skeleton
          if Depth > Maxdepth then
@@ -288,7 +288,7 @@ package body Prolog.Database is
             when Funct =>
                Func_Garb.Get (Temp);
                Temp.all := Node'(Funct, null, Heapf, 0, null,
-                                 Y.Name, Y.Arity, Skelargs (Y.Son));
+                                 Y.Name, Y.Arity, Skel_Args (Y.Son));
                return Temp;
 
             when Intt =>
@@ -297,7 +297,7 @@ package body Prolog.Database is
                return Temp;
 
             when Vart =>
-               Skelvar (Y, Z);
+               Skel_Var (Y, Z);
                return Z;
 
             when Skelt =>
@@ -307,7 +307,7 @@ package body Prolog.Database is
                                     Anon_String, True);
                   return Temp;
                else
-                  Skelvar (Y, Z);
+                  Skel_Var (Y, Z);
                   return Z;
                end if;
 
@@ -318,7 +318,7 @@ package body Prolog.Database is
       --  Skel_Call  --
       -----------------
 
-      function Skelcall (X : Term) return Term is
+      function Skel_Call (X : Term) return Term is
          --  Produce a skeleton for a goal in a clause body. A variable
          --  a is mapped onto call(X).
          Y : Term;
@@ -339,7 +339,7 @@ package body Prolog.Database is
                return Skeleton (Y, 0);
 
             when Vart =>
-               Skelvar (Y, Z);
+               Skel_Var (Y, Z);
                Func_Garb.Get (Temp);
                Temp.all := Node'(Funct, null, Heapf, 0, null, Calla, 1, Z);
                return Temp;
@@ -351,13 +351,13 @@ package body Prolog.Database is
 
          pragma Assert (False);
          raise Program_Error;
-      end Skelcall;
+      end Skel_Call;
 
       -----------------
       --  Skel_Head  --
       -----------------
 
-      function Skelhead (X : Term) return Term is
+      function Skel_Head (X : Term) return Term is
          --  Produce a skeleton for the clause head X.
          Y     : Term;
          Value : Term;
@@ -369,13 +369,13 @@ package body Prolog.Database is
          Value  := Skeleton (Y, 0);
          Newkey := Hash (Y, E);
          return Value;
-      end Skelhead;
+      end Skel_Head;
 
       -----------------
-      --  Skel_Bode  --
+      --  Skel_Body  --
       -----------------
 
-      function Skelbody (X : Term; Depth : Integer) return Term is
+      function Skel_Body (X : Term; Depth : Integer) return Term is
          --  Produce a skeleton for a clause body.
          Y, Z  : Term;
          Value : Term;
@@ -385,24 +385,24 @@ package body Prolog.Database is
          end if;
          Y := Deref (X, E);
          if Claus then
-            Z := Skelcall (Y);
+            Z := Skel_Call (Y);
             if Y.Brother /= null then
-               Z.Brother := Skelbody (Y.Brother, Depth + 1);
+               Z.Brother := Skel_Body (Y.Brother, Depth + 1);
             else
                Z.Brother := null;
             end if;
             Value := Z;
          else
             if Isfunc (Y, Commaa, 2) then
-               Z := Skelcall (Y.Son);
-               Z.Brother := Skelbody (Y.Son.Brother, Depth + 1);
+               Z := Skel_Call (Y.Son);
+               Z.Brother := Skel_Body (Y.Son.Brother, Depth + 1);
                Value := Z;
             else
-               Value := Skelcall (Y);
+               Value := Skel_Call (Y);
             end if;
          end if;
          return Value;
-      end Skelbody;
+      end Skel_Body;
 
    begin --  MAKECLAUSE
       Varcount  := 0;
@@ -410,10 +410,10 @@ package body Prolog.Database is
       Q := Deref (P, E);
 
       if Isfunc (Q, Arrowa, 2) then
-         Newhead := Skelhead (Q.Son);
-         Newbody := Skelbody (Q.Son.Brother, 0);
+         Newhead := Skel_Head (Q.Son);
+         Newbody := Skel_Body (Q.Son.Brother, 0);
       else
-         Newhead := Skelhead (Q);
+         Newhead := Skel_Head (Q);
          Newbody := null;
       end if;
 

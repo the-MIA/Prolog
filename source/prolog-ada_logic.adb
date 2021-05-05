@@ -917,7 +917,7 @@ package body Prolog.Ada_Logic is
       Temp : Clptr; T : Term;
    begin
       if Attr (Attr'First) in 'A' .. 'Z' then
-         Startvar;
+         Start_Var;
          for I in Attr'Range loop
             Varchar (Attr (I));
          end loop;
@@ -1190,7 +1190,7 @@ package body Prolog.Ada_Logic is
                   Val : Term;
                   Dummy1, Dummy2 : Natural;
                begin
-                  Startvar;
+                  Start_Var;
                   for I in 1 .. S.Len loop
                      Varchar (S.Name (I));
                   end loop;
@@ -1203,7 +1203,7 @@ package body Prolog.Ada_Logic is
                end;
 
             when Skelt =>
-               Startvar;
+               Start_Var;
                for I in 1 .. S.Len loop
                   Varchar (S.Name (I));
                end loop;

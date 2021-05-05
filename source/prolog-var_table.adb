@@ -27,12 +27,12 @@ package body Prolog.Var_Table is
 
    Vartable : array  (1 .. MaxVars) of Varstring;
 
-   procedure Startvar is
+   procedure Start_Var is
       --  Prepare to accept characters of a variable.
    begin
       Newvar.Index := Varhwm;
       Newvar.Length := 0;
-   end Startvar;
+   end Start_Var;
 
    procedure Varchar (C : Character) is
       --  Store c as the next character of a variable.

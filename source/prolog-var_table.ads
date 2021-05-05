@@ -48,7 +48,7 @@ package Prolog.Var_Table is
    Varcount    : Natural range 0 .. MaxVars := 0;
    --  Number of variable length strings stored
 
-   procedure Startvar;
+   procedure Start_Var;
    --  Start a new variable.
 
    procedure Varchar (C : Character);

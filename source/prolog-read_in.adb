@@ -282,7 +282,7 @@ package body Prolog.Read_In is
                      This_Var := Make_Var (null, Anon_String);
                      return Var_Token;
                   else
-                     Startvar;
+                     Start_Var;
                      Varchar ('_');
                      while
                        Charclass (Ch) = Smallc or else
@@ -298,7 +298,7 @@ package body Prolog.Read_In is
                   end if;
 
                when 'A' .. 'Z' =>
-                  Startvar;
+                  Start_Var;
                   while
                     Charclass (Ch) = Smallc or else
                     Charclass (Ch) = Largec or else

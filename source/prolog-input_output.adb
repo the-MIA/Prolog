@@ -241,7 +241,7 @@ package body Prolog.Input_Output is
    --  Wr_Int  --
    --------------
 
-   procedure Wrint (N : Integer) is
+   procedure Wr_Int (N : Integer) is
       --  Put an integer in the output buffer
       Str : constant String := Integer'Image (N);
    begin
@@ -253,7 +253,7 @@ package body Prolog.Input_Output is
             Wr (Str (I));
          end loop;
       end if;
-   end Wrint;
+   end Wr_Int;
 
    -----------------
    --  Wr_String  --

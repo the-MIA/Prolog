@@ -90,7 +90,7 @@ package Prolog.Input_Output is
    procedure Wr (Ch : Character);
    --  Put character in buffer.
 
-   procedure Wrint (N : Integer);
+   procedure Wr_Int (N : Integer);
    --  Put integer in buffer.
 
    procedure Wrstring (S : String);

@@ -336,7 +336,7 @@ package body Prolog.Write_Out is
                   Writefunc;
                when Intt =>
                   if Y.Ival >= 0 then
-                     Wrint (Y.Ival);
+                     Wr_Int (Y.Ival);
                   elsif Y.Ival = Integer'First then
                      declare
                         type Acc_String is access String;
@@ -349,7 +349,7 @@ package body Prolog.Write_Out is
                      end;
                   else
                      Wr ('^');
-                     Wrint (-Y.Ival);
+                     Wr_Int (-Y.Ival);
                   end if;
                when Vart =>
                   Writevar;

@@ -341,12 +341,12 @@ package body Prolog.Local_Stack is
    --  Init_Trail  --
    ------------------
 
-   procedure Inittrail is
+   procedure Init_Trail is
       --  Set up the trail with a dummy list head.
    begin
       Trailend := new Trailentry'(null, null);
       Trailsize := 0;
-   end Inittrail;
+   end Init_Trail;
 
    ------------------
    --  Return_Var  --
@@ -359,5 +359,5 @@ package body Prolog.Local_Stack is
    end Return_Var;
 
 begin
-   Inittrail;
+   Init_Trail;
 end Prolog.Local_Stack;

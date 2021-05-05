@@ -27,6 +27,10 @@ package body Prolog.Var_Table is
 
    Vartable : array  (1 .. MaxVars) of Varstring;
 
+   -----------------
+   --  Start_Var  --
+   -----------------
+
    procedure Start_Var is
       --  Prepare to accept characters of a variable.
    begin
@@ -49,8 +53,12 @@ package body Prolog.Var_Table is
       Varbuf (Newvar.Index + Newvar.Length) := C;
    end Var_Char;
 
-   function Samestring (V1, V2 : Varstring) return Boolean;
-   function Samestring (V1, V2 : Varstring) return Boolean is
+   -------------------
+   --  Same_String  --
+   -------------------
+
+   function Same_String (V1, V2 : Varstring) return Boolean;
+   function Same_String (V1, V2 : Varstring) return Boolean is
    begin
       if V1.Length /= V2.Length then
          return False;
@@ -62,7 +70,7 @@ package body Prolog.Var_Table is
          end loop;
          return True;
       end if;
-   end Samestring;
+   end Same_String;
 
    ----------------
    --  Keep_Var  --
@@ -72,7 +80,7 @@ package body Prolog.Var_Table is
       --  Mark the latest variable name permanent.
    begin
       for N in 1 .. Varcount loop
-         if Samestring (Newvar, Vartable (N)) then
+         if Same_String (Newvar, Vartable (N)) then
             return Vartable (N);
          end if;
       end loop;
@@ -82,6 +90,10 @@ package body Prolog.Var_Table is
       Vartable (Varcount) := Newvar;
       return Newvar;
    end Keep_Var;
+
+   -----------------
+   --  To_String  --
+   -----------------
 
    function To_String (V : Varstring) return String is
    begin

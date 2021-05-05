@@ -337,7 +337,7 @@ package body Prolog.Execute is
             Value := True;
 
          when Vvbindu =>
-            Bindvars (Y1, Y2);
+            Bind_Vars (Y1, Y2);
             Value := True;
 
          when Succeedu =>

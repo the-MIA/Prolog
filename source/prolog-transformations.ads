@@ -137,7 +137,7 @@ package Prolog.Transformations is
 
    function Deref (X : Term; E : Env) return Term;
 
-   procedure Bindvars (V1, V2 : Term);
+   procedure Bind_Vars (V1, V2 : Term);
    procedure Bind (V     : in out Term;
                    X     :        Term;
                    E     :        Env;

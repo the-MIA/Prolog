@@ -151,7 +151,7 @@ package body Prolog.Transformations is
    --  Bind_Vars  --
    -----------------
 
-   procedure Bindvars (V1, V2 : Term) is
+   procedure Bind_Vars (V1, V2 : Term) is
 
       --  Bind variables v1 and v2 by assigning to one of them.  The following
       --  rules must be obeyed when variable bindings are introduced:
@@ -177,7 +177,7 @@ package body Prolog.Transformations is
             Trailvar (V2);
          end if;
       end if;
-   end Bindvars;
+   end Bind_Vars;
 
    ------------
    --  Bind  --
@@ -214,7 +214,7 @@ package body Prolog.Transformations is
                Z := Make_Int (Y.Ival);
             when Vart =>
                Z := Make_Var (null, Y.Id);
-               Bindvars (Y, Z);
+               Bind_Vars (Y, Z);
             when Skelt =>
                if Y.Anont then
                   Z := Make_Var (null, Anon_String);

@@ -126,11 +126,11 @@ package body Prolog.Local_Stack is
    --  Get_List  --
    ----------------
 
-   function Getlist (E : Env) return Integer_List is
+   function Get_List (E : Env) return Integer_List is
       --  Return active list
    begin
       return Display (E).Flist;
-   end Getlist;
+   end Get_List;
 
    ------------------
    --  Get_Choice  --

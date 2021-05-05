@@ -76,7 +76,7 @@ package Prolog.Local_Stack is
    function Get_Clause (E : Env) return Clptr;
    --  Return active clause
 
-   function Getlist (E : Env) return Integer_List;
+   function Get_List (E : Env) return Integer_List;
    --  Return active list.
 
    function Getchoice (E : Env) return Env;

@@ -213,7 +213,7 @@ package body Prolog.Execute is
                   Callp   := Get_Call   (Envp);
                   Callenv := Get_Env    (Envp);
                   Clausep := Get_Clause (Envp);
-                  Listp   := Getlist (Envp);
+                  Listp   := Get_List   (Envp);
                   if Envp > Choicepoint then
                      Disposeenv;
                   end if;
@@ -242,7 +242,7 @@ package body Prolog.Execute is
                   Callp   := Get_Call   (Choicepoint);
                   Callenv := Get_Env    (Choicepoint);
                   Clausep := Get_Clause (Choicepoint);
-                  Listp   := Getlist (Choicepoint);
+                  Listp   := Get_List   (Choicepoint);
                   if
                     (Clausep.Next =
                         Get_Info (Clausep.Head.Name).Proc) and

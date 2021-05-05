@@ -106,9 +106,9 @@ package body Prolog.Write_Out is
             S : Term;
          begin
             if Quoteflag and not (Get_Info (Y.Name).Sys) then
-               Wr_String (Make_Quote (Writeatom (Y.Name)));
+               Wr_String (Make_Quote (Write_Atom (Y.Name)));
             else
-               Wr_String (Writeatom (Y.Name));
+               Wr_String (Write_Atom (Y.Name));
             end if;
             Wr ('(');
             Write_Term (Y.Son, Subprec, Depth + 1);
@@ -134,9 +134,9 @@ package body Prolog.Write_Out is
             case Get_Info (Y.Name).Oclass is
                when Fxo | Fyo =>
                   if Quoteflag and not (Get_Info (Y.Name).Sys) then
-                     Wr_String (Make_Quote (Writeatom (Y.Name)));
+                     Wr_String (Make_Quote (Write_Atom (Y.Name)));
                   else
-                     Wr_String (Writeatom (Y.Name));
+                     Wr_String (Write_Atom (Y.Name));
                   end if;
                   Wr_Check;
                   Wr (' ');
@@ -146,9 +146,9 @@ package body Prolog.Write_Out is
                   Wr_Check;
                   Wr (' ');
                   if Quoteflag and not (Get_Info (Y.Name).Sys) then
-                     Wr_String (Make_Quote (Writeatom (Y.Name)));
+                     Wr_String (Make_Quote (Write_Atom (Y.Name)));
                   else
-                     Wr_String (Writeatom (Y.Name));
+                     Wr_String (Write_Atom (Y.Name));
                   end if;
                when Xfxo | Xfyo | Yfxo =>
                   Write_Term (Y.Son, Lprec (Y.Name), Depth + 1);
@@ -159,9 +159,9 @@ package body Prolog.Write_Out is
                      Wr (' ');
                   end if;
                   if Quoteflag and not (Get_Info (Y.Name).Sys) then
-                     Wr_String (Make_Quote (Writeatom (Y.Name)));
+                     Wr_String (Make_Quote (Write_Atom (Y.Name)));
                   else
-                     Wr_String (Writeatom (Y.Name));
+                     Wr_String (Write_Atom (Y.Name));
                   end if;
                   Wr_Check;
                   Wr (' ');
@@ -270,9 +270,9 @@ package body Prolog.Write_Out is
                case Y.Arity is
                   when 0 =>
                      if Quoteflag and not (Get_Info (Y.Name).Sys) then
-                        Wr_String (Make_Quote (Writeatom (Y.Name)));
+                        Wr_String (Make_Quote (Write_Atom (Y.Name)));
                      else
-                        Wr_String (Writeatom (Y.Name));
+                        Wr_String (Write_Atom (Y.Name));
                      end if;
                      Wr_Check;
                   when 1 =>
@@ -385,7 +385,7 @@ package body Prolog.Write_Out is
             --  Write a complex term in standard notation.
             S : Term;
          begin
-            Put (Writeatom (Y.Name));
+            Put (Write_Atom (Y.Name));
             if Y.Arity /= 0 then
                Put ("(");
                Write_Term (Y.Son, Subprec, Depth + 1);

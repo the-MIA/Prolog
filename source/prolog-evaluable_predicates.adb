@@ -273,7 +273,7 @@ package body Prolog.Evaluable_Predicates is
       begin --  doname
          if Is_An_Atom (Argval (1)) then
             Result := Unify (Argval (2),
-                             List_Rep (Writeatom (Argval (1).Name)), E, 0, 0);
+                             List_Rep (Write_Atom (Argval (1).Name)), E, 0, 0);
          else
             Startatom;
             X := Argval (2);
@@ -540,12 +540,12 @@ package body Prolog.Evaluable_Predicates is
          when Debugr => Debugging := True; --  In WRITE_OUT
 
          when Seer =>
-            Result := See_File (Writeatom (Argval (1).Name)); --  In IO
+            Result := See_File (Write_Atom (Argval (1).Name)); --  In IO
 
          when Seenr => Result := Seen_File; --  In IO
 
          when Tellr =>
-            Result := Tell_File (Writeatom (Argval (1).Name)); --  In IO
+            Result := Tell_File (Write_Atom (Argval (1).Name)); --  In IO
 
          when Toldr => Result := Told_File; --  In IO
 

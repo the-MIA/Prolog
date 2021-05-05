@@ -172,11 +172,11 @@ package body Prolog.Atom_Table is
    --  Write_Atom  --
    ------------------
 
-   function Writeatom (A : Atom) return String is
+   function Write_Atom (A : Atom) return String is
       --  Write out an atom. Naive about quoting.
    begin
       return Atombuf (A.Index + 1 .. A.Index + A.Length);
-   end Writeatom;
+   end Write_Atom;
 
    ----------------
    --  Set_Info  --

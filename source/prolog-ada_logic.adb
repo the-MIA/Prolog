@@ -137,7 +137,7 @@ package body Prolog.Ada_Logic is
          raise Attr_Error;
 
       elsif C.Head.Tag = Funct then
-         return new String'(Writeatom (C.Head.Name));
+         return new String'(Write_Atom (C.Head.Name));
 
       elsif C.Head.Tag = Skelt then
          return new String'(To_String (C.Head.St));
@@ -1319,7 +1319,7 @@ package body Prolog.Ada_Logic is
          case T.Tag is
 
             when Funct =>
-               Set_Name (S, Writeatom (T.Name));
+               Set_Name (S, Write_Atom (T.Name));
                S.Arity := T.Arity;
 
             when Intt =>

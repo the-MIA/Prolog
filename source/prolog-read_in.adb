@@ -270,7 +270,7 @@ package body Prolog.Read_In is
 
                   end loop;
 
-                  This_List := List_Rep (Writeatom (Lookup));
+                  This_List := List_Rep (Write_Atom (Lookup));
                   return List_Token;
 
                when '_' =>

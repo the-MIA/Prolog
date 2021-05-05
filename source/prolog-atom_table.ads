@@ -77,7 +77,7 @@ package Prolog.Atom_Table is
    function Get_Atomno (A : Atom) return Integer;
    --  Return the atom number.
 
-   function Writeatom (A : Atom) return String;
+   function Write_Atom (A : Atom) return String;
    --  Return the atom string.
 
    procedure Set_Info (A : in out Atom; Info : Atom_Info);

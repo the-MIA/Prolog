@@ -262,7 +262,7 @@ package body Prolog.Local_Stack is
    --  Trail_Var  --
    -----------------
 
-   procedure Trailvar (V : Term) is
+   procedure Trail_Var (V : Term) is
       --  Record v on the trail if necessary.
       P : Trail;
    begin
@@ -277,7 +277,7 @@ package body Prolog.Local_Stack is
       else
          Moan (Fault_Error, Diez);
       end if;
-   end Trailvar;
+   end Trail_Var;
 
    ---------------------
    --  Present_Trail  --

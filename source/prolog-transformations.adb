@@ -171,10 +171,10 @@ package body Prolog.Transformations is
              ((V1.Field = V2.Field) and (V1.Scope > V2.Scope))
          then
             V1.Val := V2;
-            Trailvar (V1);
+            Trail_Var (V1);
          else
             V2.Val := V1;
-            Trailvar (V2);
+            Trail_Var (V2);
          end if;
       end if;
    end Bind_Vars;

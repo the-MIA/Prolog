@@ -328,12 +328,12 @@ package body Prolog.Execute is
 
          when Vtbindu =>
             Bind (Y1, Y2, E2, 0);
-            Trailvar (Y1);
+            Trail_Var (Y1);
             Value := True;
 
          when Tvbindu =>
             Bind (Y2, Y1, E1, 0);
-            Trailvar (Y2);
+            Trail_Var (Y2);
             Value := True;
 
          when Vvbindu =>

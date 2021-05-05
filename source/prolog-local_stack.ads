@@ -100,7 +100,7 @@ package Prolog.Local_Stack is
    procedure Kill_Local (Newtop : Env);
    --  Recover all environments over newtop. Accesses trail.
 
-   procedure Trailvar (V : Term);
+   procedure Trail_Var (V : Term);
    --  Record V on trail if necessary.
 
    function Present_Trail return Trail;

@@ -112,7 +112,7 @@ package body Prolog.Evaluable_Predicates is
          when Intt =>
             Value := Y.Ival = I;
          when Vart =>
-            Value := Unify (X, Makeint (I), E, 0, 0);
+            Value := Unify (X, Make_Int (I), E, 0, 0);
          when Skelt =>
             if Y.Anont then
                Value := True;

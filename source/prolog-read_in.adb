@@ -854,7 +854,7 @@ package body Prolog.Read_In is
                   Loprec := 0;
 
                when Int_Token =>
-                  Shiftterm (Makeint (This_Int));
+                  Shiftterm (Make_Int (This_Int));
                   Tkn := Lexan;
                   Expected := Opx;
                   Loprec := 0;

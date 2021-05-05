@@ -40,7 +40,7 @@ package body Prolog.Transformations is
    --  Make_Int  --
    ----------------
 
-   function Makeint (I : Integer) return Term is
+   function Make_Int (I : Integer) return Term is
       --  Construct an integer node on the global stack.
       X : Term;
    begin
@@ -49,7 +49,7 @@ package body Prolog.Transformations is
       Glotop  := X;
       Glosize := Glosize + 1;
       return X;
-   end Makeint;
+   end Make_Int;
 
    ----------------
    --  Make_Var  --
@@ -211,7 +211,7 @@ package body Prolog.Transformations is
                   Z := Make_Func (Y.Name, Y.Arity, Y.Son);
                end if;
             when Intt =>
-               Z := Makeint (Y.Ival);
+               Z := Make_Int (Y.Ival);
             when Vart =>
                Z := Makevar (null, Y.Id);
                Bindvars (Y, Z);
@@ -297,7 +297,7 @@ package body Prolog.Transformations is
    begin
       X := Make_Func (Nila, 0, null);
       for N in reverse S'Range loop
-         Y := Makeint (Character'Pos (S (N)));
+         Y := Make_Int (Character'Pos (S (N)));
          Y.Brother := X;
          X := Make_Func (Consa, 2, Y);
       end loop;

@@ -684,14 +684,14 @@ package body Prolog.Ada_Logic is
          raise Out_Of_Range;
       elsif L.List.Next = null then
          if N = 1 then
-            Zapclause (Clptr (L.List.Value));
+            Zap_Clause (Clptr (L.List.Value));
             L.List := null;
             L.Arity := 0;
          else
             raise Out_Of_Range;
          end if;
       elsif N = 1 then
-         Zapclause (Clptr (L.List.Value));
+         Zap_Clause (Clptr (L.List.Value));
          L.List  := L.List.Next;
          L.Arity := L.Arity - 1;
       else
@@ -701,7 +701,7 @@ package body Prolog.Ada_Logic is
             Ptr := Ptr.Next;
          end loop;
          if I = N then
-            Zapclause (Clptr (Ptr.Next.Value));
+            Zap_Clause (Clptr (Ptr.Next.Value));
             Ptr.Next := Ptr.Next.Next;
             L.Arity  := L.Arity - 1;
          else
@@ -795,7 +795,7 @@ package body Prolog.Ada_Logic is
    procedure Destroy (L : in out List_Of_Clauses) is
    begin
       while L.List /= null loop
-         Zapclause (Clptr (L.List.Value));
+         Zap_Clause (Clptr (L.List.Value));
          L.List := L.List.Next;
       end loop;
       L.Arity := 0;

@@ -360,7 +360,7 @@ package body Prolog.Evaluable_Predicates is
                   end if;
                end if;
                if Found then
-                  Zapclause (Cl);
+                  Zap_Clause (Cl);
                   Result := True;
                   exit when True;
                elsif Cl.Next /= Get_Info (Cl.Head.Name).Proc then

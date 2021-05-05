@@ -530,7 +530,7 @@ package body Prolog.Database is
    --  Zap_Clause  --
    ------------------
 
-   procedure Zapclause (Cl : Clptr) is
+   procedure Zap_Clause (Cl : Clptr) is
       --  Delete the clause entry pointed to by CL.
       Temp : Clptr;
    begin
@@ -552,6 +552,6 @@ package body Prolog.Database is
          Temp := Cl;
          Clause_Garb.Free (Temp);
       end if;
-   end Zapclause;
+   end Zap_Clause;
 
 end Prolog.Database;

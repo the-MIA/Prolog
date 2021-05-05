@@ -62,7 +62,7 @@ package Prolog.Database is
    --  entries are found by following the clptr chain on the 'proc'
    --  entry of the atom. Subsequent calls to FINDCLAUSE advance the pointer.
 
-   procedure Zapclause (Cl : Clptr);
+   procedure Zap_Clause (Cl : Clptr);
    --  Delete the clause entry pointed to by CL.
 
 end Prolog.Database;

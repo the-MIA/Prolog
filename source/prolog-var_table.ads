@@ -51,7 +51,7 @@ package Prolog.Var_Table is
    procedure Start_Var;
    --  Start a new variable.
 
-   procedure Varchar (C : Character);
+   procedure Var_Char (C : Character);
    --  Add a character to the variable name.
 
    function Keep_Var return Varstring;

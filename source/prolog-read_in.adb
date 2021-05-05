@@ -283,13 +283,13 @@ package body Prolog.Read_In is
                      return Var_Token;
                   else
                      Start_Var;
-                     Varchar ('_');
+                     Var_Char ('_');
                      while
                        Charclass (Ch) = Smallc or else
                        Charclass (Ch) = Largec or else
                        Charclass (Ch) = Digitc
                      loop
-                        Varchar (Ch);
+                        Var_Char (Ch);
                         Ch := Getchar;
                      end loop;
 
@@ -304,7 +304,7 @@ package body Prolog.Read_In is
                     Charclass (Ch) = Largec or else
                     Charclass (Ch) = Digitc
                   loop
-                     Varchar (Ch);
+                     Var_Char (Ch);
                      Ch := Getchar;
                   end loop;
 

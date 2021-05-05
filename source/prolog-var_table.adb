@@ -34,7 +34,11 @@ package body Prolog.Var_Table is
       Newvar.Length := 0;
    end Start_Var;
 
-   procedure Varchar (C : Character) is
+   ----------------
+   --  Var_Char  --
+   ----------------
+
+   procedure Var_Char (C : Character) is
       --  Store c as the next character of a variable.
    begin
       if Newvar.Index + Newvar.Length >= Var_Table_Size then
@@ -43,7 +47,7 @@ package body Prolog.Var_Table is
 
       Newvar.Length := Newvar.Length + 1;
       Varbuf (Newvar.Index + Newvar.Length) := C;
-   end Varchar;
+   end Var_Char;
 
    function Samestring (V1, V2 : Varstring) return Boolean;
    function Samestring (V1, V2 : Varstring) return Boolean is

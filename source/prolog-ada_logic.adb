@@ -919,7 +919,7 @@ package body Prolog.Ada_Logic is
       if Attr (Attr'First) in 'A' .. 'Z' then
          Start_Var;
          for I in Attr'Range loop
-            Varchar (Attr (I));
+            Var_Char (Attr (I));
          end loop;
          Clause_Garb.Get (Temp);
          Var_Garb.Get (T);
@@ -1192,7 +1192,7 @@ package body Prolog.Ada_Logic is
                begin
                   Start_Var;
                   for I in 1 .. S.Len loop
-                     Varchar (S.Name (I));
+                     Var_Char (S.Name (I));
                   end loop;
 
                   Id := Keep_Var;
@@ -1205,7 +1205,7 @@ package body Prolog.Ada_Logic is
             when Skelt =>
                Start_Var;
                for I in 1 .. S.Len loop
-                  Varchar (S.Name (I));
+                  Var_Char (S.Name (I));
                end loop;
                T1 := new Node'(Skelt, null, S.Field, S.Scope, null,
                                S.Offset, Keep_Var, S.Anont);

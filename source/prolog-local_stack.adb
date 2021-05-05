@@ -136,11 +136,11 @@ package body Prolog.Local_Stack is
    --  Get_Choice  --
    ------------------
 
-   function Getchoice (E : Env) return Env is
+   function Get_Choice (E : Env) return Env is
       --  Return choicepoint.
    begin
       return Display (E).Fchoice;
-   end Getchoice;
+   end Get_Choice;
 
    ------------------
    --  Get_Global  --

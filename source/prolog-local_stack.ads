@@ -79,7 +79,7 @@ package Prolog.Local_Stack is
    function Get_List (E : Env) return Integer_List;
    --  Return active list.
 
-   function Getchoice (E : Env) return Env;
+   function Get_Choice (E : Env) return Env;
    --  Return choicepoint.
 
    function Getglobal (E : Env) return Term;

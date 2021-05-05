@@ -109,7 +109,7 @@ package Prolog.Local_Stack is
    function Return_Var (T : Trail) return Term;
    --  Return the most immediate var from trail.
 
-   procedure Trimtrail (Base : Trail);
+   procedure Trim_Trail (Base : Trail);
    --  Remove non-critical references newer than BASE.
 
    procedure Untrail (Newtrail : Trail);

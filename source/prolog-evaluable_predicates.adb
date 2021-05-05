@@ -374,7 +374,7 @@ package body Prolog.Evaluable_Predicates is
                exit when True;
             end if;
          end loop;
-         Trimtrail (Trl);
+         Trim_Trail (Trl);
       end Doretract;
 
       ------------------

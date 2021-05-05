@@ -207,7 +207,7 @@ package body Prolog.Local_Stack is
          Cl   := Display (Envp).Fclause;
       end loop;
       Choicepoint := Display (Envp).Fchoice;
-      Trimtrail (Display (Envp).Ftrail);
+      Trim_Trail (Display (Envp).Ftrail);
       if Envtop > E then
          Loctop := Display (E + 1).Fbase;
          Envtop := E;
@@ -292,7 +292,7 @@ package body Prolog.Local_Stack is
    --  Trim_Trail  --
    ------------------
 
-   procedure Trimtrail (Base : Trail) is
+   procedure Trim_Trail (Base : Trail) is
       --  Remove references to variables newer than choicepoint. Some of the
       --  Ftrail entries in 'display' may be made invalid by this operation,
       --  but it doesn't matter, since they will never be used for
@@ -312,7 +312,7 @@ package body Prolog.Local_Stack is
          Q := P.Chain;
       end loop;
       Trailend := P;
-   end Trimtrail;
+   end Trim_Trail;
 
    ---------------
    --  Untrail  --

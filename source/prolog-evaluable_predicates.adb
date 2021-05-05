@@ -229,8 +229,8 @@ package body Prolog.Evaluable_Predicates is
          Info : Atom_Info;
       begin
          if (Argval (1).Tag /= Intt) or
-           not Isatom (Argval (2)) or
-           not Isatom (Argval (3))
+           not Is_An_Atom (Argval (2)) or
+           not Is_An_Atom (Argval (3))
          then
             Moan (Op_Error, Abortz);
          end if;
@@ -271,7 +271,7 @@ package body Prolog.Evaluable_Predicates is
          X, Y : Term;
          Ch   : Integer;
       begin --  doname
-         if Isatom (Argval (1)) then
+         if Is_An_Atom (Argval (1)) then
             Result := Unify (Argval (2),
                              List_Rep (Writeatom (Argval (1).Name)), E, 0, 0);
          else
@@ -413,7 +413,7 @@ package body Prolog.Evaluable_Predicates is
                      Moan (Functor_Error, Abortz);
                   end if;
                   M := Argval (3).Ival;
-                  if Isatom (Argval (2)) and (M >= 0) then
+                  if Is_An_Atom (Argval (2)) and (M >= 0) then
                      X := null;
                      for Ix in reverse 1 .. M loop
                         Y := Make_Var (null, Null_String);
@@ -508,7 +508,7 @@ package body Prolog.Evaluable_Predicates is
 
          when Notracer => Tracing := False; --  In GLOBAL_OBJECTS
 
-         when Atomr => Result := Isatom (Argval (1)); --  In TRANSFORM
+         when Atomr => Result := Is_An_Atom (Argval (1)); --  In TRANSFORM
 
          when Integerr => Result := Argval (1).Tag = Intt; --  Right here.
 

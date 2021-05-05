@@ -104,7 +104,7 @@ package body Prolog.Transformations is
    --  Is_Atom  --
    ---------------
 
-   function Isatom (X : Term) return Boolean is
+   function Is_An_Atom (X : Term) return Boolean is
       --  True if x is an atom.
    begin
       if X.Tag /= Funct then
@@ -112,7 +112,7 @@ package body Prolog.Transformations is
       else
          return X.Arity = 0;
       end if;
-   end Isatom;
+   end Is_An_Atom;
 
    -------------
    --  Deref  --

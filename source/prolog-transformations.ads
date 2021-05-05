@@ -133,7 +133,7 @@ package Prolog.Transformations is
    procedure Kill_Global (Newptr : Term);
 
    function Is_Func (X : Term; A : Atom; M : Integer) return Boolean;
-   function Isatom (X : Term) return Boolean;
+   function Is_An_Atom (X : Term) return Boolean;
 
    function Deref (X : Term; E : Env) return Term;
 

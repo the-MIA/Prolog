@@ -87,11 +87,11 @@ package body Prolog.Database is
    --  Find_Clause  --
    -------------------
 
-   procedure Findclause (X     : Term;
-                         E     : Env;
-                         Dbase : in out Integer_List;
-                         Cl    : in out Clptr;
-                         Value : out Boolean)
+   procedure Find_Clause (X     : Term;
+                          E     : Env;
+                          Dbase : in out Integer_List;
+                          Cl    : in out Clptr;
+                          Value : out Boolean)
    is
       --  Advance cl to the first applicable clause. Hash is used to compare
       --  clause heads with the goal x. If either has hash function zero, a
@@ -107,23 +107,23 @@ package body Prolog.Database is
       else
          Clause_X := Get_Info (Cl.Head.Name).Proc;
          loop
-            Findclause (X, E, Dbase.I, Cl, Ok);
+            Find_Clause (X, E, Dbase.I, Cl, Ok);
             exit when Ok or (Dbase.Next = null);
             Dbase := Dbase.Next;
          end loop;
          Value := Ok;
       end if;
-   end Findclause;
+   end Find_Clause;
 
    -------------------
    --  Find_Clause  --
    -------------------
 
-   procedure Findclause (X     : Term;
-                         E     : Env;
-                         Dbase : Integer;
-                         Cl    : in out Clptr;
-                         Value : out Boolean)
+   procedure Find_Clause (X     : Term;
+                          E     : Env;
+                          Dbase : Integer;
+                          Cl    : in out Clptr;
+                          Value : out Boolean)
    is
       --  Advance cl to the first applicable clause. Hash is used to compare
       --  clause heads with the goal x. If either has hash function zero, a
@@ -150,7 +150,7 @@ package body Prolog.Database is
          end loop;
          Value := Ok;
       end if;
-   end Findclause;
+   end Find_Clause;
 
    -------------------
    --  Make_Clause  --

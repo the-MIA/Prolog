@@ -47,17 +47,17 @@ package Prolog.Database is
    function Make_Clause (P : Term; E : Env) return Clptr;
    --  Return a skeleton for P.
 
-   procedure Findclause (X     : in     Term;
-                         E     : in     Env;
-                         Dbase : in out Integer_List;
-                         Cl    : in out Clptr;
-                         Value :    out Boolean);
+   procedure Find_Clause (X     : in     Term;
+                          E     : in     Env;
+                          Dbase : in out Integer_List;
+                          Cl    : in out Clptr;
+                          Value :    out Boolean);
 
-   procedure Findclause (X    : in     Term;
-                         E     : in     Env;
-                         Dbase : in     Integer;
-                         Cl    : in out Clptr;
-                         Value :    out Boolean);
+   procedure Find_Clause (X     : in     Term;
+                          E     : in     Env;
+                          Dbase : in     Integer;
+                          Cl    : in out Clptr;
+                          Value :    out Boolean);
    --  Set cl to the first applicable clause. After this other 'procedure'
    --  entries are found by following the clptr chain on the 'proc'
    --  entry of the atom. Subsequent calls to FINDCLAUSE advance the pointer.

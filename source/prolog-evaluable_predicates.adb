@@ -336,7 +336,7 @@ package body Prolog.Evaluable_Predicates is
          Cl := Get_Info (Argval (1).Name).Proc;
 
          loop
-            Findclause (H, E, 0, Cl, Found);
+            Find_Clause (H, E, 0, Cl, Found);
             if not Found then
                exit when True;
 

@@ -140,7 +140,7 @@ package body Prolog.Execute is
             when Procq =>
                --  'clausep' points to a chain of untried clauses
                --  for the goal in 'callp'.
-               Findclause (Callp, Callenv, Listp, Clausep, Dummy);
+               Find_Clause (Callp, Callenv, Listp, Clausep, Dummy);
                if Dummy then
                   Envp := Newenv (Callp, Callenv, Clausep, Listp,
                                  Clausep.Nvars, Glotop, Present_Trail);

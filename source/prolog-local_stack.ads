@@ -82,7 +82,7 @@ package Prolog.Local_Stack is
    function Get_Choice (E : Env) return Env;
    --  Return choicepoint.
 
-   function Getglobal (E : Env) return Term;
+   function Get_Global (E : Env) return Term;
    --  Return global ptr.
 
    function Gettrail (E : Env) return Trail;

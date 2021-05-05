@@ -80,7 +80,7 @@ package body Prolog.Execute is
    procedure Kill_Stacks (E : Integer) is
       T : Term;
    begin
-      T := Getglobal (E + 1);
+      T := Get_Global (E + 1);
       Killlocal (E);
       Kill_Global (T);
    end Kill_Stacks;

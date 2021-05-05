@@ -146,11 +146,11 @@ package body Prolog.Local_Stack is
    --  Get_Global  --
    ------------------
 
-   function Getglobal (E : Env) return Term is
+   function Get_Global (E : Env) return Term is
       --  Return global ptr.
    begin
       return Display (E).Fglotop;
-   end Getglobal;
+   end Get_Global;
 
    -----------------
    --  Get_Trail  --

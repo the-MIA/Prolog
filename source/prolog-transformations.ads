@@ -145,9 +145,9 @@ package Prolog.Transformations is
 
    function Listrep (S : String) return Term;
 
-   procedure Getbody (V : in out Term;
-                      B :        Term;
-                      E :        Env);
+   procedure Get_Body (V : in out Term;
+                       B :        Term;
+                       E :        Env);
 
 private
    Comma_Atom  : aliased Atom_Record := (Normp, Xfyo, 1000, True, null);

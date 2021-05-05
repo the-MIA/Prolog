@@ -270,7 +270,7 @@ package body Prolog.Transformations is
    --  Get_Body  --
    ----------------
 
-   procedure Getbody (V : in out Term; B : Term; E : Env) is
+   procedure Get_Body (V : in out Term; B : Term; E : Env) is
       --  Bind v to a term representing the clause body b.
       --  b must not be the empty body.
       L, R : Term;
@@ -283,9 +283,9 @@ package body Prolog.Transformations is
          L.Brother := R;
          V := Make_Func (Commaa, 2, L);
          Bind (L, B, E, 0);
-         Getbody (R, B.Brother, E);
+         Get_Body (R, B.Brother, E);
       end if;
-   end Getbody;
+   end Get_Body;
 
    ----------------
    --  List_Rep  --

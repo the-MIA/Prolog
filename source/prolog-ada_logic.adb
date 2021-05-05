@@ -137,7 +137,7 @@ package body Prolog.Ada_Logic is
          raise Attr_Error;
 
       elsif C.Head.Tag = Funct then
-         return new String'(Writeatom (C.Head.Name));
+         return new String'(Write_Atom (C.Head.Name));
 
       elsif C.Head.Tag = Skelt then
          return new String'(To_String (C.Head.St));
@@ -391,14 +391,14 @@ package body Prolog.Ada_Logic is
       else
          Ltemp := new List_Of_Clauses_Record;
          Copy_Clause (L1.List.Value, Cl, Number, Heapf);
-         Addclause (Clptr (Cl), Number, False);
+         Add_Clause (Clptr (Cl), Number, False);
          Ptr2 := new Clause_List_Record;
          Ltemp.all.List := Ptr2;
          Ptr2.Value := Cl;
          Ptr1 := Ptr1.Next;
          while Ptr1 /= null loop
             Copy_Clause (Ptr1.Value, Cl, Number, Heapf);
-            Addclause (Clptr (Cl), Number, False);
+            Add_Clause (Clptr (Cl), Number, False);
             Ptr2.Next  := new Clause_List_Record;
             Ptr2       := Ptr2.Next;
             Ptr2.Value := Cl;
@@ -476,13 +476,13 @@ package body Prolog.Ada_Logic is
       Ptr := new Clause_List_Record;
       case C.Typ is
          when Commac =>
-            Ptr.Value := Clause (Makeclause (C.Head, 0));
+            Ptr.Value := Clause (Make_Clause (C.Head, 0));
          when Chainc =>
-            Ptr.Value := Clause (Makeclause (C.Head, C.The_Body, 0));
+            Ptr.Value := Clause (Make_Clause (C.Head, C.The_Body, 0));
          when Madec =>
             Ptr.Value := C;
       end case;
-      Addclause (Clptr (Ptr.Value), L.Number, True);
+      Add_Clause (Clptr (Ptr.Value), L.Number, True);
       Ptr.Next := L.List;
       L.List   := Ptr;
       L.Arity := L.Arity + 1;
@@ -536,17 +536,17 @@ package body Prolog.Ada_Logic is
 
             when Commac =>
                Ptr.Next :=
-                 new Clause_List_Record'(Clause (Makeclause (C.Head, 0)),
+                 new Clause_List_Record'(Clause (Make_Clause (C.Head, 0)),
                                          null);
             when Chainc =>
                Ptr.Next :=
-                 new Clause_List_Record'(Clause (Makeclause (C.Head,
+                 new Clause_List_Record'(Clause (Make_Clause (C.Head,
                                                              C.The_Body, 0)),
                                          null);
             when Madec =>
                Ptr.Next := new Clause_List_Record'(C, null);
          end case;
-         Addclause (Clptr (Ptr.Next.Value), L.Number, False);
+         Add_Clause (Clptr (Ptr.Next.Value), L.Number, False);
          L.Arity := L.Arity + 1;
       end if;
    end Append;
@@ -684,14 +684,14 @@ package body Prolog.Ada_Logic is
          raise Out_Of_Range;
       elsif L.List.Next = null then
          if N = 1 then
-            Zapclause (Clptr (L.List.Value));
+            Zap_Clause (Clptr (L.List.Value));
             L.List := null;
             L.Arity := 0;
          else
             raise Out_Of_Range;
          end if;
       elsif N = 1 then
-         Zapclause (Clptr (L.List.Value));
+         Zap_Clause (Clptr (L.List.Value));
          L.List  := L.List.Next;
          L.Arity := L.Arity - 1;
       else
@@ -701,7 +701,7 @@ package body Prolog.Ada_Logic is
             Ptr := Ptr.Next;
          end loop;
          if I = N then
-            Zapclause (Clptr (Ptr.Next.Value));
+            Zap_Clause (Clptr (Ptr.Next.Value));
             Ptr.Next := Ptr.Next.Next;
             L.Arity  := L.Arity - 1;
          else
@@ -795,7 +795,7 @@ package body Prolog.Ada_Logic is
    procedure Destroy (L : in out List_Of_Clauses) is
    begin
       while L.List /= null loop
-         Zapclause (Clptr (L.List.Value));
+         Zap_Clause (Clptr (L.List.Value));
          L.List := L.List.Next;
       end loop;
       L.Arity := 0;
@@ -917,13 +917,13 @@ package body Prolog.Ada_Logic is
       Temp : Clptr; T : Term;
    begin
       if Attr (Attr'First) in 'A' .. 'Z' then
-         Startvar;
+         Start_Var;
          for I in Attr'Range loop
-            Varchar (Attr (I));
+            Var_Char (Attr (I));
          end loop;
          Clause_Garb.Get (Temp);
          Var_Garb.Get (T);
-         T.all := Node'(Vart, null, Heapf, 0, null, null, Keepvar);
+         T.all := Node'(Vart, null, Heapf, 0, null, null, Keep_Var);
          Temp.all :=  (Cls'(Head => T,
                             The_Body => null, Typ => Chainc,
                             Nvars => 0, Keyval => 0,
@@ -931,9 +931,9 @@ package body Prolog.Ada_Logic is
                             Next => null));
          return Clause (Temp);
       else
-         Startatom;
+         Start_Atom;
          for I in Attr'Range loop
-            Atomchar (Attr (I));
+            Atom_Char (Attr (I));
          end loop;
          Clause_Garb.Get (Temp);
          Func_Garb.Get (T);
@@ -1058,7 +1058,7 @@ package body Prolog.Ada_Logic is
       end loop;
 
       if (T.Tag = Funct) and then (T.Name = Arrowa) then
-         return (Clause (Makeclause (T, 0)));
+         return (Clause (Make_Clause (T, 0)));
       else
          return new Cls'(Head => T, The_Body => null,
                          Nvars => 0, Keyval => 0, Typ => Chainc,
@@ -1088,7 +1088,7 @@ package body Prolog.Ada_Logic is
       begin
          Init_String;
          Writeout (T, 0);
-         Wrln;
+         Wr_Ln;
          return new String'(Get_String);
       end Dump_Term;
    begin
@@ -1134,7 +1134,7 @@ package body Prolog.Ada_Logic is
                                  Next     => null));
       end loop;
 
-      Dummy := Seenfile;
+      Dummy := Seen_File;
       return Value;
 
    end Read_File;
@@ -1164,9 +1164,9 @@ package body Prolog.Ada_Logic is
                   Son, Prev : Term;
                   Dummy1, Dummy2 : Natural;
                begin
-                  Startatom;
+                  Start_Atom;
                   for I in 1 .. S.Len loop
-                     Atomchar (S.Name (I));
+                     Atom_Char (S.Name (I));
                   end loop;
                   Name := Lookup;
                   if S.Arity > 0 then
@@ -1190,12 +1190,12 @@ package body Prolog.Ada_Logic is
                   Val : Term;
                   Dummy1, Dummy2 : Natural;
                begin
-                  Startvar;
+                  Start_Var;
                   for I in 1 .. S.Len loop
-                     Varchar (S.Name (I));
+                     Var_Char (S.Name (I));
                   end loop;
 
-                  Id := Keepvar;
+                  Id := Keep_Var;
                   Get_Term (Val, Dummy1, Dummy2);
 
                   T1 := new Node'(Vart, null, S.Field, S.Scope, null,
@@ -1203,12 +1203,12 @@ package body Prolog.Ada_Logic is
                end;
 
             when Skelt =>
-               Startvar;
+               Start_Var;
                for I in 1 .. S.Len loop
-                  Varchar (S.Name (I));
+                  Var_Char (S.Name (I));
                end loop;
                T1 := new Node'(Skelt, null, S.Field, S.Scope, null,
-                               S.Offset, Keepvar, S.Anont);
+                               S.Offset, Keep_Var, S.Anont);
          end case;
          T := T1;
       end Get_Term;
@@ -1261,7 +1261,7 @@ package body Prolog.Ada_Logic is
          if T /= null then
             Writeout (T, 0);
             if T.Brother /= null then
-               Wrstring (", ");
+               Wr_String (", ");
                Write_Tail (T.Brother);
             end if;
          end if;
@@ -1273,16 +1273,16 @@ package body Prolog.Ada_Logic is
       for I in 1 .. List.Arity loop
          Writeout (Ptr.Value.Head, 0);
          if Ptr.Value.The_Body /= null then
-            Wrstring (" :- ");
+            Wr_String (" :- ");
             --  Walt: I'm trying to get the tail successfully printed.
             --                WRITEOUT(PTR.VALUE.THE_BODY,0);
             Write_Tail (Ptr.Value.The_Body);
          end if;
          Wr ('.');
-         Wrln;
+         Wr_Ln;
          Ptr := Ptr.Next;
       end loop;
-      Dummy := Toldfile;
+      Dummy := Told_File;
    end Write_File;
 
    -----------------------
@@ -1319,7 +1319,7 @@ package body Prolog.Ada_Logic is
          case T.Tag is
 
             when Funct =>
-               Set_Name (S, Writeatom (T.Name));
+               Set_Name (S, Write_Atom (T.Name));
                S.Arity := T.Arity;
 
             when Intt =>
@@ -1590,11 +1590,11 @@ package body Prolog.Ada_Logic is
       end if;
 
       while not File_Ended loop
-         Clause_X := Clause (Addclause (Read_In.Read_In, 0, 0, False));
+         Clause_X := Clause (Add_Clause (Read_In.Read_In, 0, 0, False));
 
       end loop;
 
-      Dummy := Seenfile;
+      Dummy := Seen_File;
 
       if not (Dummy) then
          Moan (Init_Error, Diez);
@@ -1604,8 +1604,8 @@ package body Prolog.Ada_Logic is
 
    exception
       when others =>
-         Killlocal (0);
-         Killglobal (null);
+         Kill_Local (0);
+         Kill_Global (null);
          Init_Input;
          raise;
    end Init_Package;

@@ -32,19 +32,19 @@ package body Prolog.Atom_Table is
    --  Start_Atom  --
    ------------------
 
-   procedure Startatom is
+   procedure Start_Atom is
       --  Prepare to accept characters of an atom.
    begin
       Newatom := new Atomentry;
       Newatom.Index := Atomhwm;
       Newatom.Length := 0;
-   end Startatom;
+   end Start_Atom;
 
    -----------------
    --  Atom_Char  --
    -----------------
 
-   procedure Atomchar (C : Character) is
+   procedure Atom_Char (C : Character) is
       --  Store c as the next char of an atom.
    begin
       if Newatom.Index + Newatom.Length >= Atom_Table_Size then
@@ -53,7 +53,7 @@ package body Prolog.Atom_Table is
 
       Newatom.Length := Newatom.Length + 1;
       Atombuf (Newatom.Index + Newatom.Length) := C;
-   end Atomchar;
+   end Atom_Char;
 
    -----------------
    --  Same_Atom  --
@@ -132,9 +132,9 @@ package body Prolog.Atom_Table is
 
    function Lookup (S : String) return Atom is
    begin
-      Startatom;
+      Start_Atom;
       for I in S'Range loop
-         Atomchar (S (I));
+         Atom_Char (S (I));
       end loop;
       return Lookup;
    end Lookup;
@@ -158,9 +158,9 @@ package body Prolog.Atom_Table is
    function Lookup (S : String; Info : Atom_Info) return Atom is
       A : Atom;
    begin
-      Startatom;
+      Start_Atom;
       for I in S'Range loop
-         Atomchar (S (I));
+         Atom_Char (S (I));
       end loop;
 
       A := Lookup;
@@ -172,11 +172,11 @@ package body Prolog.Atom_Table is
    --  Write_Atom  --
    ------------------
 
-   function Writeatom (A : Atom) return String is
+   function Write_Atom (A : Atom) return String is
       --  Write out an atom. Naive about quoting.
    begin
       return Atombuf (A.Index + 1 .. A.Index + A.Length);
-   end Writeatom;
+   end Write_Atom;
 
    ----------------
    --  Set_Info  --
@@ -200,10 +200,10 @@ package body Prolog.Atom_Table is
    --  Get_Atom_No  --
    -------------------
 
-   function Get_Atomno (A : Atom) return Integer is
+   function Get_Atom_No (A : Atom) return Integer is
    begin
       return A.Number;
-   end Get_Atomno;
+   end Get_Atom_No;
 
    ------------------
    --  First_Atom  --

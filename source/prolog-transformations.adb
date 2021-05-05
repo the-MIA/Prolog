@@ -25,7 +25,7 @@ package body Prolog.Transformations is
    --  Make_Func  --
    -----------------
 
-   function Makefunc (A : Atom; M : Integer; S : Term) return Term is
+   function Make_Func (A : Atom; M : Integer; S : Term) return Term is
       --  Construct a functor node on the global stack.
       X : Term;
    begin
@@ -34,13 +34,13 @@ package body Prolog.Transformations is
       Glotop  := X;
       Glosize := Glosize + 1;
       return X;
-   end Makefunc;
+   end Make_Func;
 
    ----------------
    --  Make_Int  --
    ----------------
 
-   function Makeint (I : Integer) return Term is
+   function Make_Int (I : Integer) return Term is
       --  Construct an integer node on the global stack.
       X : Term;
    begin
@@ -49,13 +49,13 @@ package body Prolog.Transformations is
       Glotop  := X;
       Glosize := Glosize + 1;
       return X;
-   end Makeint;
+   end Make_Int;
 
    ----------------
    --  Make_Var  --
    ----------------
 
-   function Makevar (V : Term; S : Varstring) return Term is
+   function Make_Var (V : Term; S : Varstring) return Term is
       --  Construct a variable node on the global stack.
       X : Term;
    begin
@@ -64,13 +64,13 @@ package body Prolog.Transformations is
       Glotop  := X;
       Glosize := Glosize + 1;
       return X;
-   end Makevar;
+   end Make_Var;
 
    -------------------
    --  Kill_Global  --
    -------------------
 
-   procedure Killglobal (Newptr : Term) is
+   procedure Kill_Global (Newptr : Term) is
       Temp : Term;
    begin
       while Glotop /= Newptr loop
@@ -84,13 +84,13 @@ package body Prolog.Transformations is
          Glotop  := Temp;
          Glosize := Glosize - 1;
       end loop;
-   end Killglobal;
+   end Kill_Global;
 
    ---------------
    --  Is_Func  --
    ---------------
 
-   function Isfunc (X : Term; A : Atom; M : Integer) return Boolean is
+   function Is_Func (X : Term; A : Atom; M : Integer) return Boolean is
       --  True if x is a functor node with name a and arity m.
    begin
       if X.Tag /= Funct then
@@ -98,13 +98,13 @@ package body Prolog.Transformations is
       else
          return (X.Name = A) and (X.Arity = M);
       end if;
-   end Isfunc;
+   end Is_Func;
 
    ---------------
    --  Is_Atom  --
    ---------------
 
-   function Isatom (X : Term) return Boolean is
+   function Is_An_Atom (X : Term) return Boolean is
       --  True if x is an atom.
    begin
       if X.Tag /= Funct then
@@ -112,7 +112,7 @@ package body Prolog.Transformations is
       else
          return X.Arity = 0;
       end if;
-   end Isatom;
+   end Is_An_Atom;
 
    -------------
    --  Deref  --
@@ -136,7 +136,7 @@ package body Prolog.Transformations is
       Y := X;
       if (Y.Tag = Skelt) and then (not (Y.Anont)) and then (E /= 0) then
          S := Y.St;
-         Y := Envref (Y.Offset, E);
+         Y := Env_Ref (Y.Offset, E);
          if Y /= null and then Y.Tag = Vart then Y.Id := S; end if;
       end if;
       while Y.Tag = Vart loop
@@ -151,7 +151,7 @@ package body Prolog.Transformations is
    --  Bind_Vars  --
    -----------------
 
-   procedure Bindvars (V1, V2 : Term) is
+   procedure Bind_Vars (V1, V2 : Term) is
 
       --  Bind variables v1 and v2 by assigning to one of them.  The following
       --  rules must be obeyed when variable bindings are introduced:
@@ -171,13 +171,13 @@ package body Prolog.Transformations is
              ((V1.Field = V2.Field) and (V1.Scope > V2.Scope))
          then
             V1.Val := V2;
-            Trailvar (V1);
+            Trail_Var (V1);
          else
             V2.Val := V1;
-            Trailvar (V2);
+            Trail_Var (V2);
          end if;
       end if;
-   end Bindvars;
+   end Bind_Vars;
 
    ------------
    --  Bind  --
@@ -206,18 +206,18 @@ package body Prolog.Transformations is
          case Y.Tag is
             when Funct =>
                if Y.Field = Heapf then
-                  Z := Makefunc (Y.Name, Y.Arity, Copyargs (Y.Son));
+                  Z := Make_Func (Y.Name, Y.Arity, Copyargs (Y.Son));
                else
-                  Z := Makefunc (Y.Name, Y.Arity, Y.Son);
+                  Z := Make_Func (Y.Name, Y.Arity, Y.Son);
                end if;
             when Intt =>
-               Z := Makeint (Y.Ival);
+               Z := Make_Int (Y.Ival);
             when Vart =>
-               Z := Makevar (null, Y.Id);
-               Bindvars (Y, Z);
+               Z := Make_Var (null, Y.Id);
+               Bind_Vars (Y, Z);
             when Skelt =>
                if Y.Anont then
-                  Z := Makevar (null, Anon_String);
+                  Z := Make_Var (null, Anon_String);
                else
                   null;
                end if;
@@ -270,7 +270,7 @@ package body Prolog.Transformations is
    --  Get_Body  --
    ----------------
 
-   procedure Getbody (V : in out Term; B : Term; E : Env) is
+   procedure Get_Body (V : in out Term; B : Term; E : Env) is
       --  Bind v to a term representing the clause body b.
       --  b must not be the empty body.
       L, R : Term;
@@ -278,30 +278,30 @@ package body Prolog.Transformations is
       if B.Brother = null then
          Bind (V, B, E, 0);
       else
-         L := Makefunc (Null_Atom, 0, null);
-         R := Makefunc (Null_Atom, 0, null);
+         L := Make_Func (Null_Atom, 0, null);
+         R := Make_Func (Null_Atom, 0, null);
          L.Brother := R;
-         V := Makefunc (Commaa, 2, L);
+         V := Make_Func (Commaa, 2, L);
          Bind (L, B, E, 0);
-         Getbody (R, B.Brother, E);
+         Get_Body (R, B.Brother, E);
       end if;
-   end Getbody;
+   end Get_Body;
 
    ----------------
    --  List_Rep  --
    ----------------
 
-   function Listrep (S : String) return Term is
+   function List_Rep (S : String) return Term is
       --  A Prolog list of the characters of s: cf. 'atom'.
       X, Y : Term;
    begin
-      X := Makefunc (Nila, 0, null);
+      X := Make_Func (Nila, 0, null);
       for N in reverse S'Range loop
-         Y := Makeint (Character'Pos (S (N)));
+         Y := Make_Int (Character'Pos (S (N)));
          Y.Brother := X;
-         X := Makefunc (Consa, 2, Y);
+         X := Make_Func (Consa, 2, Y);
       end loop;
       return X;
-   end Listrep;
+   end List_Rep;
 
 end Prolog.Transformations;

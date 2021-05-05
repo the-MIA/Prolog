@@ -69,7 +69,7 @@ package body Prolog.Write_Out is
       --  Make_Quote  --
       ------------------
 
-      function Makequote (S : String) return String is
+      function Make_Quote (S : String) return String is
       begin
          if
            (Charclass (S (S'First)) = Largec) or
@@ -87,13 +87,13 @@ package body Prolog.Write_Out is
             end if;
          end loop;
          return S;
-      end Makequote;
+      end Make_Quote;
 
       ------------------
       --  Write_Term  --
       ------------------
 
-      procedure Writeterm (X : Term; P : Prec; Depth : Integer) is
+      procedure Write_Term (X : Term; P : Prec; Depth : Integer) is
          --  Write a term with maximum precedence p.
          Y : Term;
 
@@ -101,57 +101,57 @@ package body Prolog.Write_Out is
          --  Write_Stand  --
          -------------------
 
-         procedure Writestand is
+         procedure Write_Stand is
             --  Write a complex term in standard notation.
             S : Term;
          begin
             if Quoteflag and not (Get_Info (Y.Name).Sys) then
-               Wrstring (Makequote (Writeatom (Y.Name)));
+               Wr_String (Make_Quote (Write_Atom (Y.Name)));
             else
-               Wrstring (Writeatom (Y.Name));
+               Wr_String (Write_Atom (Y.Name));
             end if;
             Wr ('(');
-            Writeterm (Y.Son, Subprec, Depth + 1);
+            Write_Term (Y.Son, Subprec, Depth + 1);
             S := Y.Son.Brother;
             while S /= null loop
                Wr (',');
-               Wrcheck;
+               Wr_Check;
                Wr (' ');
-               Writeterm (S, Subprec, Depth + 1);
+               Write_Term (S, Subprec, Depth + 1);
                S := S.Brother;
             end loop;
             Wr (')');
-            Wrcheck;
-         end Writestand;
+            Wr_Check;
+         end Write_Stand;
 
          ----------------
          --  Write_Op  --
          ----------------
 
-         procedure Writeop is
+         procedure Write_Op is
             --  Write an operator expression.
          begin
             case Get_Info (Y.Name).Oclass is
                when Fxo | Fyo =>
                   if Quoteflag and not (Get_Info (Y.Name).Sys) then
-                     Wrstring (Makequote (Writeatom (Y.Name)));
+                     Wr_String (Make_Quote (Write_Atom (Y.Name)));
                   else
-                     Wrstring (Writeatom (Y.Name));
+                     Wr_String (Write_Atom (Y.Name));
                   end if;
-                  Wrcheck;
+                  Wr_Check;
                   Wr (' ');
-                  Writeterm (Y.Son, Rprec (Y.Name), Depth + 1);
+                  Write_Term (Y.Son, Rprec (Y.Name), Depth + 1);
                when Xfo | Yfo =>
-                  Writeterm (Y.Son, Lprec (Y.Name), Depth + 1);
-                  Wrcheck;
+                  Write_Term (Y.Son, Lprec (Y.Name), Depth + 1);
+                  Wr_Check;
                   Wr (' ');
                   if Quoteflag and not (Get_Info (Y.Name).Sys) then
-                     Wrstring (Makequote (Writeatom (Y.Name)));
+                     Wr_String (Make_Quote (Write_Atom (Y.Name)));
                   else
-                     Wrstring (Writeatom (Y.Name));
+                     Wr_String (Write_Atom (Y.Name));
                   end if;
                when Xfxo | Xfyo | Yfxo =>
-                  Writeterm (Y.Son, Lprec (Y.Name), Depth + 1);
+                  Write_Term (Y.Son, Lprec (Y.Name), Depth + 1);
                   if
                     (Y.Name /= Commaa) and
                       (Y.Name /= Semia)
@@ -159,34 +159,34 @@ package body Prolog.Write_Out is
                      Wr (' ');
                   end if;
                   if Quoteflag and not (Get_Info (Y.Name).Sys) then
-                     Wrstring (Makequote (Writeatom (Y.Name)));
+                     Wr_String (Make_Quote (Write_Atom (Y.Name)));
                   else
-                     Wrstring (Writeatom (Y.Name));
+                     Wr_String (Write_Atom (Y.Name));
                   end if;
-                  Wrcheck;
+                  Wr_Check;
                   Wr (' ');
-                  Writeterm (Y.Son.Brother, Rprec (Y.Name), Depth + 1);
+                  Write_Term (Y.Son.Brother, Rprec (Y.Name), Depth + 1);
                when Nono => null;
             end case;
-         end Writeop;
+         end Write_Op;
 
          -----------------
          --  Write_Exp  --
          -----------------
 
-         procedure Writeexp is
+         procedure Write_Exp is
             --  Write an operator expression, using parentheses if higher
             --  precedence is needed.
          begin
             if P < Get_Info (Y.Name).Oprec then
                Wr ('(');
-               Writeop;
+               Write_Op;
                Wr (')');
             else
-               Writeop;
+               Write_Op;
             end if;
-            Wrcheck;
-         end Writeexp;
+            Wr_Check;
+         end Write_Exp;
 
          ---------------------
          --  Writelist_Old  --
@@ -198,24 +198,24 @@ package body Prolog.Write_Out is
             Z : Term;
          begin
             Wr ('[');
-            Writeterm (Y.Son, Subprec, Depth + 1);
+            Write_Term (Y.Son, Subprec, Depth + 1);
             N := 1;
             Z := Deref (Y.Son.Brother, E);
-            while (N /= Writelength) and Isfunc (Z, Consa, 2) loop
+            while (N /= Writelength) and Is_Func (Z, Consa, 2) loop
                Wr (',');
-               Wrcheck;
+               Wr_Check;
                Wr (' ');
-               Writeterm (Z.Son, Subprec, Depth + 1);
+               Write_Term (Z.Son, Subprec, Depth + 1);
                Z := Deref (Z.Son.Brother, E);
                N := N + 1;
             end loop;
-            if not Isfunc (Z, Nila, 0) then
+            if not Is_Func (Z, Nila, 0) then
                if N < Writelength then
                   Wr (' ');
                   Wr ('|');
-                  Wrcheck;
+                  Wr_Check;
                   Wr (' ');
-                  Writeterm (Z, Subprec, Depth + 1);
+                  Write_Term (Z, Subprec, Depth + 1);
                else
                   Wr (' ');
                   Wr ('.');
@@ -224,7 +224,7 @@ package body Prolog.Write_Out is
                end if;
             end if;
             Wr (']');
-            Wrcheck;
+            Wr_Check;
          end Writelist_Old;
          pragma Unreferenced (Writelist_Old);
 
@@ -232,91 +232,91 @@ package body Prolog.Write_Out is
          --  Writelist  --
          -----------------
 
-         procedure Writelist is
+         procedure Write_List is
             --  Write a list in pointed notation.
             N : Integer;
             Z : Term;
          begin
             Wr ('(');
-            Writeterm (Y.Son, Subprec, Depth + 1);
+            Write_Term (Y.Son, Subprec, Depth + 1);
             N := 1;
             Z := Deref (Y.Son.Brother, E);
-            while (N /= Writelength) and Isfunc (Z, Consa, 2) loop
-               Wrcheck; Wr ('.');
-               Writeterm (Z.Son, Subprec, Depth + 1);
+            while (N /= Writelength) and Is_Func (Z, Consa, 2) loop
+               Wr_Check; Wr ('.');
+               Write_Term (Z.Son, Subprec, Depth + 1);
                Z := Deref (Z.Son.Brother, E);
                N := N + 1;
             end loop;
             if N < Writelength then
-               Wrcheck; Wr ('.');
-               Writeterm (Z, Subprec, Depth + 1);
-               Wrcheck;
+               Wr_Check; Wr ('.');
+               Write_Term (Z, Subprec, Depth + 1);
+               Wr_Check;
             else
                Wr (' '); Wr ('.'); Wr ('.'); Wr ('.');
             end if;
-            Wr (')'); Wrcheck;
-         end Writelist;
+            Wr (')'); Wr_Check;
+         end Write_List;
 
          ------------------
          --  Write_Func  --
          ------------------
 
-         procedure Writefunc is
+         procedure Write_Func is
             --  Write a complex term.
          begin
             if Y.Arity > 2 then
-               Writestand;
+               Write_Stand;
             else
                case Y.Arity is
                   when 0 =>
                      if Quoteflag and not (Get_Info (Y.Name).Sys) then
-                        Wrstring (Makequote (Writeatom (Y.Name)));
+                        Wr_String (Make_Quote (Write_Atom (Y.Name)));
                      else
-                        Wrstring (Writeatom (Y.Name));
+                        Wr_String (Write_Atom (Y.Name));
                      end if;
-                     Wrcheck;
+                     Wr_Check;
                   when 1 =>
                      if Y.Name = Curlya then
                         Wr ('}');
-                        Writeterm (Y.Son, Maxprec, Depth + 1);
+                        Write_Term (Y.Son, Maxprec, Depth + 1);
                         Wr ('K');
-                        Wrcheck;
+                        Wr_Check;
                      else
                         if Get_Info (Y.Name).Oclass in Fxo .. Yfo then
-                           Writeexp;
+                           Write_Exp;
                         else
-                           Writestand;
+                           Write_Stand;
                         end if;
                      end if;
                   when 2 =>
                      if Y.Name = Consa then
-                        Writelist;
+                        Write_List;
                      else
                         if Get_Info (Y.Name).Oclass in Xfxo .. Yfxo then
-                           Writeexp;
+                           Write_Exp;
                         else
-                           Writestand;
+                           Write_Stand;
                         end if;
                      end if;
                   when others => null;
                end case;
             end if;
-         end Writefunc;
+         end Write_Func;
 
          -----------------
          --  Write_Var  --
          -----------------
 
-         procedure Writevar is
+         procedure Write_Var is
          begin
             if Y.Tag = Skelt then
-               Wrstring (To_String (Y.St));
-               Wrcheck;
+               Wr_String (To_String (Y.St));
+               Wr_Check;
             else
-               Wrstring (To_String (Y.Id));
-               Wrcheck;
+               Wr_String (To_String (Y.Id));
+               Wr_Check;
             end if;
-         end Writevar;
+         end Write_Var;
 
       begin --  WriteTerm
          if Depth = Writedepth then
@@ -328,15 +328,15 @@ package body Prolog.Write_Out is
             case Y.Tag is
                when Skelt =>
                   if Y.Anont then
-                     Writevar;
+                     Write_Var;
                   else
-                     Writevar;
+                     Write_Var;
                   end if;
                when Funct =>
-                  Writefunc;
+                  Write_Func;
                when Intt =>
                   if Y.Ival >= 0 then
-                     Wrint (Y.Ival);
+                     Wr_Int (Y.Ival);
                   elsif Y.Ival = Integer'First then
                      declare
                         type Acc_String is access String;
@@ -344,23 +344,23 @@ package body Prolog.Write_Out is
                           new String'(Integer'Image (Integer'First));
                      begin
                         Wr ('^');
-                        Wrstring (Last_Int.all (Last_Int'First + 1 ..
-                                                 Last_Int'Last));
+                        Wr_String (Last_Int.all (Last_Int'First + 1 ..
+                                                   Last_Int'Last));
                      end;
                   else
                      Wr ('^');
-                     Wrint (-Y.Ival);
+                     Wr_Int (-Y.Ival);
                   end if;
                when Vart =>
-                  Writevar;
+                  Write_Var;
             end case;
          end if;
-         Wrcheck;
-      end Writeterm;
+         Wr_Check;
+      end Write_Term;
 
    begin --  WriteOut
       Varcount := 0;
-      Writeterm (X, Maxprec, 0);
+      Write_Term (X, Maxprec, 0);
    end Writeout;
 
    -------------
@@ -385,7 +385,7 @@ package body Prolog.Write_Out is
             --  Write a complex term in standard notation.
             S : Term;
          begin
-            Put (Writeatom (Y.Name));
+            Put (Write_Atom (Y.Name));
             if Y.Arity /= 0 then
                Put ("(");
                Write_Term (Y.Son, Subprec, Depth + 1);

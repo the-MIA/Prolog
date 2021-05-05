@@ -27,14 +27,22 @@ package body Prolog.Var_Table is
 
    Vartable : array  (1 .. MaxVars) of Varstring;
 
-   procedure Startvar is
+   -----------------
+   --  Start_Var  --
+   -----------------
+
+   procedure Start_Var is
       --  Prepare to accept characters of a variable.
    begin
       Newvar.Index := Varhwm;
       Newvar.Length := 0;
-   end Startvar;
+   end Start_Var;
 
-   procedure Varchar (C : Character) is
+   ----------------
+   --  Var_Char  --
+   ----------------
+
+   procedure Var_Char (C : Character) is
       --  Store c as the next character of a variable.
    begin
       if Newvar.Index + Newvar.Length >= Var_Table_Size then
@@ -43,10 +51,14 @@ package body Prolog.Var_Table is
 
       Newvar.Length := Newvar.Length + 1;
       Varbuf (Newvar.Index + Newvar.Length) := C;
-   end Varchar;
+   end Var_Char;
 
-   function Samestring (V1, V2 : Varstring) return Boolean;
-   function Samestring (V1, V2 : Varstring) return Boolean is
+   -------------------
+   --  Same_String  --
+   -------------------
+
+   function Same_String (V1, V2 : Varstring) return Boolean;
+   function Same_String (V1, V2 : Varstring) return Boolean is
    begin
       if V1.Length /= V2.Length then
          return False;
@@ -58,13 +70,17 @@ package body Prolog.Var_Table is
          end loop;
          return True;
       end if;
-   end Samestring;
+   end Same_String;
 
-   function Keepvar return Varstring is
+   ----------------
+   --  Keep_Var  --
+   ----------------
+
+   function Keep_Var return Varstring is
       --  Mark the latest variable name permanent.
    begin
       for N in 1 .. Varcount loop
-         if Samestring (Newvar, Vartable (N)) then
+         if Same_String (Newvar, Vartable (N)) then
             return Vartable (N);
          end if;
       end loop;
@@ -73,7 +89,11 @@ package body Prolog.Var_Table is
       Varcount := Varcount + 1;
       Vartable (Varcount) := Newvar;
       return Newvar;
-   end Keepvar;
+   end Keep_Var;
+
+   -----------------
+   --  To_String  --
+   -----------------
 
    function To_String (V : Varstring) return String is
    begin

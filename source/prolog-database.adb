@@ -74,7 +74,7 @@ package body Prolog.Database is
       else
          Z := Deref (Y.Son, E);
          case Z.Tag is
-            when Funct => Value := Infinity + Get_Atomno (Z.Name);
+            when Funct => Value := Infinity + Get_Atom_No (Z.Name);
             when Intt  => Value := Z.Ival - Boolean'Pos (Z.Ival <= 0);
             when Vart  => Value := 0;
             when Skelt => Value := 0;
@@ -87,11 +87,11 @@ package body Prolog.Database is
    --  Find_Clause  --
    -------------------
 
-   procedure Findclause (X     : Term;
-                         E     : Env;
-                         Dbase : in out Integer_List;
-                         Cl    : in out Clptr;
-                         Value : out Boolean)
+   procedure Find_Clause (X     : Term;
+                          E     : Env;
+                          Dbase : in out Integer_List;
+                          Cl    : in out Clptr;
+                          Value : out Boolean)
    is
       --  Advance cl to the first applicable clause. Hash is used to compare
       --  clause heads with the goal x. If either has hash function zero, a
@@ -107,23 +107,23 @@ package body Prolog.Database is
       else
          Clause_X := Get_Info (Cl.Head.Name).Proc;
          loop
-            Findclause (X, E, Dbase.I, Cl, Ok);
+            Find_Clause (X, E, Dbase.I, Cl, Ok);
             exit when Ok or (Dbase.Next = null);
             Dbase := Dbase.Next;
          end loop;
          Value := Ok;
       end if;
-   end Findclause;
+   end Find_Clause;
 
    -------------------
    --  Find_Clause  --
    -------------------
 
-   procedure Findclause (X     : Term;
-                         E     : Env;
-                         Dbase : Integer;
-                         Cl    : in out Clptr;
-                         Value : out Boolean)
+   procedure Find_Clause (X     : Term;
+                          E     : Env;
+                          Dbase : Integer;
+                          Cl    : in out Clptr;
+                          Value : out Boolean)
    is
       --  Advance cl to the first applicable clause. Hash is used to compare
       --  clause heads with the goal x. If either has hash function zero, a
@@ -150,13 +150,13 @@ package body Prolog.Database is
          end loop;
          Value := Ok;
       end if;
-   end Findclause;
+   end Find_Clause;
 
    -------------------
    --  Make_Clause  --
    -------------------
 
-   function Makeclause (P : Term; E : Env; Claus : Boolean) return Clptr is
+   function Make_Clause (P : Term; E : Env; Claus : Boolean) return Clptr is
       --  Produce a skeleton for p and add it to the database.  The new clause
       --  is added at the front of the clause chain if asserta is true,
       --  otherwise at the end.
@@ -171,7 +171,7 @@ package body Prolog.Database is
       --  Skel_Var  --
       ----------------
 
-      procedure Skelvar (V1 : Term; V2 : in out Term) is
+      procedure Skel_Var (V1 : Term; V2 : in out Term) is
          --  Produce a skeleton for a variable v. When the first occurrence of
          --  v is encountered, it is tentatively translated as an anonymous
          --  variable, and a pointer to this variable is stored in the
@@ -248,7 +248,7 @@ package body Prolog.Database is
                Varmap (Varcount).Firstref  := V2;
             end if;
          end if;
-      end Skelvar;
+      end Skel_Var;
 
       ----------------
       --  Skeleton  --
@@ -259,7 +259,7 @@ package body Prolog.Database is
          Y, Z : Term;
          Temp : Term;
 
-         function Skelargs (S : Term) return Term is
+         function Skel_Args (S : Term) return Term is
             --  Produce a skeleton for the arguments of a functor node.
             T, U, V : Term;
          begin --  skelargs
@@ -276,7 +276,7 @@ package body Prolog.Database is
                end loop;
                return U;
             end if;
-         end Skelargs;
+         end Skel_Args;
 
       begin --  Skeleton
          if Depth > Maxdepth then
@@ -288,7 +288,7 @@ package body Prolog.Database is
             when Funct =>
                Func_Garb.Get (Temp);
                Temp.all := Node'(Funct, null, Heapf, 0, null,
-                                 Y.Name, Y.Arity, Skelargs (Y.Son));
+                                 Y.Name, Y.Arity, Skel_Args (Y.Son));
                return Temp;
 
             when Intt =>
@@ -297,7 +297,7 @@ package body Prolog.Database is
                return Temp;
 
             when Vart =>
-               Skelvar (Y, Z);
+               Skel_Var (Y, Z);
                return Z;
 
             when Skelt =>
@@ -307,7 +307,7 @@ package body Prolog.Database is
                                     Anon_String, True);
                   return Temp;
                else
-                  Skelvar (Y, Z);
+                  Skel_Var (Y, Z);
                   return Z;
                end if;
 
@@ -318,7 +318,7 @@ package body Prolog.Database is
       --  Skel_Call  --
       -----------------
 
-      function Skelcall (X : Term) return Term is
+      function Skel_Call (X : Term) return Term is
          --  Produce a skeleton for a goal in a clause body. A variable
          --  a is mapped onto call(X).
          Y : Term;
@@ -339,7 +339,7 @@ package body Prolog.Database is
                return Skeleton (Y, 0);
 
             when Vart =>
-               Skelvar (Y, Z);
+               Skel_Var (Y, Z);
                Func_Garb.Get (Temp);
                Temp.all := Node'(Funct, null, Heapf, 0, null, Calla, 1, Z);
                return Temp;
@@ -351,13 +351,13 @@ package body Prolog.Database is
 
          pragma Assert (False);
          raise Program_Error;
-      end Skelcall;
+      end Skel_Call;
 
       -----------------
       --  Skel_Head  --
       -----------------
 
-      function Skelhead (X : Term) return Term is
+      function Skel_Head (X : Term) return Term is
          --  Produce a skeleton for the clause head X.
          Y     : Term;
          Value : Term;
@@ -369,13 +369,13 @@ package body Prolog.Database is
          Value  := Skeleton (Y, 0);
          Newkey := Hash (Y, E);
          return Value;
-      end Skelhead;
+      end Skel_Head;
 
       -----------------
-      --  Skel_Bode  --
+      --  Skel_Body  --
       -----------------
 
-      function Skelbody (X : Term; Depth : Integer) return Term is
+      function Skel_Body (X : Term; Depth : Integer) return Term is
          --  Produce a skeleton for a clause body.
          Y, Z  : Term;
          Value : Term;
@@ -385,35 +385,35 @@ package body Prolog.Database is
          end if;
          Y := Deref (X, E);
          if Claus then
-            Z := Skelcall (Y);
+            Z := Skel_Call (Y);
             if Y.Brother /= null then
-               Z.Brother := Skelbody (Y.Brother, Depth + 1);
+               Z.Brother := Skel_Body (Y.Brother, Depth + 1);
             else
                Z.Brother := null;
             end if;
             Value := Z;
          else
-            if Isfunc (Y, Commaa, 2) then
-               Z := Skelcall (Y.Son);
-               Z.Brother := Skelbody (Y.Son.Brother, Depth + 1);
+            if Is_Func (Y, Commaa, 2) then
+               Z := Skel_Call (Y.Son);
+               Z.Brother := Skel_Body (Y.Son.Brother, Depth + 1);
                Value := Z;
             else
-               Value := Skelcall (Y);
+               Value := Skel_Call (Y);
             end if;
          end if;
          return Value;
-      end Skelbody;
+      end Skel_Body;
 
    begin --  MAKECLAUSE
       Varcount  := 0;
       Framesize := 0;
       Q := Deref (P, E);
 
-      if Isfunc (Q, Arrowa, 2) then
-         Newhead := Skelhead (Q.Son);
-         Newbody := Skelbody (Q.Son.Brother, 0);
+      if Is_Func (Q, Arrowa, 2) then
+         Newhead := Skel_Head (Q.Son);
+         Newbody := Skel_Body (Q.Son.Brother, 0);
       else
-         Newhead := Skelhead (Q);
+         Newhead := Skel_Head (Q);
          Newbody := null;
       end if;
 
@@ -435,57 +435,57 @@ package body Prolog.Database is
                           Nvars => Framesize, Keyval => Newkey,
                           Dbase => -1, Previous => null, Next => null);
       return Tempcls;
-   end Makeclause;
+   end Make_Clause;
 
    -------------------
    --  Make_Clause  --
    -------------------
 
-   function Makeclause (P : Term; E : Env) return Clptr is
+   function Make_Clause (P : Term; E : Env) return Clptr is
    begin
-      return Makeclause (P, E, False);
-   end Makeclause;
+      return Make_Clause (P, E, False);
+   end Make_Clause;
 
    -------------------
    --  Make_Clause  --
    -------------------
 
-   function Makeclause (Head : Term; Tail : Term; E : Env) return Clptr is
+   function Make_Clause (Head : Term; Tail : Term; E : Env) return Clptr is
       Temp : Term;
    begin
       if Tail = null then
-         return Makeclause (Head, E, True);
+         return Make_Clause (Head, E, True);
       else
          Head.Brother := Tail;
          Func_Garb.Get (Temp);
          Temp.all := Node'(Funct, null, Heapf, 0, null, Arrowa, 2, Head);
-         return Makeclause (Temp, E, True);
+         return Make_Clause (Temp, E, True);
       end if;
-   end Makeclause;
+   end Make_Clause;
 
-   -----------------
-   --  Addclause  --
-   -----------------
+   ------------------
+   --  Add_Clause  --
+   ------------------
 
-   function Addclause (P       : Term;
-                       E       : Env;
-                       Dbase   : Integer;
-                       Asserta : Boolean) return Clptr
+   function Add_Clause (P       : Term;
+                        E       : Env;
+                        Dbase   : Integer;
+                        Asserta : Boolean) return Clptr
    is
       Cl : Clptr;
    begin
-      Cl := Makeclause (P, E);
-      Addclause (Cl, Dbase, Asserta);
+      Cl := Make_Clause (P, E);
+      Add_Clause (Cl, Dbase, Asserta);
       return Cl;
-   end Addclause;
+   end Add_Clause;
 
-   -----------------
-   --  Addclause  --
-   -----------------
+   ------------------
+   --  Add_Clause  --
+   ------------------
 
-   procedure Addclause (C       : in out Clptr;
-                        Dbase   : in     Integer;
-                        Asserta : in     Boolean)
+   procedure Add_Clause (C       : in out Clptr;
+                         Dbase   : in     Integer;
+                         Asserta : in     Boolean)
    is
 
       procedure Pluga (Cp : in out Clptr; C : Clptr) is
@@ -524,13 +524,13 @@ package body Prolog.Database is
       else
          Plugz (Get_Info (C.Head.Name).Proc, C);
       end if;
-   end Addclause;
+   end Add_Clause;
 
    ------------------
    --  Zap_Clause  --
    ------------------
 
-   procedure Zapclause (Cl : Clptr) is
+   procedure Zap_Clause (Cl : Clptr) is
       --  Delete the clause entry pointed to by CL.
       Temp : Clptr;
    begin
@@ -552,6 +552,6 @@ package body Prolog.Database is
          Temp := Cl;
          Clause_Garb.Free (Temp);
       end if;
-   end Zapclause;
+   end Zap_Clause;
 
 end Prolog.Database;

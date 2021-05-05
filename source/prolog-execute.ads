@@ -1,4 +1,3 @@
-
 --  Copyright (C) 1986, 1987, 1988, 1989, 1990, 1991, 1992 by the Program
 --  Analysis and Verification Group, Leland Stanford Junior University.
 --  All Rights Reserved.

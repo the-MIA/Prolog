@@ -112,7 +112,7 @@ package body Prolog.Evaluable_Predicates is
          when Intt =>
             Value := Y.Ival = I;
          when Vart =>
-            Value := Unify (X, Makeint (I), E, 0, 0);
+            Value := Unify (X, Make_Int (I), E, 0, 0);
          when Skelt =>
             if Y.Anont then
                Value := True;
@@ -171,13 +171,13 @@ package body Prolog.Evaluable_Predicates is
             Moan (Call_Error, Abortz);
          end if;
 
-         E1 := Newenv (Call, E, null, Dbase, 1, Glotop, Present_Trail);
-         X  := Envref (1, E1);
+         E1 := New_Env (Call, E, null, Dbase, 1, Glotop, Present_Trail);
+         X  := Env_Ref (1, E1);
          Bind (X, Argval (1), E, 0);
          First_Answer (X, E1, Dbase, Ans, Result);
 
          if E1 > Choicepoint then
-            Disposeenv;
+            Dispose_Env;
          end if;
 
       end Docall;
@@ -196,7 +196,7 @@ package body Prolog.Evaluable_Predicates is
             if File_Ended then
                Moan (Eof_Error, Diez);
             end if;
-            Ch := Getchar;
+            Ch := Get_Char;
          end if;
          Result := Intresult (Argval (1), E, Character'Pos (Ch));
       end Doget0;
@@ -229,8 +229,8 @@ package body Prolog.Evaluable_Predicates is
          Info : Atom_Info;
       begin
          if (Argval (1).Tag /= Intt) or
-           not Isatom (Argval (2)) or
-           not Isatom (Argval (3))
+           not Is_An_Atom (Argval (2)) or
+           not Is_An_Atom (Argval (3))
          then
             Moan (Op_Error, Abortz);
          end if;
@@ -271,13 +271,13 @@ package body Prolog.Evaluable_Predicates is
          X, Y : Term;
          Ch   : Integer;
       begin --  doname
-         if Isatom (Argval (1)) then
+         if Is_An_Atom (Argval (1)) then
             Result := Unify (Argval (2),
-                             Listrep (Writeatom (Argval (1).Name)), E, 0, 0);
+                             List_Rep (Write_Atom (Argval (1).Name)), E, 0, 0);
          else
-            Startatom;
+            Start_Atom;
             X := Argval (2);
-            while Isfunc (X, Consa, 2) loop
+            while Is_Func (X, Consa, 2) loop
                Y := Deref (X.Son, E);
                if Y.Tag /= Intt then
                   Moan (Name_Arg_Error, Abortz);
@@ -288,14 +288,14 @@ package body Prolog.Evaluable_Predicates is
                then
                   Moan (Bad_Char_Error, Abortz);
                end if;
-               Atomchar (Character'Val (Ch));
+               Atom_Char (Character'Val (Ch));
                X := Deref (X.Son.Brother, E);
             end loop;
-            if not Isfunc (X, Nila, 0) then
+            if not Is_Func (X, Nila, 0) then
                Moan (Name_Arg_Error, Abortz);
             end if;
             Result := Unify (Argval (1),
-                             Makefunc (Lookup, 0, null), E, 0, 0);
+                             Make_Func (Lookup, 0, null), E, 0, 0);
          end if;
       end Doname;
 
@@ -336,7 +336,7 @@ package body Prolog.Evaluable_Predicates is
          Cl := Get_Info (Argval (1).Name).Proc;
 
          loop
-            Findclause (H, E, 0, Cl, Found);
+            Find_Clause (H, E, 0, Cl, Found);
             if not Found then
                exit when True;
 
@@ -360,7 +360,7 @@ package body Prolog.Evaluable_Predicates is
                   end if;
                end if;
                if Found then
-                  Zapclause (Cl);
+                  Zap_Clause (Cl);
                   Result := True;
                   exit when True;
                elsif Cl.Next /= Get_Info (Cl.Head.Name).Proc then
@@ -374,7 +374,7 @@ package body Prolog.Evaluable_Predicates is
                exit when True;
             end if;
          end loop;
-         Trimtrail (Trl);
+         Trim_Trail (Trl);
       end Doretract;
 
       ------------------
@@ -394,8 +394,8 @@ package body Prolog.Evaluable_Predicates is
                if not Intresult (Argval (3), E, Argval (1).Arity) then
                   Result := False;
                else
-                  Result := Unify (Argval (2), Makefunc (Argval (1).Name,
-                                                       0, null), E, 0, 0);
+                  Result := Unify (Argval (2), Make_Func (Argval (1).Name,
+                                                          0, null), E, 0, 0);
                end if;
 
             when Intt =>
@@ -413,15 +413,15 @@ package body Prolog.Evaluable_Predicates is
                      Moan (Functor_Error, Abortz);
                   end if;
                   M := Argval (3).Ival;
-                  if Isatom (Argval (2)) and (M >= 0) then
+                  if Is_An_Atom (Argval (2)) and (M >= 0) then
                      X := null;
                      for Ix in reverse 1 .. M loop
-                        Y := Makevar (null, Null_String);
+                        Y := Make_Var (null, Null_String);
                         Y.Brother := X;
                         X := Y;
                      end loop;
-                     Result := Unify (Argval (1), Makefunc (Argval (2).Name,
-                                                            M, X),
+                     Result := Unify (Argval (1), Make_Func (Argval (2).Name,
+                                                             M, X),
                                       E, 0, 0);
                   elsif  (Argval (2).Tag = Intt) and (M = 0) then
                      Result := Intresult (Argval (1), E,
@@ -492,7 +492,7 @@ package body Prolog.Evaluable_Predicates is
 
          when Putr => Doput; --  Right Here
 
-         when Nlr => Wrln; --  In IO
+         when Nlr => Wr_Ln; --  In IO
 
          when Eolnr => Result := Line_Ended; --  In IO
 
@@ -508,7 +508,7 @@ package body Prolog.Evaluable_Predicates is
 
          when Notracer => Tracing := False; --  In GLOBAL_OBJECTS
 
-         when Atomr => Result := Isatom (Argval (1)); --  In TRANSFORM
+         when Atomr => Result := Is_An_Atom (Argval (1)); --  In TRANSFORM
 
          when Integerr => Result := Argval (1).Tag = Intt; --  Right here.
 
@@ -522,8 +522,9 @@ package body Prolog.Evaluable_Predicates is
          when Ltr => Result :=  (Evaluate (Argval (1), E, 0) <
                                    Evaluate (Argval (2), E, 0)); --  Right here
 
-         when Assertar | Assertzr => Dummy := Addclause (Argval (1), E, 0,
-                                                         Routine = Assertar);
+         when Assertar | Assertzr =>
+            Dummy := Add_Clause (Argval (1), E, 0,
+                                 Routine = Assertar);
             --  In DATABASE
 
          when Retractr => Doretract; --  Right here
@@ -539,14 +540,14 @@ package body Prolog.Evaluable_Predicates is
          when Debugr => Debugging := True; --  In WRITE_OUT
 
          when Seer =>
-            Result := See_File (Writeatom (Argval (1).Name)); --  In IO
+            Result := See_File (Write_Atom (Argval (1).Name)); --  In IO
 
-         when Seenr => Result := Seenfile; --  In IO
+         when Seenr => Result := Seen_File; --  In IO
 
          when Tellr =>
-            Result := Tell_File (Writeatom (Argval (1).Name)); --  In IO
+            Result := Tell_File (Write_Atom (Argval (1).Name)); --  In IO
 
-         when Toldr => Result := Toldfile; --  In IO
+         when Toldr => Result := Told_File; --  In IO
 
          when Quoter => Quoteflag := True; --  In WRITE_OUT
 

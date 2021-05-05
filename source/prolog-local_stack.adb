@@ -52,13 +52,13 @@ package body Prolog.Local_Stack is
    --  New_Env  --
    ---------------
 
-   function Newenv (Callp   : Term;
-                    Envp    : Env;
-                    Clausep : Clptr;
-                    Listp   : Integer_List;
-                    Nvars   : Integer;
-                    Glblptr : Term;
-                    Trlptr  : Trail) return Env
+   function New_Env (Callp   : Term;
+                     Envp    : Env;
+                     Clausep : Clptr;
+                     Listp   : Integer_List;
+                     Nvars   : Integer;
+                     Glblptr : Term;
+                     Trlptr  : Trail) return Env
    is
       --  Create a new environment e.
       E : Env;
@@ -90,99 +90,99 @@ package body Prolog.Local_Stack is
       end loop;
       Loctop := Loctop + Nvars;
       return E;
-   end Newenv;
+   end New_Env;
 
    ----------------
    --  Get_Call  --
    ----------------
 
-   function Getcall (E : Env) return Term is
+   function Get_Call (E : Env) return Term is
       --  Return invoking goal.
    begin
       return Display (E).Fcall;
-   end Getcall;
+   end Get_Call;
 
    ---------------
    --  Get_Env  --
    ---------------
 
-   function Getenv (E : Env) return Env is
+   function Get_Env (E : Env) return Env is
       --  Return environment for the invoking goal.
    begin
       return Display (E).Fenv;
-   end Getenv;
+   end Get_Env;
 
    ------------------
    --  Get_Clause  --
    ------------------
 
-   function Getclause (E : Env) return Clptr is
+   function Get_Clause (E : Env) return Clptr is
       --  Return active clause
    begin
       return Display (E).Fclause;
-   end Getclause;
+   end Get_Clause;
 
    ----------------
    --  Get_List  --
    ----------------
 
-   function Getlist (E : Env) return Integer_List is
+   function Get_List (E : Env) return Integer_List is
       --  Return active list
    begin
       return Display (E).Flist;
-   end Getlist;
+   end Get_List;
 
    ------------------
    --  Get_Choice  --
    ------------------
 
-   function Getchoice (E : Env) return Env is
+   function Get_Choice (E : Env) return Env is
       --  Return choicepoint.
    begin
       return Display (E).Fchoice;
-   end Getchoice;
+   end Get_Choice;
 
    ------------------
    --  Get_Global  --
    ------------------
 
-   function Getglobal (E : Env) return Term is
+   function Get_Global (E : Env) return Term is
       --  Return global ptr.
    begin
       return Display (E).Fglotop;
-   end Getglobal;
+   end Get_Global;
 
    -----------------
    --  Get_Trail  --
    -----------------
 
-   function Gettrail (E : Env) return Trail is
+   function Get_Trail (E : Env) return Trail is
       --  Return trail.
    begin
       return Display (E).Ftrail;
-   end Gettrail;
+   end Get_Trail;
 
    ---------------
    --  Env_Ref  --
    ---------------
 
-   function Envref (Offset : Integer; E : Env) return Term is
+   function Env_Ref (Offset : Integer; E : Env) return Term is
       --  Return the OFFSETth variable in environment E
    begin
       return Locstack (Display (E).Fbase + Offset);
-   end Envref;
+   end Env_Ref;
 
    -------------------
    --  Dispose_Env  --
    -------------------
 
-   procedure Disposeenv is
+   procedure Dispose_Env is
       --  Recover the top frame on the local stack.
       --  TEMP : ENV;
    begin
       Loctop := Display (Envtop).Fbase;
       Envtop := Envtop - 1;
-   end Disposeenv;
+   end Dispose_Env;
 
    -----------
    --  Cut  --
@@ -207,7 +207,7 @@ package body Prolog.Local_Stack is
          Cl   := Display (Envp).Fclause;
       end loop;
       Choicepoint := Display (Envp).Fchoice;
-      Trimtrail (Display (Envp).Ftrail);
+      Trim_Trail (Display (Envp).Ftrail);
       if Envtop > E then
          Loctop := Display (E + 1).Fbase;
          Envtop := E;
@@ -218,7 +218,7 @@ package body Prolog.Local_Stack is
    --  Kill_Local  --
    ------------------
 
-   procedure Killlocal (Newtop : Env) is
+   procedure Kill_Local (Newtop : Env) is
       --  Dispose of all environments after newtop, together with all
       --  associated global storage, and undo critical variable bindings.
    begin
@@ -229,9 +229,9 @@ package body Prolog.Local_Stack is
          Envtop := Newtop;
       end if;
       for I in reverse Newtop + 1 .. Envtop loop
-         Disposeenv;
+         Dispose_Env;
       end loop;
-   end Killlocal;
+   end Kill_Local;
 
    ----------------
    --  Critical  --
@@ -262,7 +262,7 @@ package body Prolog.Local_Stack is
    --  Trail_Var  --
    -----------------
 
-   procedure Trailvar (V : Term) is
+   procedure Trail_Var (V : Term) is
       --  Record v on the trail if necessary.
       P : Trail;
    begin
@@ -277,7 +277,7 @@ package body Prolog.Local_Stack is
       else
          Moan (Fault_Error, Diez);
       end if;
-   end Trailvar;
+   end Trail_Var;
 
    ---------------------
    --  Present_Trail  --
@@ -292,7 +292,7 @@ package body Prolog.Local_Stack is
    --  Trim_Trail  --
    ------------------
 
-   procedure Trimtrail (Base : Trail) is
+   procedure Trim_Trail (Base : Trail) is
       --  Remove references to variables newer than choicepoint. Some of the
       --  Ftrail entries in 'display' may be made invalid by this operation,
       --  but it doesn't matter, since they will never be used for
@@ -312,7 +312,7 @@ package body Prolog.Local_Stack is
          Q := P.Chain;
       end loop;
       Trailend := P;
-   end Trimtrail;
+   end Trim_Trail;
 
    ---------------
    --  Untrail  --
@@ -341,23 +341,23 @@ package body Prolog.Local_Stack is
    --  Init_Trail  --
    ------------------
 
-   procedure Inittrail is
+   procedure Init_Trail is
       --  Set up the trail with a dummy list head.
    begin
       Trailend := new Trailentry'(null, null);
       Trailsize := 0;
-   end Inittrail;
+   end Init_Trail;
 
    ------------------
    --  Return_Var  --
    ------------------
 
-   function Returnvar (T : Trail) return Term is
+   function Return_Var (T : Trail) return Term is
       --  Return the most immediate var from trail.
    begin
       return T.Boundvar;
-   end Returnvar;
+   end Return_Var;
 
 begin
-   Inittrail;
+   Init_Trail;
 end Prolog.Local_Stack;

@@ -49,7 +49,7 @@ package Prolog.Local_Stack is
    Loctop : Integer range 0 .. Maxlocsize;
    --  Local vars at the present time.
 
-   function Newenv
+   function New_Env
      (Callp   : Term;
       Envp    : Env;
       Clausep : Clptr;
@@ -67,49 +67,49 @@ package Prolog.Local_Stack is
    --  Also sets : present choicepoint,present envtop.
    --  Creates space for NVARS variables on the local stack.
 
-   function Getcall (E : Env) return Term;
+   function Get_Call (E : Env) return Term;
    --  Return invoking goal.
 
-   function Getenv (E : Env) return Env;
+   function Get_Env (E : Env) return Env;
    --  Return environment for the invoking goal.
 
-   function Getclause (E : Env) return Clptr;
+   function Get_Clause (E : Env) return Clptr;
    --  Return active clause
 
-   function Getlist (E : Env) return Integer_List;
+   function Get_List (E : Env) return Integer_List;
    --  Return active list.
 
-   function Getchoice (E : Env) return Env;
+   function Get_Choice (E : Env) return Env;
    --  Return choicepoint.
 
-   function Getglobal (E : Env) return Term;
+   function Get_Global (E : Env) return Term;
    --  Return global ptr.
 
-   function Gettrail (E : Env) return Trail;
+   function Get_Trail (E : Env) return Trail;
    --  Return trail.
 
-   function Envref (Offset : Integer; E : Env) return Term;
+   function Env_Ref (Offset : Integer; E : Env) return Term;
    --  Return the OFFSETth variable in environment E.
 
-   procedure Disposeenv;
+   procedure Dispose_Env;
    --  Recover the top frame.
 
    procedure Cut (E : Env);
    --  Cut. This accesses the trail too.
 
-   procedure Killlocal (Newtop : Env);
+   procedure Kill_Local (Newtop : Env);
    --  Recover all environments over newtop. Accesses trail.
 
-   procedure Trailvar (V : Term);
+   procedure Trail_Var (V : Term);
    --  Record V on trail if necessary.
 
    function Present_Trail return Trail;
    --  Value of the trail at the current time.
 
-   function Returnvar (T : Trail) return Term;
+   function Return_Var (T : Trail) return Term;
    --  Return the most immediate var from trail.
 
-   procedure Trimtrail (Base : Trail);
+   procedure Trim_Trail (Base : Trail);
    --  Remove non-critical references newer than BASE.
 
    procedure Untrail (Newtrail : Trail);

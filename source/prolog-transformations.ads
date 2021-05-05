@@ -126,28 +126,28 @@ package Prolog.Transformations is
    Glotop   : Term := null;
    Glosize  : Natural := 0;
 
-   function Makefunc (A : Atom; M : Integer; S : Term) return Term;
-   function Makeint (I : Integer) return Term;
-   function Makevar (V : Term; S : Varstring) return Term;
+   function Make_Func (A : Atom; M : Integer; S : Term) return Term;
+   function Make_Int (I : Integer) return Term;
+   function Make_Var (V : Term; S : Varstring) return Term;
 
-   procedure Killglobal (Newptr : Term);
+   procedure Kill_Global (Newptr : Term);
 
-   function Isfunc (X : Term; A : Atom; M : Integer) return Boolean;
-   function Isatom (X : Term) return Boolean;
+   function Is_Func (X : Term; A : Atom; M : Integer) return Boolean;
+   function Is_An_Atom (X : Term) return Boolean;
 
    function Deref (X : Term; E : Env) return Term;
 
-   procedure Bindvars (V1, V2 : Term);
+   procedure Bind_Vars (V1, V2 : Term);
    procedure Bind (V     : in out Term;
                    X     :        Term;
                    E     :        Env;
                    Depth :        Integer);
 
-   function Listrep (S : String) return Term;
+   function List_Rep (S : String) return Term;
 
-   procedure Getbody (V : in out Term;
-                      B :        Term;
-                      E :        Env);
+   procedure Get_Body (V : in out Term;
+                       B :        Term;
+                       E :        Env);
 
 private
    Comma_Atom  : aliased Atom_Record := (Normp, Xfyo, 1000, True, null);

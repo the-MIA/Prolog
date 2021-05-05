@@ -77,13 +77,13 @@ package body Prolog.Execute is
    --  Kill_Stacks  --
    -------------------
 
-   procedure Killstacks (E : Integer) is
+   procedure Kill_Stacks (E : Integer) is
       T : Term;
    begin
-      T := Getglobal (E + 1);
-      Killlocal (E);
-      Killglobal (T);
-   end Killstacks;
+      T := Get_Global (E + 1);
+      Kill_Local (E);
+      Kill_Global (T);
+   end Kill_Stacks;
 
    ---------------
    --  Execute  --
@@ -120,8 +120,8 @@ package body Prolog.Execute is
                      if Callp.Name = Calla then
                         Temp1 := Callp.Brother;
                         Temp2 := Deref (Callp.Son, Callenv);
-                        Callp := Makefunc (Temp2.Name, Temp2.Arity,
-                                           Temp2.Son);
+                        Callp := Make_Func (Temp2.Name, Temp2.Arity,
+                                            Temp2.Son);
                         Callp.Brother := Temp1;
                         State := Callq;
 
@@ -140,10 +140,10 @@ package body Prolog.Execute is
             when Procq =>
                --  'clausep' points to a chain of untried clauses
                --  for the goal in 'callp'.
-               Findclause (Callp, Callenv, Listp, Clausep, Dummy);
+               Find_Clause (Callp, Callenv, Listp, Clausep, Dummy);
                if Dummy then
-                  Envp := Newenv (Callp, Callenv, Clausep, Listp,
-                                 Clausep.Nvars, Glotop, Present_Trail);
+                  Envp := New_Env (Callp, Callenv, Clausep, Listp,
+                                   Clausep.Nvars, Glotop, Present_Trail);
                   if Clausep.Next /= Get_Info (Clausep.Head.Name).Proc
                   then
                      Choicepoint := Envp;
@@ -210,12 +210,12 @@ package body Prolog.Execute is
                --  environment for the clause.
                if Callp = null then
                   Envp    := Callenv;
-                  Callp   := Getcall (Envp);
-                  Callenv := Getenv (Envp);
-                  Clausep := Getclause (Envp);
-                  Listp   := Getlist (Envp);
+                  Callp   := Get_Call   (Envp);
+                  Callenv := Get_Env    (Envp);
+                  Clausep := Get_Clause (Envp);
+                  Listp   := Get_List   (Envp);
                   if Envp > Choicepoint then
-                     Disposeenv;
+                     Dispose_Env;
                   end if;
                   if Tracing then
                      Trace (Provedd, Callp, Callenv);
@@ -239,10 +239,10 @@ package body Prolog.Execute is
                --  Failure has occurred.  'choicepoint' is the newest
                --  environment with a nondeterminate choice.
                if Choicepoint > Baseenv then
-                  Callp   := Getcall (Choicepoint);
-                  Callenv := Getenv (Choicepoint);
-                  Clausep := Getclause (Choicepoint);
-                  Listp   := Getlist (Choicepoint);
+                  Callp   := Get_Call   (Choicepoint);
+                  Callenv := Get_Env    (Choicepoint);
+                  Clausep := Get_Clause (Choicepoint);
+                  Listp   := Get_List   (Choicepoint);
                   if
                     (Clausep.Next =
                         Get_Info (Clausep.Head.Name).Proc) and
@@ -258,7 +258,7 @@ package body Prolog.Execute is
                   else
                      Clausep := Clausep.Next;
                   end if;
-                  Killstacks (Choicepoint - 1);
+                  Kill_Stacks (Choicepoint - 1);
                   State := Procq;
                else
                   Value := False;
@@ -328,16 +328,16 @@ package body Prolog.Execute is
 
          when Vtbindu =>
             Bind (Y1, Y2, E2, 0);
-            Trailvar (Y1);
+            Trail_Var (Y1);
             Value := True;
 
          when Tvbindu =>
             Bind (Y2, Y1, E1, 0);
-            Trailvar (Y2);
+            Trail_Var (Y2);
             Value := True;
 
          when Vvbindu =>
-            Bindvars (Y1, Y2);
+            Bind_Vars (Y1, Y2);
             Value := True;
 
          when Succeedu =>
@@ -440,8 +440,8 @@ package body Prolog.Execute is
       --  Execute a goal.
       G : constant Term := Deref (Goalp, Envp);
    begin
-      Killstacks (0);
-      Callp   := Makefunc (G.Name, G.Arity, G.Son);
+      Kill_Stacks (0);
+      Callp   := Make_Func (G.Name, G.Arity, G.Son);
       Callenv := Envp;
       Goalenv := Envp;
       Baseenv := Envtop;
@@ -487,7 +487,7 @@ package body Prolog.Execute is
    --  Init_Unify --
    -----------------
 
-   procedure Initunify is
+   procedure Init_Unify is
       --  Set up table of actions for Unify.
    begin
       Uaction (Funct, Funct)  := Funcu;
@@ -506,8 +506,8 @@ package body Prolog.Execute is
       Uaction (Skelt, Skelt)  := Succeedu;
       Uaction (Funct, Intt)   := Failu;
       Uaction (Intt,  Funct)  := Failu;
-   end Initunify;
+   end Init_Unify;
 
 begin
-   Initunify;
+   Init_Unify;
 end Prolog.Execute;

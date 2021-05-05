@@ -41,11 +41,11 @@ package Prolog.Atom_Table is
 
    Null_Atom : constant Atom;
 
-   procedure Startatom;
+   procedure Start_Atom;
    --  Start an atom. All the characters passed to AtomChar
    --  are considered part of this atom till a Lookup is done.
 
-   procedure Atomchar (C : Character);
+   procedure Atom_Char (C : Character);
    --  The next character of the atom started by StartAtom.
 
    function Lookup return Atom;
@@ -74,10 +74,10 @@ package Prolog.Atom_Table is
 
    --  All the four integers above are changed by LOOKUP.
 
-   function Get_Atomno (A : Atom) return Integer;
+   function Get_Atom_No (A : Atom) return Integer;
    --  Return the atom number.
 
-   function Writeatom (A : Atom) return String;
+   function Write_Atom (A : Atom) return String;
    --  Return the atom string.
 
    procedure Set_Info (A : in out Atom; Info : Atom_Info);

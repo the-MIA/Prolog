@@ -242,7 +242,7 @@ package body Prolog.Input_Output is
       --  max output line length is rightmargin
    begin
       for I in 1 .. Inlinelength (In_File_Depth) - 1 loop
-         if ((I mod Rightmargin) = 0) then
+         if (I mod Rightmargin) = 0 then
             Wrln;
          end if;
          --  write out each time output buffer line i.e.tempbuff becomes full.

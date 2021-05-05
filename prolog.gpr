@@ -11,7 +11,7 @@ project Prolog is
    package Builder is
       for Default_Switches ("Ada") use
         ("-gnatwa",
-         "-gnatyy-s");
+         "-gnatyyx-s");
    end Builder;
 
    for Create_Missing_Dirs use "True";

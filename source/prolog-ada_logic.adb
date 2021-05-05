@@ -240,15 +240,15 @@ package body Prolog.Ada_Logic is
    end Create;
 
    function Get_Item (L : List_Of_Clauses; N : Positive) return Clause is
-      Ptr : Clause_List := L.List;
-      I : Integer := 1;
+      Ptr  : Clause_List := L.List;
+      I    : Integer     := 1;
       Temp : Clause;
    begin
-      if (N > L.Arity) then
+      if N > L.Arity then
          raise Out_Of_Range;
       else
-         while (I <= N) loop
-            if (I = N) then
+         while I <= N loop
+            if I = N then
                Copy_Clause (Ptr.Value, Temp, -1, Heapf);
                return Temp;
             else
@@ -271,8 +271,8 @@ package body Prolog.Ada_Logic is
       if N > L.Arity then
          raise Out_Of_Range;
       else
-         while (I <= N) loop
-            if (I = N) then
+         while I <= N loop
+            if I = N then
                Clause_Garb.Get (Temp);
                if (Ptr.Tag = Skelt) and then not (Ptr.Anont) then
                   Var_Garb.Get (X);
@@ -308,13 +308,13 @@ package body Prolog.Ada_Logic is
                       N : Positive) return List_Of_Clauses
    is
       Ptr : List_List := L.List;
-      I : Integer := 1;
+      I   : Integer   := 1;
    begin
       if N > L.Arity then
          raise Out_Of_Range;
       else
-         while (I <= N) loop
-            if (I = N) then
+         while I <= N loop
+            if I = N then
                return Ptr.L;
             else
                Ptr := Ptr.Next;
@@ -350,16 +350,16 @@ package body Prolog.Ada_Logic is
          Ltemp.all.List := Ptr2;
          Ptr2.Value := Cl;
          Ptr1 := Ptr1.Next;
-         while (Ptr1 /= null) loop
+         while Ptr1 /= null loop
             Copy_Clause (Ptr1.Value, Cl, Number, Heapf);
             Addclause (Clptr (Cl), Number, False);
-            Ptr2.Next := new Clause_List_Record;
-            Ptr2 := Ptr2.Next;
+            Ptr2.Next  := new Clause_List_Record;
+            Ptr2       := Ptr2.Next;
             Ptr2.Value := Cl;
-            Ptr1 := Ptr1.Next;
+            Ptr1       := Ptr1.Next;
          end loop;
          Ptr2.Next := null;
-         Ltemp.all.Arity := L1.all.Arity;
+         Ltemp.all.Arity  := L1.all.Arity;
          Ltemp.all.Number := Number;
       end if;
       L2 := Ltemp;
@@ -388,7 +388,7 @@ package body Prolog.Ada_Logic is
          Copy_Term (L1.List, Value.List, Heapf);
          Ptr2 := Value.List;
          Ptr1 := Ptr1.Brother;
-         while (Ptr1 /= null) loop
+         while Ptr1 /= null loop
             Copy_Term (Ptr1, Ptr2.Brother, Heapf);
             Ptr1 := Ptr1.Brother;
             Ptr2 := Ptr2.Brother;
@@ -584,7 +584,7 @@ package body Prolog.Ada_Logic is
    begin
       if L.List = null then
          raise Out_Of_Range;
-      elsif (L.List.Next = null) then
+      elsif L.List.Next = null then
          if N = 1 then
             Zapclause (Clptr (L.List.Value));
             L.List := null;
@@ -592,7 +592,7 @@ package body Prolog.Ada_Logic is
          else
             raise Out_Of_Range;
          end if;
-      elsif (N = 1) then
+      elsif N = 1 then
          Zapclause (Clptr (L.List.Value));
          L.List  := L.List.Next;
          L.Arity := L.Arity - 1;
@@ -602,7 +602,7 @@ package body Prolog.Ada_Logic is
             I := I + 1;
             Ptr := Ptr.Next;
          end loop;
-         if (I = N) then
+         if I = N then
             Zapclause (Clptr (Ptr.Next.Value));
             Ptr.Next := Ptr.Next.Next;
             L.Arity  := L.Arity - 1;
@@ -620,14 +620,14 @@ package body Prolog.Ada_Logic is
    begin
       if L.List = null then
          raise Out_Of_Range;
-      elsif (L.List.Brother = null) then
+      elsif L.List.Brother = null then
          if N = 1 then
-            L.List := null;
+            L.List  := null;
             L.Arity := 0;
          else
             raise Out_Of_Range;
          end if;
-      elsif (N = 1) then
+      elsif N = 1 then
          L.List  := L.List.Brother;
          L.Arity := L.Arity - 1;
       else
@@ -636,7 +636,7 @@ package body Prolog.Ada_Logic is
             I   := I + 1;
             Ptr := Ptr.Brother;
          end loop;
-         if (I = N) then
+         if I = N then
             Ptr.Brother := Ptr.Brother.Brother;
             L.Arity := L.Arity - 1;
          else
@@ -652,7 +652,7 @@ package body Prolog.Ada_Logic is
    begin
       if L.List = null then
          raise Out_Of_Range;
-      elsif (L.List.Next = null) then
+      elsif L.List.Next = null then
          if N = 1 then
             L.List := null;
             L.Int_List := null;
@@ -660,7 +660,7 @@ package body Prolog.Ada_Logic is
          else
             raise Out_Of_Range;
          end if;
-      elsif (N = 1) then
+      elsif N = 1 then
          L.List := L.List.Next;
          L.Int_List := L.Int_List.Next;
          L.Arity := L.Arity - 1;
@@ -672,7 +672,7 @@ package body Prolog.Ada_Logic is
             Ptr1 := Ptr1.Next;
             Ptr2 := Ptr2.Next;
          end loop;
-         if (I = N) then
+         if I = N then
             Ptr1.Next := Ptr1.Next.Next;
             Ptr2.Next := Ptr2.Next.Next;
             L.Arity := L.Arity - 1;
@@ -708,7 +708,7 @@ package body Prolog.Ada_Logic is
 
    function Arity (C : Clause) return Natural is
    begin
-      if (C.The_Body /= null) then
+      if C.The_Body /= null then
          raise Attr_Error;
       elsif C.Head.Tag = Funct then
          return (C.Head.Arity);
@@ -745,7 +745,7 @@ package body Prolog.Ada_Logic is
       Ptr : Term;
       Count : Integer := 0;
    begin
-      if (C.The_Body /= null) then
+      if C.The_Body /= null then
          Ptr := C.The_Body;
          while Ptr /= null loop
             Count := Count + 1;
@@ -1202,7 +1202,7 @@ package body Prolog.Ada_Logic is
       Ptr : Answer := Ans;
    begin
       while Ptr /= null loop
-         if (Var = Ptr.Value.Id.all) then
+         if Var = Ptr.Value.Id.all then
             return (new Cls'(Head     => Ptr.Value.C,
                              The_Body => null,
                              Typ      => Chainc,
@@ -1242,7 +1242,7 @@ package body Prolog.Ada_Logic is
       I : Integer := 1;
    begin
       while Ptr /= null loop
-         if (I = N) then
+         if I = N then
             return Ptr.Value;
          else
             I := I + 1;

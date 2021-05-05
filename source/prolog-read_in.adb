@@ -414,7 +414,7 @@ package body Prolog.Read_In is
                            This_Int := 10 * This_Int + (Character'Pos (Ch) -
                                                           Character'Pos ('0'));
                            Ch := Getchar;
-                           exit when (Charclass (Ch) /= Digitc);
+                           exit when Charclass (Ch) /= Digitc;
                         end loop;
 
                         This_Int := -This_Int;

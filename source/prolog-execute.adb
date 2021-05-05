@@ -242,8 +242,8 @@ package body Prolog.Execute is
                   then
                      Clausep := null;
                   elsif
-                    (Clausep.Next =
-                       Get_Info (Clausep.Head.Name).Proc)
+                    Clausep.Next =
+                    Get_Info (Clausep.Head.Name).Proc
                   then
                      Clausep := Clausep.Next;
                      Listp   := Listp.Next;

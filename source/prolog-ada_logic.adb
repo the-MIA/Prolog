@@ -933,7 +933,7 @@ package body Prolog.Ada_Logic is
       else
          Startatom;
          for I in Attr'Range loop
-            Atomchar (Attr (I));
+            Atom_Char (Attr (I));
          end loop;
          Clause_Garb.Get (Temp);
          Func_Garb.Get (T);
@@ -1166,7 +1166,7 @@ package body Prolog.Ada_Logic is
                begin
                   Startatom;
                   for I in 1 .. S.Len loop
-                     Atomchar (S.Name (I));
+                     Atom_Char (S.Name (I));
                   end loop;
                   Name := Lookup;
                   if S.Arity > 0 then

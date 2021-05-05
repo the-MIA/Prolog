@@ -211,7 +211,7 @@ package body Prolog.Read_In is
                   Startatom;
 
                   loop
-                     Atomchar (Ch);
+                     Atom_Char (Ch);
                      Ch := Get_Char;
 
                      exit when not (Charclass (Ch) = Smallc or else
@@ -242,9 +242,9 @@ package body Prolog.Read_In is
                      if Ch = ''' then
                         Ch := Get_Char;
                         exit when Ch /= ''';
-                        Atomchar (Ch);
+                        Atom_Char (Ch);
                      else
-                        Atomchar (Ch);
+                        Atom_Char (Ch);
                      end if;
 
                   end loop;
@@ -263,9 +263,9 @@ package body Prolog.Read_In is
                      if Ch = '"' then
                         Ch := Get_Char;
                         exit when Ch /= '"';
-                        Atomchar (Ch);
+                        Atom_Char (Ch);
                      else
-                        Atomchar (Ch);
+                        Atom_Char (Ch);
                      end if;
 
                   end loop;
@@ -425,10 +425,10 @@ package body Prolog.Read_In is
 
                      else
                         Startatom;
-                        Atomchar (Lastch);
+                        Atom_Char (Lastch);
 
                         while Charclass (Ch) = Specialc loop
-                           Atomchar (Ch);
+                           Atom_Char (Ch);
                            Ch := Get_Char;
                         end loop;
 

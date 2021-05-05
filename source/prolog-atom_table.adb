@@ -44,7 +44,7 @@ package body Prolog.Atom_Table is
    --  Atom_Char  --
    -----------------
 
-   procedure Atomchar (C : Character) is
+   procedure Atom_Char (C : Character) is
       --  Store c as the next char of an atom.
    begin
       if Newatom.Index + Newatom.Length >= Atom_Table_Size then
@@ -53,7 +53,7 @@ package body Prolog.Atom_Table is
 
       Newatom.Length := Newatom.Length + 1;
       Atombuf (Newatom.Index + Newatom.Length) := C;
-   end Atomchar;
+   end Atom_Char;
 
    -----------------
    --  Same_Atom  --
@@ -134,7 +134,7 @@ package body Prolog.Atom_Table is
    begin
       Startatom;
       for I in S'Range loop
-         Atomchar (S (I));
+         Atom_Char (S (I));
       end loop;
       return Lookup;
    end Lookup;
@@ -160,7 +160,7 @@ package body Prolog.Atom_Table is
    begin
       Startatom;
       for I in S'Range loop
-         Atomchar (S (I));
+         Atom_Char (S (I));
       end loop;
 
       A := Lookup;

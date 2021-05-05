@@ -288,7 +288,7 @@ package body Prolog.Evaluable_Predicates is
                then
                   Moan (Bad_Char_Error, Abortz);
                end if;
-               Atomchar (Character'Val (Ch));
+               Atom_Char (Character'Val (Ch));
                X := Deref (X.Son.Brother, E);
             end loop;
             if not Is_Func (X, Nila, 0) then

@@ -45,7 +45,7 @@ package Prolog.Atom_Table is
    --  Start an atom. All the characters passed to AtomChar
    --  are considered part of this atom till a Lookup is done.
 
-   procedure Atomchar (C : Character);
+   procedure Atom_Char (C : Character);
    --  The next character of the atom started by StartAtom.
 
    function Lookup return Atom;

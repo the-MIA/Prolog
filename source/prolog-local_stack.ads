@@ -13,7 +13,7 @@
 --  THE USE OF THIS SOFTWARE.
 ----------------------------------------------------------------------
 
---with Prolog.Global_Objects; use Prolog.Global_Objects;
+--  with Prolog.Global_Objects; use Prolog.Global_Objects;
 with Prolog.Term_Pkg;       use Prolog.Term_Pkg;
 
 generic

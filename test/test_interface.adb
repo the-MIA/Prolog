@@ -18,7 +18,7 @@
 --  can use this procedure to drive the software.
 --  Not at all suitable for learning how to use the packages.
 
-with Ada.Text_Io;         use Ada.Text_Io;
+with Ada.Text_IO;         use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Prolog.Ada_Logic;    use Prolog.Ada_Logic;
 
@@ -151,7 +151,8 @@ begin
 
          Put_Line ("Operations on Lists of Clauses:");
          New_Line;
-         Put_Line ("CreateList-1,      Append-7,       CopyList-8,    GetItem-9");
+         Put_Line ("CreateList-1,      Append-7,       CopyList-8,    " &
+                     "GetItem-9");
          Put_Line ("DeleteItem-10,     DestroyList-11, ListLength-12");
          New_Line;
          New_Line;
@@ -168,7 +169,8 @@ begin
          Put_Line ("Operations on Clauses:");
          New_Line;
          Put_Line ("CopyClause-19,     DestroyClause-51,");
-         Put_Line ("SetSon-20,         GetSon-21,        Arity-22,  IsRule-23,");
+         Put_Line ("SetSon-20,         GetSon-21,        Arity-22,  " &
+                     "IsRule-23,");
          Put_Line ("BuildRule-24,      GetHead-25,       GetTail-26,");
          Put_Line ("ReadClause-27,     DumpClause-28,");
          New_Line;
@@ -194,7 +196,8 @@ begin
          Put_Line ("Operations on Lists of Lists:");
          New_Line;
          Put_Line ("CreateListList-42,  AppendListList-43,");
-         Put_Line ("CopyListList-44,    GetListItem-45,    DeleteListItem-46,");
+         Put_Line ("CopyListList-44,    GetListItem-45,    " &
+                     "DeleteListItem-46,");
          Put_Line ("DestroyListList-47, ListListLength-48,");
          New_Line;
          New_Line;
@@ -219,10 +222,15 @@ begin
                C (Op1) := Build_Fact (Getid);
                Put_Line ("^^^CLAUSE :^^^" & Dump_Clause (C (Op1)).all & ".");
 
-            when 4 => Put_Line ("Attribute : " &
-                                  Attribute_Kind_Type'Image (Attribute_Kind (C (Getclause))));
+            when 4 =>
+               Put_Line ("Attribute : " &
+                           Attribute_Kind_Type'Image
+                             (Attribute_Kind (C (Getclause))));
 
-            when 5 => Put_Line ("Integer : " & Integer'Image (Integer_Attribute (C (Getclause))));
+            when 5 =>
+               Put_Line ("Integer : " &
+                           Integer'Image
+                             (Integer_Attribute (C (Getclause))));
 
             when 6 => Put_Line ("Id : " &
                                   Identifier_Attribute (C (Getclause)).all);
@@ -390,7 +398,8 @@ begin
                New_Line;
 
             when 32 =>
-               This_Answer := Get_Answer (All_Answers, Getinteger ("Answer #"));
+               This_Answer := Get_Answer (All_Answers,
+                                          Getinteger ("Answer #"));
                Put_Line ("Answer now selected.");
 
             when 33 =>
@@ -437,7 +446,8 @@ begin
                Write_List (L (Op1));
 
             when 40 =>
-               Write_Fast_File (Getid ("FileName").all,  L (Get_List ("From")));
+               Write_Fast_File (Getid ("FileName").all,
+                                L (Get_List ("From")));
 
             when 41 =>
                S (Get_Son_List) := Create;

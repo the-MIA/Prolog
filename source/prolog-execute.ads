@@ -47,6 +47,7 @@ package Prolog.Execute is
      (X1, X2 : Term;
       E1, E2 : Integer;
       Depth  : Integer) return Boolean;
-   --  Unify x1 and x2.  Perform the matching substitution by binding variables.
+   --  Unify x1 and x2.  Perform the matching substitution by binding
+   --  variables.
 
 end Prolog.Execute;

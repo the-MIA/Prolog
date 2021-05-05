@@ -304,7 +304,9 @@ package body Prolog.Ada_Logic is
 
    end Get_Item;
 
-   function Get_Item (L : List_Of_Lists; N : Positive) return List_Of_Clauses is
+   function Get_Item (L : List_Of_Lists;
+                      N : Positive) return List_Of_Clauses
+   is
       Ptr : List_List := L.List;
       I : Integer := 1;
    begin
@@ -460,10 +462,13 @@ package body Prolog.Ada_Logic is
 
             when Commac =>
                Ptr.Next :=
-                 new Clause_List_Record'(Clause (Makeclause (C.Head, 0)), null);
+                 new Clause_List_Record'(Clause (Makeclause (C.Head, 0)),
+                                         null);
             when Chainc =>
-               Ptr.Next := new Clause_List_Record'(Clause (Makeclause (C.Head, C.The_Body, 0)),
-                                                   null);
+               Ptr.Next :=
+                 new Clause_List_Record'(Clause (Makeclause (C.Head,
+                                                             C.The_Body, 0)),
+                                         null);
             when Madec =>
                Ptr.Next := new Clause_List_Record'(C, null);
          end case;
@@ -933,7 +938,7 @@ package body Prolog.Ada_Logic is
       C     : Term;
       Dummy : Boolean;
    begin
-      Dummy := SeeFile (Fu.Readable_Or_Moan (File));
+      Dummy := See_File (Fu.Readable_Or_Moan (File));
       Value := Create;
 
       while not (File_Ended) loop
@@ -1079,7 +1084,7 @@ package body Prolog.Ada_Logic is
       end Write_Tail;
 
    begin
-      Dummy := TellFile (Fu.Createable_Or_Moan (File));
+      Dummy := Tell_File (Fu.Createable_Or_Moan (File));
       Ptr := List.List;
       for I in 1 .. List.Arity loop
          Writeout (Ptr.Value.Head, 0);
@@ -1346,7 +1351,7 @@ package body Prolog.Ada_Logic is
       Global_Objects.Mode := Sysm;
 
       --  The following used to be "SeeSystemFile"
-      Dummy := SeeFile (Fu.Readable_Or_Moan (Id.Ada_Logic_System_File));
+      Dummy := See_File (Fu.Readable_Or_Moan (Id.Ada_Logic_System_File));
 
       if not Dummy then
          Moan (Init_Error, Diez);
@@ -1357,7 +1362,7 @@ package body Prolog.Ada_Logic is
 
       end loop;
 
-      Dummy := SeenFile;
+      Dummy := Seenfile;
 
       if not (Dummy) then
          Moan (Init_Error, Diez);

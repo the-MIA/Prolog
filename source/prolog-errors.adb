@@ -1,17 +1,17 @@
 
--- Copyright (C) 1986, 1987, 1988, 1989, 1990, 1991, 1992 by the Program
--- Analysis and Verification Group, Leland Stanford Junior University.
--- All Rights Reserved.
+--  Copyright (C) 1986, 1987, 1988, 1989, 1990, 1991, 1992 by the Program
+--  Analysis and Verification Group, Leland Stanford Junior University.
+--  All Rights Reserved.
 --
--- This file is part of the Anna tools.  You may copy, modify, and
--- distribute the Anna tools under the conditions described in the Anna
--- General Public License.  A copy of this license should be in a file
--- named COPYING.
+--  This file is part of the Anna tools.  You may copy, modify, and
+--  distribute the Anna tools under the conditions described in the Anna
+--  General Public License.  A copy of this license should be in a file
+--  named COPYING.
 --
--- LELAND STANFORD JUNIOR UNIVERSITY ALLOWS FREE USE OF THIS SOFTWARE IN
--- ITS "AS IS" CONDITION.  LELAND STANFORD JUNIOR UNIVERSITY DISCLAIMS
--- ANY LIABILITY OF ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM
--- THE USE OF THIS SOFTWARE.
+--  LELAND STANFORD JUNIOR UNIVERSITY ALLOWS FREE USE OF THIS SOFTWARE IN
+--  ITS "AS IS" CONDITION.  LELAND STANFORD JUNIOR UNIVERSITY DISCLAIMS
+--  ANY LIABILITY OF ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM
+--  THE USE OF THIS SOFTWARE.
 ----------------------------------------------------------------------
 
 package body Prolog.Errors is
@@ -21,47 +21,66 @@ package body Prolog.Errors is
    type Acc_String is access constant String;
 
 
-   Arity_Str          : aliased constant String := "evaluable predicate called with wrong arity";
+   Arity_Str          : aliased constant String :=
+     "evaluable predicate called with wrong arity";
    Assert_Str         : aliased constant String := "asserting unsuitable term";
    Atom_Space_Str     : aliased constant String := "out of atom space";
    Bad_Cdd_Str        : aliased constant String := ".   expected";
-   Bad_Char_Str       : aliased constant String := "character value out of range";
+   Bad_Char_Str       : aliased constant String :=
+     "character value out of range";
    Bad_Delim_Str      : aliased constant String := "unexpected delimiter";
    Bad_Exp_Str        : aliased constant String := "malformed expression";
-   Call_Str           : aliased constant String := "unsuitable arguments to  'call'";
-   Clause_Str         : aliased constant String := "unsuitable arguments to 'clause' /'deny'";
+   Call_Str           : aliased constant String :=
+     "unsuitable arguments to  'call'";
+   Clause_Str         : aliased constant String :=
+     "unsuitable arguments to 'clause' /'deny'";
    Comment_Str        : aliased constant String := "unterminated comment";
 
    Conflict_Str       : aliased constant String := "precedence conflict";
-   Depth_Str          : aliased constant String := "nesting too deep: probably cyclic term";
+   Depth_Str          : aliased constant String :=
+     "nesting too deep: probably cyclic term";
    Divide_Str         : aliased constant String := "dividing by zero";
    Eof_Str            : aliased constant String := "unexpected end of file";
    Frame_Space_Str    : aliased constant String := "out of frame space";
-   Functor_Str        : aliased constant String := "unsuitable arguments to  'functor'";
-   Goal_Str           : aliased constant String := "unsuitable term appears as goal";
+   Functor_Str        : aliased constant String :=
+     "unsuitable arguments to  'functor'";
+   Goal_Str           : aliased constant String :=
+     "unsuitable term appears as goal";
    Local_Space_Str    : aliased constant String := "out of local stack space";
    Long_Line_Str      : aliased constant String := "input line too long";
-   Name_Arg_Str       : aliased constant String := "unsuitable arguments to  'name'";
+   Name_Arg_Str       : aliased constant String :=
+     "unsuitable arguments to  'name'";
 
-   Need_Op_Str        : aliased constant String := "infix or postfix operator expected";
+   Need_Op_Str        : aliased constant String :=
+     "infix or postfix operator expected";
    Need_Quote_Str     : aliased constant String := "closing quote expected";
-   Need_Rand_Str      : aliased constant String := "operand or prefix operator expected";
-   Nvars_Str          : aliased constant String := "out of variable table space";
-   Op_Str             : aliased constant String := "unsuitable arguments to ''op'";
+   Need_Rand_Str      : aliased constant String :=
+     "operand or prefix operator expected";
+   Nvars_Str          : aliased constant String :=
+     "out of variable table space";
+   Op_Str             : aliased constant String :=
+     "unsuitable arguments to ''op'";
    Prec_Str           : aliased constant String := "precedence violation";
-   Prog_Fail_Str      : aliased constant String := "goal failed during program input";
+   Prog_Fail_Str      : aliased constant String :=
+     "goal failed during program input";
    Read_Nest_Str      : aliased constant String := "nesting too deep in input";
    Read_Stack_Str     : aliased constant String := "read stack overflow";
-   Sys_Proc_Str       : aliased constant String := "accessing or modifying system procedures";
+   Sys_Proc_Str       : aliased constant String :=
+     "accessing or modifying system procedures";
 
-   Var_Space_Str      : aliased constant String := "out of variable name space";
-   Wierd_Ch_Str       : aliased constant String := "illegal character in input";
+   Var_Space_Str      : aliased constant String :=
+     "out of variable name space";
+   Wierd_Ch_Str       : aliased constant String :=
+     "illegal character in input";
    Fault_Str          : aliased constant String := "internal error";
-   In_File_Depth_Str  : aliased constant String := "nesting-level of  'see'  is to deep";
-   Out_File_Depth_Str : aliased constant String := "nesting-level of 'tell' is to deep";
+   In_File_Depth_Str  : aliased constant String :=
+     "nesting-level of  'see'  is to deep";
+   Out_File_Depth_Str : aliased constant String :=
+     "nesting-level of 'tell' is to deep";
    File_Name_Str      : aliased constant String := "file-name error";
    File_Status_Str    : aliased constant String := "status error";
-   Init_Str           : aliased constant String := "error during initialization";
+   Init_Str           : aliased constant String :=
+     "error during initialization";
 
    Err_Array : constant array (Error_Type) of Acc_String := (
                 Arity_Error          => Arity_Str'Access,
@@ -123,7 +142,7 @@ package body Prolog.Errors is
    --  Set_Kind_Of_Error  --
    -------------------------
 
-   procedure Set_Kind_Of_Error ( E : Error_Type) is
+   procedure Set_Kind_Of_Error (E : Error_Type) is
    --  This procedure is used by the underlying Prolog
    --  reasoning tool to set the kind of error so that function
    --  KIND_OF_ERROR knows what to return.

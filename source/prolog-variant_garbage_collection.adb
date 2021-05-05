@@ -1,4 +1,3 @@
-
 --  Copyright (C) 1986, 1987, 1988, 1989, 1990, 1991, 1992 by the Program
 --  Analysis and Verification Group, Leland Stanford Junior University.
 --  All Rights Reserved.
@@ -16,23 +15,24 @@
 
 package body Prolog.Variant_Garbage_Collection is
 
---  type item is limited private;
---  type link is access item;
+   --  type item is limited private;
+   --  type link is access item;
 
-    type Node_Type;
-    type List_Type is access Node_Type;
-    type Node_Type is
-	record
-	    L    : Link;
-	    Next : List_Type;
-	end record;
+   type Node_Type;
+   type List_Type is access Node_Type;
+   type Node_Type is
+      record
+         L    : Link;
+         Next : List_Type;
+      end record;
 
-    Free_Nodes_With_No_Items, Free_Nodes_With_Free_Items : List_Type;
+   Free_Nodes_With_No_Items   : List_Type;
+   Free_Nodes_With_Free_Items : List_Type;
 
---    Free_Items   : List_Type renames Free_Nodes_With_Free_Items;
---    Free_Nodes   : List_Type renames Free_Nodes_With_No_Items;
+   ------------
+   --  Free  --
+   ------------
 
---------------------------
    procedure Free (Item : in out Link) is
       Temp : List_Type;
    begin
@@ -51,7 +51,10 @@ package body Prolog.Variant_Garbage_Collection is
       end if;
    end Free;
 
---------------------------
+   -----------
+   --  Get  --
+   -----------
+
    procedure Get (New_Item : in out Link) is
       Temp : List_Type;
    begin
@@ -69,5 +72,5 @@ package body Prolog.Variant_Garbage_Collection is
       end if;
    end Get;
 
---------------------------
+
 end Prolog.Variant_Garbage_Collection;

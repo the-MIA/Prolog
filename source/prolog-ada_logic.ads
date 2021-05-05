@@ -67,7 +67,8 @@ package Prolog.Ada_Logic is
 
    function Get_Item (L : List_Of_Clauses; N : Positive) return Clause;
    function Get_Item (L : List_Of_Sons;    N : Positive) return Clause;
-   function Get_Item (L : List_Of_Lists;   N : Positive) return List_Of_Clauses;
+   function Get_Item (L : List_Of_Lists;
+                      N : Positive) return List_Of_Clauses;
 
    procedure Copy (L1 : List_Of_Clauses; L2 : out List_Of_Clauses);
    procedure Copy (L1 : List_Of_Sons;    L2 : out List_Of_Sons);

@@ -487,7 +487,7 @@ package body Prolog.Execute is
    --  Init_Unify --
    -----------------
 
-   procedure Initunify is
+   procedure Init_Unify is
       --  Set up table of actions for Unify.
    begin
       Uaction (Funct, Funct)  := Funcu;
@@ -506,8 +506,8 @@ package body Prolog.Execute is
       Uaction (Skelt, Skelt)  := Succeedu;
       Uaction (Funct, Intt)   := Failu;
       Uaction (Intt,  Funct)  := Failu;
-   end Initunify;
+   end Init_Unify;
 
 begin
-   Initunify;
+   Init_Unify;
 end Prolog.Execute;

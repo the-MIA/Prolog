@@ -116,11 +116,11 @@ package body Prolog.Local_Stack is
    --  Get_Clause  --
    ------------------
 
-   function Getclause (E : Env) return Clptr is
+   function Get_Clause (E : Env) return Clptr is
       --  Return active clause
    begin
       return Display (E).Fclause;
-   end Getclause;
+   end Get_Clause;
 
    ----------------
    --  Get_List  --

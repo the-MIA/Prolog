@@ -1134,7 +1134,7 @@ package body Prolog.Ada_Logic is
                                  Next     => null));
       end loop;
 
-      Dummy := Seenfile;
+      Dummy := Seen_File;
       return Value;
 
    end Read_File;
@@ -1282,7 +1282,7 @@ package body Prolog.Ada_Logic is
          Wrln;
          Ptr := Ptr.Next;
       end loop;
-      Dummy := Toldfile;
+      Dummy := Told_File;
    end Write_File;
 
    -----------------------
@@ -1594,7 +1594,7 @@ package body Prolog.Ada_Logic is
 
       end loop;
 
-      Dummy := Seenfile;
+      Dummy := Seen_File;
 
       if not (Dummy) then
          Moan (Init_Error, Diez);

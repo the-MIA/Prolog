@@ -43,7 +43,7 @@ package Prolog.Input_Output is
    Out_File_Depth : Integer range 1 .. Maxoutdepth := 1;
    --  The current depth.
 
-   function Seesystemfile (Filename : String) return Boolean;
+   function See_System_File (Filename : String) return Boolean;
    --  Open the system file 'filename' and connect to it.
 
    function See_File  (Filename : String) return Boolean;
@@ -54,20 +54,20 @@ package Prolog.Input_Output is
    --  The functions below give some idea about whether a file is
    --  being seen/told.
 
-   function Seeingsystemfile return Boolean;
+   function Seeing_System_File return Boolean;
    --  Is the system file being read?
 
-   function Seeingfile return Boolean;
+   function Seeing_File return Boolean;
    --  Is a file being 'seen' at present?
 
-   function Tellingfile return Boolean;
+   function Telling_File return Boolean;
    --  Is a file being 'told' at present?
 
-   function Seensystemfile return Boolean;
+   function Seen_System_File return Boolean;
    --  Close the system file.
 
-   function Seenfile return Boolean;
-   function Toldfile return Boolean;
+   function Seen_File return Boolean;
+   function Told_File return Boolean;
    --  Change depth back by 1 and connect to previous file.
    --  The functions return true if a file was actually being seen/told.
 

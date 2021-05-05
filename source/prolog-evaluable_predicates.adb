@@ -542,12 +542,12 @@ package body Prolog.Evaluable_Predicates is
          when Seer =>
             Result := See_File (Writeatom (Argval (1).Name)); --  In IO
 
-         when Seenr => Result := Seenfile; --  In IO
+         when Seenr => Result := Seen_File; --  In IO
 
          when Tellr =>
             Result := Tell_File (Writeatom (Argval (1).Name)); --  In IO
 
-         when Toldr => Result := Toldfile; --  In IO
+         when Toldr => Result := Told_File; --  In IO
 
          when Quoter => Quoteflag := True; --  In WRITE_OUT
 

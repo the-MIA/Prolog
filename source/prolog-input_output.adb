@@ -450,36 +450,36 @@ package body Prolog.Input_Output is
    --  Seeing_File  --
    -------------------
 
-   function Seeingfile return Boolean is
+   function Seeing_File return Boolean is
    begin
       return Seeflag;
-   end Seeingfile;
+   end Seeing_File;
 
    --------------------
    --  Telling_File  --
    --------------------
 
-   function Tellingfile return Boolean is
+   function Telling_File return Boolean is
    begin
       return Tellflag;
-   end Tellingfile;
+   end Telling_File;
 
    -------------------
    --  Seen_File  --
    -------------------
 
-   function Seenfile return Boolean is
+   function Seen_File return Boolean is
    begin
       In_Line_Buffer := Null_Unbounded_String;
       Pos := 1;
       return True;
-   end Seenfile;
+   end Seen_File;
 
    -----------------
    --  Told_File  --
    -----------------
 
-   function Toldfile return Boolean is
+   function Told_File return Boolean is
    begin
       if Out_File_Depth > 1 then
          Wrln;
@@ -493,13 +493,13 @@ package body Prolog.Input_Output is
          Tellflag := False;
          return False;
       end if;
-   end Toldfile;
+   end Told_File;
 
    -----------------------
    --  See_System_File  --
    -----------------------
 
-   function Seesystemfile (Filename : String) return Boolean is
+   function See_System_File (Filename : String) return Boolean is
       --  Open a systemfile for reading.
    begin
       Open (Prolib, In_File, Filename);
@@ -508,22 +508,22 @@ package body Prolog.Input_Output is
    exception
       when others =>
          return False;
-   end Seesystemfile;
+   end See_System_File;
 
    --------------------------
    --  Seeing_System_File  --
    --------------------------
 
-   function Seeingsystemfile return Boolean is
+   function Seeing_System_File return Boolean is
    begin
       return Is_Open (Prolib);
-   end Seeingsystemfile;
+   end Seeing_System_File;
 
    ------------------------
    --  Seen_System_File  --
    ------------------------
 
-   function Seensystemfile return Boolean is
+   function Seen_System_File return Boolean is
    begin
       if Is_Open (Prolib) then
          Close (Prolib);
@@ -532,7 +532,7 @@ package body Prolog.Input_Output is
       else
          return False;
       end if;
-   end Seensystemfile;
+   end Seen_System_File;
 
 begin
 

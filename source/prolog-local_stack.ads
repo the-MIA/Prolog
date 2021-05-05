@@ -13,7 +13,7 @@
 --  THE USE OF THIS SOFTWARE.
 ----------------------------------------------------------------------
 
---with Prolog.Global_Objects; use Prolog.Global_Objects;
+--  with Prolog.Global_Objects; use Prolog.Global_Objects;
 with Prolog.Term_Pkg;       use Prolog.Term_Pkg;
 
 generic
@@ -57,7 +57,6 @@ package Prolog.Local_Stack is
       Nvars   : Integer;
       Glblptr : Term;
       Trlptr  : Trail) return Env;
-
    --  Create a new environment with :
    --       Invoking goal : callp
    --       Environment for the goal : envp

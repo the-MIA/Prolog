@@ -1,4 +1,3 @@
-
 --  Copyright (C) 1986, 1987, 1988, 1989, 1990, 1991, 1992 by the Program
 --  Analysis and Verification Group, Leland Stanford Junior University.
 --  All Rights Reserved.
@@ -75,6 +74,10 @@ package body Prolog.Ada_Logic is
    Clause_X : Clause;
    pragma Unreferenced (Clause_X);
 
+   ---------------
+   --  Is_Rule  --
+   ---------------
+
    function Is_Rule (C : Clause) return Boolean is
    begin
       if C.The_Body /= null then
@@ -83,6 +86,10 @@ package body Prolog.Ada_Logic is
          return False;
       end if;
    end Is_Rule;
+
+   ----------------------
+   --  Attribute_Kind  --
+   ----------------------
 
    function Attribute_Kind (C : Clause) return Attribute_Kind_Type is
    begin
@@ -103,6 +110,10 @@ package body Prolog.Ada_Logic is
       end if;
    end Attribute_Kind;
 
+   -------------------------
+   --  Integer_Attribute  --
+   -------------------------
+
    function Integer_Attribute (C : Clause) return Integer is
    begin
       if (C.The_Body /= null) or else (C.Head.Tag /= Intt) then
@@ -111,6 +122,10 @@ package body Prolog.Ada_Logic is
          return C.Head.Ival;
       end if;
    end Integer_Attribute;
+
+   ----------------------------
+   --  Identifier_Attribute  --
+   ----------------------------
 
    function Identifier_Attribute (C : Clause) return Identifier is
    begin
@@ -141,6 +156,10 @@ package body Prolog.Ada_Logic is
    procedure Copy_Term (C1 :     Term;
                         C2 : out Term;
                         F  :     Field_Type);
+
+   -----------------
+   --  Copy_Term  --
+   -----------------
 
    procedure Copy_Term (C1 : Term; C2 : out Term; F : Field_Type) is
       Value, C3, C4 : Term;
@@ -185,6 +204,10 @@ package body Prolog.Ada_Logic is
       end if;
    end Copy_Term;
 
+   ----------------------
+   --  Destroy_Clause  --
+   ----------------------
+
    procedure Destroy_Clause (C : in out Clause) is
    begin
       if C.Head /= null then
@@ -208,6 +231,10 @@ package body Prolog.Ada_Logic is
       Clause_Garb.Free (Clptr (C));
    end Destroy_Clause;
 
+   --------------
+   --  Length  --
+   --------------
+
    function Length (L : List_Of_Clauses) return Natural is
    begin
       return (L.Arity);
@@ -222,6 +249,10 @@ package body Prolog.Ada_Logic is
    begin
       return (L.Arity);
    end Length;
+
+   --------------
+   --  Create  --
+   --------------
 
    function Create return List_Of_Clauses is
    begin
@@ -239,16 +270,20 @@ package body Prolog.Ada_Logic is
       return (0, null);
    end Create;
 
+   ----------------
+   --  Get_Item  --
+   ----------------
+
    function Get_Item (L : List_Of_Clauses; N : Positive) return Clause is
-      Ptr : Clause_List := L.List;
-      I : Integer := 1;
+      Ptr  : Clause_List := L.List;
+      I    : Integer     := 1;
       Temp : Clause;
    begin
-      if (N > L.Arity) then
+      if N > L.Arity then
          raise Out_Of_Range;
       else
-         while (I <= N) loop
-            if (I = N) then
+         while I <= N loop
+            if I = N then
                Copy_Clause (Ptr.Value, Temp, -1, Heapf);
                return Temp;
             else
@@ -262,6 +297,10 @@ package body Prolog.Ada_Logic is
       return Temp;
    end Get_Item;
 
+   ----------------
+   --  Get_Item  --
+   ----------------
+
    function Get_Item (L : List_Of_Sons; N : Positive) return Clause is
       Ptr : Term := L.List;
       I : Integer := 1;
@@ -271,8 +310,8 @@ package body Prolog.Ada_Logic is
       if N > L.Arity then
          raise Out_Of_Range;
       else
-         while (I <= N) loop
-            if (I = N) then
+         while I <= N loop
+            if I = N then
                Clause_Garb.Get (Temp);
                if (Ptr.Tag = Skelt) and then not (Ptr.Anont) then
                   Var_Garb.Get (X);
@@ -304,15 +343,21 @@ package body Prolog.Ada_Logic is
 
    end Get_Item;
 
-   function Get_Item (L : List_Of_Lists; N : Positive) return List_Of_Clauses is
+   ----------------
+   --  Get_Item  --
+   ----------------
+
+   function Get_Item (L : List_Of_Lists;
+                      N : Positive) return List_Of_Clauses
+   is
       Ptr : List_List := L.List;
-      I : Integer := 1;
+      I   : Integer   := 1;
    begin
       if N > L.Arity then
          raise Out_Of_Range;
       else
-         while (I <= N) loop
-            if (I = N) then
+         while I <= N loop
+            if I = N then
                return Ptr.L;
             else
                Ptr := Ptr.Next;
@@ -324,6 +369,9 @@ package body Prolog.Ada_Logic is
       raise Program_Error;
    end Get_Item;
 
+   ------------
+   --  Copy  --
+   ------------
 
    procedure Copy (L1     :     List_Of_Clauses;
                    L2     : out List_Of_Clauses;
@@ -348,20 +396,24 @@ package body Prolog.Ada_Logic is
          Ltemp.all.List := Ptr2;
          Ptr2.Value := Cl;
          Ptr1 := Ptr1.Next;
-         while (Ptr1 /= null) loop
+         while Ptr1 /= null loop
             Copy_Clause (Ptr1.Value, Cl, Number, Heapf);
             Addclause (Clptr (Cl), Number, False);
-            Ptr2.Next := new Clause_List_Record;
-            Ptr2 := Ptr2.Next;
+            Ptr2.Next  := new Clause_List_Record;
+            Ptr2       := Ptr2.Next;
             Ptr2.Value := Cl;
-            Ptr1 := Ptr1.Next;
+            Ptr1       := Ptr1.Next;
          end loop;
          Ptr2.Next := null;
-         Ltemp.all.Arity := L1.all.Arity;
+         Ltemp.all.Arity  := L1.all.Arity;
          Ltemp.all.Number := Number;
       end if;
       L2 := Ltemp;
    end Copy;
+
+   ------------
+   --  Copy  --
+   ------------
 
    procedure Copy (L1 :     List_Of_Clauses;
                    L2 : out List_Of_Clauses)
@@ -372,6 +424,10 @@ package body Prolog.Ada_Logic is
       Copy (L1, Value, Value.Number);
       L2 := Value;
    end Copy;
+
+   ------------
+   --  Copy  --
+   ------------
 
    procedure Copy (L1 :     List_Of_Sons;
                    L2 : out List_Of_Sons) is
@@ -386,7 +442,7 @@ package body Prolog.Ada_Logic is
          Copy_Term (L1.List, Value.List, Heapf);
          Ptr2 := Value.List;
          Ptr1 := Ptr1.Brother;
-         while (Ptr1 /= null) loop
+         while Ptr1 /= null loop
             Copy_Term (Ptr1, Ptr2.Brother, Heapf);
             Ptr1 := Ptr1.Brother;
             Ptr2 := Ptr2.Brother;
@@ -398,11 +454,19 @@ package body Prolog.Ada_Logic is
       end if;
    end Copy;
 
+   ------------
+   --  Copy  --
+   ------------
+
    procedure Copy (L1 :     List_Of_Lists;
                    L2 : out List_Of_Lists) is
    begin
       L2 := L1; --  To be changed.
    end Copy;
+
+   --------------
+   --  Append  --
+   --------------
 
    procedure Append (C :        Clause;
                      L : in out List_Of_Clauses)
@@ -424,6 +488,10 @@ package body Prolog.Ada_Logic is
       L.Arity := L.Arity + 1;
    end Append;
 
+   --------------
+   --  Append  --
+   --------------
+
    procedure Append (C :        List_Of_Clauses;
                      L : in out List_Of_Lists)
    is
@@ -437,6 +505,10 @@ package body Prolog.Ada_Logic is
       L.Arity    := L.Arity + 1;
    end Append;
 
+   --------------
+   --  Append  --
+   --------------
+
    procedure Append (C :        Clause;
                      L : in out List_Of_Sons) is
    begin
@@ -445,6 +517,10 @@ package body Prolog.Ada_Logic is
       L.List := C.Head;
       L.Arity := L.Arity + 1;
    end Append;
+
+   --------------
+   --  Append  --
+   --------------
 
    procedure Append (L : in out List_Of_Clauses; C : Clause) is
       Ptr : Clause_List;
@@ -460,10 +536,13 @@ package body Prolog.Ada_Logic is
 
             when Commac =>
                Ptr.Next :=
-                 new Clause_List_Record'(Clause (Makeclause (C.Head, 0)), null);
+                 new Clause_List_Record'(Clause (Makeclause (C.Head, 0)),
+                                         null);
             when Chainc =>
-               Ptr.Next := new Clause_List_Record'(Clause (Makeclause (C.Head, C.The_Body, 0)),
-                                                   null);
+               Ptr.Next :=
+                 new Clause_List_Record'(Clause (Makeclause (C.Head,
+                                                             C.The_Body, 0)),
+                                         null);
             when Madec =>
                Ptr.Next := new Clause_List_Record'(C, null);
          end case;
@@ -471,6 +550,10 @@ package body Prolog.Ada_Logic is
          L.Arity := L.Arity + 1;
       end if;
    end Append;
+
+   --------------
+   --  Append  --
+   --------------
 
    procedure Append (L : in out List_Of_Sons; C : Clause) is
       Ptr, T : Term;
@@ -492,6 +575,10 @@ package body Prolog.Ada_Logic is
       end if;
    end Append;
 
+   --------------
+   --  Append  --
+   --------------
+
    procedure Append (L : in out List_Of_Lists; C : List_Of_Clauses) is
       Ptr1 : Integer_List;
       Ptr2 : List_List;
@@ -512,6 +599,10 @@ package body Prolog.Ada_Logic is
          L.Arity := L.Arity + 1;
       end if;
    end Append;
+
+   --------------
+   --  Append  --
+   --------------
 
    procedure Append (L1 : in out List_Of_Clauses;
                      L2 :        List_Of_Clauses)
@@ -535,6 +626,10 @@ package body Prolog.Ada_Logic is
       end if;
    end Append;
 
+   --------------
+   --  Append  --
+   --------------
+
    procedure Append (L1 : in out List_Of_Sons;
                      L2 :        List_Of_Sons)
    is
@@ -551,6 +646,10 @@ package body Prolog.Ada_Logic is
          L1.Arity := L1.Arity + L2.Arity;
       end if;
    end Append;
+
+   --------------
+   --  Append  --
+   --------------
 
    procedure Append (L1 : in out List_Of_Lists;
                      L2 :        List_Of_Lists)
@@ -573,13 +672,17 @@ package body Prolog.Ada_Logic is
       end if;
    end Append;
 
+   -------------------
+   --  Delete_Item  --
+   -------------------
+
    procedure Delete_Item (L : in out List_Of_Clauses; N : Positive) is
       Ptr : Clause_List;
       I   : Integer := 2;
    begin
       if L.List = null then
          raise Out_Of_Range;
-      elsif (L.List.Next = null) then
+      elsif L.List.Next = null then
          if N = 1 then
             Zapclause (Clptr (L.List.Value));
             L.List := null;
@@ -587,7 +690,7 @@ package body Prolog.Ada_Logic is
          else
             raise Out_Of_Range;
          end if;
-      elsif (N = 1) then
+      elsif N = 1 then
          Zapclause (Clptr (L.List.Value));
          L.List  := L.List.Next;
          L.Arity := L.Arity - 1;
@@ -597,7 +700,7 @@ package body Prolog.Ada_Logic is
             I := I + 1;
             Ptr := Ptr.Next;
          end loop;
-         if (I = N) then
+         if I = N then
             Zapclause (Clptr (Ptr.Next.Value));
             Ptr.Next := Ptr.Next.Next;
             L.Arity  := L.Arity - 1;
@@ -607,6 +710,10 @@ package body Prolog.Ada_Logic is
       end if;
    end Delete_Item;
 
+   -------------------
+   --  Delete_Item  --
+   -------------------
+
    procedure Delete_Item (L : in out List_Of_Sons;
                           N :        Positive)
    is
@@ -615,14 +722,14 @@ package body Prolog.Ada_Logic is
    begin
       if L.List = null then
          raise Out_Of_Range;
-      elsif (L.List.Brother = null) then
+      elsif L.List.Brother = null then
          if N = 1 then
-            L.List := null;
+            L.List  := null;
             L.Arity := 0;
          else
             raise Out_Of_Range;
          end if;
-      elsif (N = 1) then
+      elsif N = 1 then
          L.List  := L.List.Brother;
          L.Arity := L.Arity - 1;
       else
@@ -631,7 +738,7 @@ package body Prolog.Ada_Logic is
             I   := I + 1;
             Ptr := Ptr.Brother;
          end loop;
-         if (I = N) then
+         if I = N then
             Ptr.Brother := Ptr.Brother.Brother;
             L.Arity := L.Arity - 1;
          else
@@ -640,6 +747,10 @@ package body Prolog.Ada_Logic is
       end if;
    end Delete_Item;
 
+   -------------------
+   --  Delete_Item  --
+   -------------------
+
    procedure Delete_Item (L : in out List_Of_Lists; N : Positive) is
       Ptr1 : Integer_List;
       Ptr2 : List_List;
@@ -647,7 +758,7 @@ package body Prolog.Ada_Logic is
    begin
       if L.List = null then
          raise Out_Of_Range;
-      elsif (L.List.Next = null) then
+      elsif L.List.Next = null then
          if N = 1 then
             L.List := null;
             L.Int_List := null;
@@ -655,7 +766,7 @@ package body Prolog.Ada_Logic is
          else
             raise Out_Of_Range;
          end if;
-      elsif (N = 1) then
+      elsif N = 1 then
          L.List := L.List.Next;
          L.Int_List := L.Int_List.Next;
          L.Arity := L.Arity - 1;
@@ -667,7 +778,7 @@ package body Prolog.Ada_Logic is
             Ptr1 := Ptr1.Next;
             Ptr2 := Ptr2.Next;
          end loop;
-         if (I = N) then
+         if I = N then
             Ptr1.Next := Ptr1.Next.Next;
             Ptr2.Next := Ptr2.Next.Next;
             L.Arity := L.Arity - 1;
@@ -677,6 +788,10 @@ package body Prolog.Ada_Logic is
       end if;
    end Delete_Item;
 
+   ---------------
+   --  Destroy  --
+   ---------------
+
    procedure Destroy (L : in out List_Of_Clauses) is
    begin
       while L.List /= null loop
@@ -685,6 +800,10 @@ package body Prolog.Ada_Logic is
       end loop;
       L.Arity := 0;
    end Destroy;
+
+   ---------------
+   --  Destroy  --
+   ---------------
 
    procedure Destroy (L : in out List_Of_Sons) is
    begin
@@ -696,14 +815,22 @@ package body Prolog.Ada_Logic is
       --  end loop;
    end Destroy;
 
+   ---------------
+   --  Destroy  --
+   ---------------
+
    procedure Destroy (L : in out List_Of_Lists) is
    begin
       L := (null, null, 0);
    end Destroy;
 
+   -------------
+   --  Arity  --
+   -------------
+
    function Arity (C : Clause) return Natural is
    begin
-      if (C.The_Body /= null) then
+      if C.The_Body /= null then
          raise Attr_Error;
       elsif C.Head.Tag = Funct then
          return (C.Head.Arity);
@@ -711,6 +838,10 @@ package body Prolog.Ada_Logic is
          return 0;
       end if;
    end Arity;
+
+   --------------------
+   --  Get_Son_List  --
+   --------------------
 
    function Get_Son_List (C : Clause) return List_Of_Sons is
    begin
@@ -722,6 +853,10 @@ package body Prolog.Ada_Logic is
          raise No_Sons;
       end if;
    end Get_Son_List;
+
+   ----------------
+   --  Get_Head  --
+   ----------------
 
    function Get_Head (C : Clause) return Clause is
       Temp : Clptr;
@@ -736,11 +871,15 @@ package body Prolog.Ada_Logic is
       return Clause (Temp);
    end Get_Head;
 
+   ----------------
+   --  Get_Tail  --
+   ----------------
+
    function Get_Tail (C : Clause) return List_Of_Sons is
       Ptr : Term;
       Count : Integer := 0;
    begin
-      if (C.The_Body /= null) then
+      if C.The_Body /= null then
          Ptr := C.The_Body;
          while Ptr /= null loop
             Count := Count + 1;
@@ -751,6 +890,10 @@ package body Prolog.Ada_Logic is
          raise Attr_Error;
       end if;
    end Get_Tail;
+
+   ------------------
+   --  Build_Fact  --
+   ------------------
 
    function Build_Fact (Attr : Integer) return Clause is
       Temp : Clptr;
@@ -765,6 +908,10 @@ package body Prolog.Ada_Logic is
                          Next => null));
       return Clause (Temp);
    end Build_Fact;
+
+   ------------------
+   --  Build_Fact  --
+   ------------------
 
    function Build_Fact (Attr : Identifier) return Clause is
       Temp : Clptr; T : Term;
@@ -800,6 +947,10 @@ package body Prolog.Ada_Logic is
       end if;
    end Build_Fact;
 
+   ------------------
+   --  Build_Anon  --
+   ------------------
+
    function Build_Anon return Clause is
       Temp : Clptr; T : Term;
    begin
@@ -814,6 +965,10 @@ package body Prolog.Ada_Logic is
       return Clause (Temp);
    end Build_Anon;
 
+   --------------------
+   --  Set_Son_List  --
+   --------------------
+
    procedure Set_Son_List (C : in out Clause; Sons : List_Of_Sons) is
    begin
       if C.The_Body /= null then
@@ -825,6 +980,10 @@ package body Prolog.Ada_Logic is
          C.Head.Arity := Sons.Arity;
       end if;
    end Set_Son_List;
+
+   ------------------
+   --  Build_Rule  --
+   ------------------
 
    function Build_Rule (Head_Of_Clause : Clause;
                         Tail : List_Of_Sons) return Clause is
@@ -838,6 +997,10 @@ package body Prolog.Ada_Logic is
                         Next => null));
       return Clause (Temp);
    end Build_Rule;
+
+   -------------------
+   --  Copy_Clause  --
+   -------------------
 
    procedure Copy_Clause (C1 :     Clause;
                           C2 : out Clause;
@@ -868,10 +1031,18 @@ package body Prolog.Ada_Logic is
       Temp := null;
    end Copy_Clause;
 
+   -------------------
+   --  Copy_Clause  --
+   -------------------
+
    procedure Copy_Clause (C1 : Clause; C2 : out Clause) is
    begin
       Copy_Clause (C1, C2, C1.Dbase, Heapf);
    end Copy_Clause;
+
+   -------------------
+   --  Read_Clause  --
+   -------------------
 
    function Read_Clause (Text : String) return Clause is
       T  : Term;
@@ -896,10 +1067,18 @@ package body Prolog.Ada_Logic is
 
    end Read_Clause;
 
+   -------------------
+   --  Read_Clause  --
+   -------------------
+
    function Read_Clause (Text : Identifier) return Clause is
    begin
       return Read_Clause (Text.all);
    end Read_Clause;
+
+   -------------------
+   --  Dump_Clause  --
+   -------------------
 
    function Dump_Clause (Tree : Clause) return Identifier is
       Idd : Identifier;
@@ -927,13 +1106,16 @@ package body Prolog.Ada_Logic is
       end if;
    end Dump_Clause;
 
+   -----------------
+   --  Read_File  --
+   -----------------
 
    function Read_File (File : String) return List_Of_Clauses is
       Value : List_Of_Clauses;
       C     : Term;
       Dummy : Boolean;
    begin
-      Dummy := SeeFile (Fu.Readable_Or_Moan (File));
+      Dummy := See_File (Fu.Readable_Or_Moan (File));
       Value := Create;
 
       while not (File_Ended) loop
@@ -957,6 +1139,9 @@ package body Prolog.Ada_Logic is
 
    end Read_File;
 
+   ----------------------
+   --  Read_Fast_File  --
+   ----------------------
 
    function Read_Fast_File (File : String) return List_Of_Clauses is
       F : Term_Rec_Io.File_Type;
@@ -1062,6 +1247,10 @@ package body Prolog.Ada_Logic is
       return L;
    end Read_Fast_File;
 
+   ------------------
+   --  Write_File  --
+   ------------------
+
    procedure Write_File (File : String; List : List_Of_Clauses) is
       Ptr : Clause_List;
       Dummy : Boolean;
@@ -1079,7 +1268,7 @@ package body Prolog.Ada_Logic is
       end Write_Tail;
 
    begin
-      Dummy := TellFile (Fu.Createable_Or_Moan (File));
+      Dummy := Tell_File (Fu.Createable_Or_Moan (File));
       Ptr := List.List;
       for I in 1 .. List.Arity loop
          Writeout (Ptr.Value.Head, 0);
@@ -1095,6 +1284,10 @@ package body Prolog.Ada_Logic is
       end loop;
       Dummy := Toldfile;
    end Write_File;
+
+   -----------------------
+   --  Write_Fast_File  --
+   -----------------------
 
    procedure Write_Fast_File (File : String; List : List_Of_Clauses) is
       F : Term_Rec_Io.File_Type;
@@ -1182,6 +1375,10 @@ package body Prolog.Ada_Logic is
       Term_Rec_Io.Close (F);
    end Write_Fast_File;
 
+   --------------
+   --  Length  --
+   --------------
+
    function Length (Ans : Answer) return Integer is
       Ptr : Answer := Ans;
       I : Integer := 0;
@@ -1193,11 +1390,15 @@ package body Prolog.Ada_Logic is
       return I;
    end Length;
 
+   -------------------
+   --  Get_Binding  --
+   -------------------
+
    function Get_Binding (Ans : Answer; Var : String) return Clause is
       Ptr : Answer := Ans;
    begin
       while Ptr /= null loop
-         if (Var = Ptr.Value.Id.all) then
+         if Var = Ptr.Value.Id.all then
             return (new Cls'(Head     => Ptr.Value.C,
                              The_Body => null,
                              Typ      => Chainc,
@@ -1214,10 +1415,18 @@ package body Prolog.Ada_Logic is
       raise Not_Bound;
    end Get_Binding;
 
+   -------------------
+   --  Get_Binding  --
+   -------------------
+
    function Get_Binding (Ans : Answer; Var : Identifier) return Clause is
    begin
       return Get_Binding (Ans, Var.all);
    end Get_Binding;
+
+   --------------
+   --  Length  --
+   --------------
 
    function Length (L : List_Of_Answers) return Integer is
       Ptr : List_Of_Answers := L;
@@ -1230,6 +1439,10 @@ package body Prolog.Ada_Logic is
       return I;
    end Length;
 
+   ------------------
+   --  Get_Answer  --
+   ------------------
+
    function Get_Answer (L : List_Of_Answers; N : Integer)
                        return Answer
    is
@@ -1237,7 +1450,7 @@ package body Prolog.Ada_Logic is
       I : Integer := 1;
    begin
       while Ptr /= null loop
-         if (I = N) then
+         if I = N then
             return Ptr.Value;
          else
             I := I + 1;
@@ -1247,7 +1460,11 @@ package body Prolog.Ada_Logic is
       raise Out_Of_Range;
    end Get_Answer;
 
-   procedure Query (Question : Clause;
+   -------------
+   --  Query  --
+   -------------
+
+   procedure Query (Question  : Clause;
                     Based_On  : List_Of_Clauses;
                     Success   : out Boolean;
                     Solutions : out List_Of_Answers)
@@ -1274,6 +1491,10 @@ package body Prolog.Ada_Logic is
          Solutions := null;
       end if;
    end Query;
+
+   -------------
+   --  Query  --
+   -------------
 
    procedure Query (Question  :     Clause;
                     Based_On  :     List_Of_Lists;
@@ -1303,6 +1524,10 @@ package body Prolog.Ada_Logic is
       end if;
    end Query;
 
+   -------------
+   --  Query  --
+   -------------
+
    procedure Query (Question :     Clause;
                     Based_On :     List_Of_Clauses;
                     Success  : out Boolean;
@@ -1316,6 +1541,10 @@ package body Prolog.Ada_Logic is
                     S, Success);
       Bindings := Answer (S);
    end Query;
+
+   -------------
+   --  Query  --
+   -------------
 
    procedure Query (Question :     Clause;
                     Based_On :     List_Of_Lists;
@@ -1331,6 +1560,10 @@ package body Prolog.Ada_Logic is
       Bindings := Answer (S);
    end Query;
 
+   -------------------
+   --  Next_Answer  --
+   -------------------
+
    procedure Next_Answer (Success : out Boolean; Bindings : out Answer) is
       S : Solution;
    begin
@@ -1340,13 +1573,17 @@ package body Prolog.Ada_Logic is
 
    ----------------------------------------
 
+   --------------------
+   --  Init_Package  --
+   --------------------
+
    procedure Init_Package;
    procedure Init_Package is
    begin
       Global_Objects.Mode := Sysm;
 
       --  The following used to be "SeeSystemFile"
-      Dummy := SeeFile (Fu.Readable_Or_Moan (Id.Ada_Logic_System_File));
+      Dummy := See_File (Fu.Readable_Or_Moan (Id.Ada_Logic_System_File));
 
       if not Dummy then
          Moan (Init_Error, Diez);
@@ -1357,7 +1594,7 @@ package body Prolog.Ada_Logic is
 
       end loop;
 
-      Dummy := SeenFile;
+      Dummy := Seenfile;
 
       if not (Dummy) then
          Moan (Init_Error, Diez);

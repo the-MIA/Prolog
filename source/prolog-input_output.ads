@@ -46,8 +46,8 @@ package Prolog.Input_Output is
    function Seesystemfile (Filename : String) return Boolean;
    --  Open the system file 'filename' and connect to it.
 
-   function SeeFile (Filename : String) return Boolean;
-   function TellFile (Filename : String) return Boolean;
+   function See_File  (Filename : String) return Boolean;
+   function Tell_File (Filename : String) return Boolean;
    --  Change depth by 1 and connect to this file.
 
    --  Seeing (Filename) and Telling(filename) are not implemented.

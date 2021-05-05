@@ -1,4 +1,3 @@
-
 --  Copyright (C) 1986, 1987, 1988, 1989, 1990, 1991, 1992 by the Program
 --  Analysis and Verification Group, Leland Stanford Junior University.
 --  All Rights Reserved.
@@ -13,82 +12,84 @@
 --  ANY LIABILITY OF ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM
 --  THE USE OF THIS SOFTWARE.
 ----------------------------------------------------------------------
+
 package Prolog.Global_Objects is
 
-    --  Global flags :
+   --  Global flags :
 
-    Online : Boolean := False;
-    --  Is the interpreter being used ONLINE?
-    Haltflag : Boolean := False;
-    --  Set by 'end' and tested by the Top Level.
-    Tracing : Boolean;
+   Online : Boolean := False;
+   --  Is the interpreter being used ONLINE?
 
-    type Phase is (Userm, Progm, Sysm);
-    Mode : Phase := Userm;
-    --  User mode , program mode (reading program file) or
-    --  System mode (reading system file). These are set by the
-    --  appropriate packages.
+   Haltflag : Boolean := False;
+   --  Set by 'end' and tested by the Top Level.
 
-    --  Global types :
+   Tracing : Boolean;
 
-    --  Io :
+   type Phase is (Userm, Progm, Sysm);
+   Mode : Phase := Userm;
+   --  User mode , program mode (reading program file) or
+   --  System mode (reading system file). These are set by the
+   --  appropriate packages.
 
-    Maxindepth  : constant := 7; --  Max number of files open for input.
-    Maxoutdepth : constant := 7; --  Max number of files open for output.
-    Rightmargin : constant := 78; --  The right margin on output.
+   --  Global types :
 
-    --  Constants for the Atom Table.
+   --  Io :
 
-    Atom_Table_Size : constant := 10000;
-    --  Maximum number of CHARACTERS in ALL the atoms.
+   Maxindepth  : constant := 7; --  Max number of files open for input.
+   Maxoutdepth : constant := 7; --  Max number of files open for output.
+   Rightmargin : constant := 78; --  The right margin on output.
 
-    Hash_Table_Size : constant := 999;
-    --  Number of entries in the atom hash table.
+   --  Constants for the Atom Table.
 
-    --  Constants for Var Table.
+   Atom_Table_Size : constant := 10000;
+   --  Maximum number of CHARACTERS in ALL the atoms.
 
-    Var_Table_Size : constant := 10000;
-    --  Number of characters in the var table.
+   Hash_Table_Size : constant := 999;
+   --  Number of entries in the atom hash table.
 
-    Maxvars : constant := 200;
-    --  Maximum number of variables in a term.
+   --  Constants for Var Table.
 
-    --  Readin and WriteOut :
+   Var_Table_Size : constant := 10000;
+   --  Number of characters in the var table.
 
-    Maxdepth : constant := 200;
+   Maxvars : constant := 200;
+   --  Maximum number of variables in a term.
 
-    Maxprec : constant := 1200;
-    Subprec : constant := 999;
+   --  Readin and WriteOut :
 
-    type Chtype is (Smallc, Largec, Digitc, Specialc, Spacec, Wierdc);
-    type Charray is array (Character) of Chtype;
+   Maxdepth : constant := 200;
 
-    Charclass : Charray :=
-                   Charray'(
-                       'a' .. 'z'       => Smallc,
+   Maxprec : constant := 1200;
+   Subprec : constant := 999;
 
-                       'A' .. 'Z' | '_' => Largec,
+   type Chtype is (Smallc, Largec, Digitc, Specialc, Spacec, Wierdc);
+   type Charray is array (Character) of Chtype;
 
-                       '0' .. '9'       => Digitc,
+   Charclass : Charray :=
+     Charray'(
+              'a' .. 'z'       => Smallc,
 
-                       '+' | '-' | '*' | '/' | '^' |
-                       '<' | '>' | '=' | '`' | '~' |
-                       '\' | ':' | '.' | '?' | '@' |
-                       '#' | '$' | '&' | '%' | '|'
-                                        => Specialc,
+              'A' .. 'Z' | '_' => Largec,
 
-                       ' '
-                       | Ascii.HT
-                       | Ascii.LF       => Spacec,
+              '0' .. '9'       => Digitc,
 
-                       others           => Wierdc);
+              '+' | '-' | '*' | '/' | '^' |
+                '<' | '>' | '=' | '`' | '~' |
+                '\' | ':' | '.' | '?' | '@' |
+                '#' | '$' | '&' | '%' | '|'
+                => Specialc,
 
-    --  Local stack :
+              ' '
+                | ASCII.HT
+                | ASCII.LF       => Spacec,
 
-    Maxframes : constant := 10000;
-    Maxlocsize : constant := 50000;
+              others           => Wierdc);
 
+   --  Local stack :
 
-    Debug : Boolean := false;
+   Maxframes  : constant := 10000;
+   Maxlocsize : constant := 50000;
+
+   Debug : Boolean := False;
 
 end Prolog.Global_Objects;

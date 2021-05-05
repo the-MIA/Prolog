@@ -246,7 +246,7 @@ package body Prolog.Input_Output is
       Str : constant String := Integer'Image (N);
    begin
       if N < 0 then
-         Wrstring (Str);
+         Wr_String (Str);
       else
          --  get rid of the leading space.
          for I in 2 .. Str'Length loop
@@ -259,13 +259,13 @@ package body Prolog.Input_Output is
    --  Wr_String  --
    -----------------
 
-   procedure Wrstring (S : String) is
+   procedure Wr_String (S : String) is
       --  This just outputs a string character by character
    begin
       for I in S'Range loop
          Wr (S (I));
       end loop;
-   end Wrstring;
+   end Wr_String;
 
    -----------------
    --  List_Line  --

@@ -106,9 +106,9 @@ package body Prolog.Write_Out is
             S : Term;
          begin
             if Quoteflag and not (Get_Info (Y.Name).Sys) then
-               Wrstring (Makequote (Writeatom (Y.Name)));
+               Wr_String (Makequote (Writeatom (Y.Name)));
             else
-               Wrstring (Writeatom (Y.Name));
+               Wr_String (Writeatom (Y.Name));
             end if;
             Wr ('(');
             Writeterm (Y.Son, Subprec, Depth + 1);
@@ -134,9 +134,9 @@ package body Prolog.Write_Out is
             case Get_Info (Y.Name).Oclass is
                when Fxo | Fyo =>
                   if Quoteflag and not (Get_Info (Y.Name).Sys) then
-                     Wrstring (Makequote (Writeatom (Y.Name)));
+                     Wr_String (Makequote (Writeatom (Y.Name)));
                   else
-                     Wrstring (Writeatom (Y.Name));
+                     Wr_String (Writeatom (Y.Name));
                   end if;
                   Wrcheck;
                   Wr (' ');
@@ -146,9 +146,9 @@ package body Prolog.Write_Out is
                   Wrcheck;
                   Wr (' ');
                   if Quoteflag and not (Get_Info (Y.Name).Sys) then
-                     Wrstring (Makequote (Writeatom (Y.Name)));
+                     Wr_String (Makequote (Writeatom (Y.Name)));
                   else
-                     Wrstring (Writeatom (Y.Name));
+                     Wr_String (Writeatom (Y.Name));
                   end if;
                when Xfxo | Xfyo | Yfxo =>
                   Writeterm (Y.Son, Lprec (Y.Name), Depth + 1);
@@ -159,9 +159,9 @@ package body Prolog.Write_Out is
                      Wr (' ');
                   end if;
                   if Quoteflag and not (Get_Info (Y.Name).Sys) then
-                     Wrstring (Makequote (Writeatom (Y.Name)));
+                     Wr_String (Makequote (Writeatom (Y.Name)));
                   else
-                     Wrstring (Writeatom (Y.Name));
+                     Wr_String (Writeatom (Y.Name));
                   end if;
                   Wrcheck;
                   Wr (' ');
@@ -270,9 +270,9 @@ package body Prolog.Write_Out is
                case Y.Arity is
                   when 0 =>
                      if Quoteflag and not (Get_Info (Y.Name).Sys) then
-                        Wrstring (Makequote (Writeatom (Y.Name)));
+                        Wr_String (Makequote (Writeatom (Y.Name)));
                      else
-                        Wrstring (Writeatom (Y.Name));
+                        Wr_String (Writeatom (Y.Name));
                      end if;
                      Wrcheck;
                   when 1 =>
@@ -310,10 +310,10 @@ package body Prolog.Write_Out is
          procedure Writevar is
          begin
             if Y.Tag = Skelt then
-               Wrstring (To_String (Y.St));
+               Wr_String (To_String (Y.St));
                Wrcheck;
             else
-               Wrstring (To_String (Y.Id));
+               Wr_String (To_String (Y.Id));
                Wrcheck;
             end if;
          end Writevar;
@@ -344,8 +344,8 @@ package body Prolog.Write_Out is
                           new String'(Integer'Image (Integer'First));
                      begin
                         Wr ('^');
-                        Wrstring (Last_Int.all (Last_Int'First + 1 ..
-                                                 Last_Int'Last));
+                        Wr_String (Last_Int.all (Last_Int'First + 1 ..
+                                                   Last_Int'Last));
                      end;
                   else
                      Wr ('^');

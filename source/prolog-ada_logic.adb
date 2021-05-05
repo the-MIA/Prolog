@@ -1261,7 +1261,7 @@ package body Prolog.Ada_Logic is
          if T /= null then
             Writeout (T, 0);
             if T.Brother /= null then
-               Wrstring (", ");
+               Wr_String (", ");
                Write_Tail (T.Brother);
             end if;
          end if;
@@ -1273,7 +1273,7 @@ package body Prolog.Ada_Logic is
       for I in 1 .. List.Arity loop
          Writeout (Ptr.Value.Head, 0);
          if Ptr.Value.The_Body /= null then
-            Wrstring (" :- ");
+            Wr_String (" :- ");
             --  Walt: I'm trying to get the tail successfully printed.
             --                WRITEOUT(PTR.VALUE.THE_BODY,0);
             Write_Tail (Ptr.Value.The_Body);

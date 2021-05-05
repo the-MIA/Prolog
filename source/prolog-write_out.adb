@@ -93,7 +93,7 @@ package body Prolog.Write_Out is
       --  Write_Term  --
       ------------------
 
-      procedure Writeterm (X : Term; P : Prec; Depth : Integer) is
+      procedure Write_Term (X : Term; P : Prec; Depth : Integer) is
          --  Write a term with maximum precedence p.
          Y : Term;
 
@@ -111,13 +111,13 @@ package body Prolog.Write_Out is
                Wr_String (Writeatom (Y.Name));
             end if;
             Wr ('(');
-            Writeterm (Y.Son, Subprec, Depth + 1);
+            Write_Term (Y.Son, Subprec, Depth + 1);
             S := Y.Son.Brother;
             while S /= null loop
                Wr (',');
                Wr_Check;
                Wr (' ');
-               Writeterm (S, Subprec, Depth + 1);
+               Write_Term (S, Subprec, Depth + 1);
                S := S.Brother;
             end loop;
             Wr (')');
@@ -140,9 +140,9 @@ package body Prolog.Write_Out is
                   end if;
                   Wr_Check;
                   Wr (' ');
-                  Writeterm (Y.Son, Rprec (Y.Name), Depth + 1);
+                  Write_Term (Y.Son, Rprec (Y.Name), Depth + 1);
                when Xfo | Yfo =>
-                  Writeterm (Y.Son, Lprec (Y.Name), Depth + 1);
+                  Write_Term (Y.Son, Lprec (Y.Name), Depth + 1);
                   Wr_Check;
                   Wr (' ');
                   if Quoteflag and not (Get_Info (Y.Name).Sys) then
@@ -151,7 +151,7 @@ package body Prolog.Write_Out is
                      Wr_String (Writeatom (Y.Name));
                   end if;
                when Xfxo | Xfyo | Yfxo =>
-                  Writeterm (Y.Son, Lprec (Y.Name), Depth + 1);
+                  Write_Term (Y.Son, Lprec (Y.Name), Depth + 1);
                   if
                     (Y.Name /= Commaa) and
                       (Y.Name /= Semia)
@@ -165,7 +165,7 @@ package body Prolog.Write_Out is
                   end if;
                   Wr_Check;
                   Wr (' ');
-                  Writeterm (Y.Son.Brother, Rprec (Y.Name), Depth + 1);
+                  Write_Term (Y.Son.Brother, Rprec (Y.Name), Depth + 1);
                when Nono => null;
             end case;
          end Writeop;
@@ -198,14 +198,14 @@ package body Prolog.Write_Out is
             Z : Term;
          begin
             Wr ('[');
-            Writeterm (Y.Son, Subprec, Depth + 1);
+            Write_Term (Y.Son, Subprec, Depth + 1);
             N := 1;
             Z := Deref (Y.Son.Brother, E);
             while (N /= Writelength) and Is_Func (Z, Consa, 2) loop
                Wr (',');
                Wr_Check;
                Wr (' ');
-               Writeterm (Z.Son, Subprec, Depth + 1);
+               Write_Term (Z.Son, Subprec, Depth + 1);
                Z := Deref (Z.Son.Brother, E);
                N := N + 1;
             end loop;
@@ -215,7 +215,7 @@ package body Prolog.Write_Out is
                   Wr ('|');
                   Wr_Check;
                   Wr (' ');
-                  Writeterm (Z, Subprec, Depth + 1);
+                  Write_Term (Z, Subprec, Depth + 1);
                else
                   Wr (' ');
                   Wr ('.');
@@ -238,18 +238,18 @@ package body Prolog.Write_Out is
             Z : Term;
          begin
             Wr ('(');
-            Writeterm (Y.Son, Subprec, Depth + 1);
+            Write_Term (Y.Son, Subprec, Depth + 1);
             N := 1;
             Z := Deref (Y.Son.Brother, E);
             while (N /= Writelength) and Is_Func (Z, Consa, 2) loop
                Wr_Check; Wr ('.');
-               Writeterm (Z.Son, Subprec, Depth + 1);
+               Write_Term (Z.Son, Subprec, Depth + 1);
                Z := Deref (Z.Son.Brother, E);
                N := N + 1;
             end loop;
             if N < Writelength then
                Wr_Check; Wr ('.');
-               Writeterm (Z, Subprec, Depth + 1);
+               Write_Term (Z, Subprec, Depth + 1);
                Wr_Check;
             else
                Wr (' '); Wr ('.'); Wr ('.'); Wr ('.');
@@ -278,7 +278,7 @@ package body Prolog.Write_Out is
                   when 1 =>
                      if Y.Name = Curlya then
                         Wr ('}');
-                        Writeterm (Y.Son, Maxprec, Depth + 1);
+                        Write_Term (Y.Son, Maxprec, Depth + 1);
                         Wr ('K');
                         Wr_Check;
                      else
@@ -356,11 +356,11 @@ package body Prolog.Write_Out is
             end case;
          end if;
          Wr_Check;
-      end Writeterm;
+      end Write_Term;
 
    begin --  WriteOut
       Varcount := 0;
-      Writeterm (X, Maxprec, 0);
+      Write_Term (X, Maxprec, 0);
    end Writeout;
 
    -------------

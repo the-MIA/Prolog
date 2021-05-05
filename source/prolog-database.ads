@@ -43,8 +43,8 @@ package Prolog.Database is
    --  otherwise at the end. Terms are always accompnied by their environments.
 
 
-   function Makeclause (Head : Term; Tail : Term; E : Env) return Clptr;
-   function Makeclause (P : Term; E : Env) return Clptr;
+   function Make_Clause (Head : Term; Tail : Term; E : Env) return Clptr;
+   function Make_Clause (P : Term; E : Env) return Clptr;
    --  Return a skeleton for P.
 
    procedure Findclause (X     : in     Term;

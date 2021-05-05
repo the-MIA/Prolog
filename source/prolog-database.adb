@@ -156,7 +156,7 @@ package body Prolog.Database is
    --  Make_Clause  --
    -------------------
 
-   function Makeclause (P : Term; E : Env; Claus : Boolean) return Clptr is
+   function Make_Clause (P : Term; E : Env; Claus : Boolean) return Clptr is
       --  Produce a skeleton for p and add it to the database.  The new clause
       --  is added at the front of the clause chain if asserta is true,
       --  otherwise at the end.
@@ -435,33 +435,33 @@ package body Prolog.Database is
                           Nvars => Framesize, Keyval => Newkey,
                           Dbase => -1, Previous => null, Next => null);
       return Tempcls;
-   end Makeclause;
+   end Make_Clause;
 
    -------------------
    --  Make_Clause  --
    -------------------
 
-   function Makeclause (P : Term; E : Env) return Clptr is
+   function Make_Clause (P : Term; E : Env) return Clptr is
    begin
-      return Makeclause (P, E, False);
-   end Makeclause;
+      return Make_Clause (P, E, False);
+   end Make_Clause;
 
    -------------------
    --  Make_Clause  --
    -------------------
 
-   function Makeclause (Head : Term; Tail : Term; E : Env) return Clptr is
+   function Make_Clause (Head : Term; Tail : Term; E : Env) return Clptr is
       Temp : Term;
    begin
       if Tail = null then
-         return Makeclause (Head, E, True);
+         return Make_Clause (Head, E, True);
       else
          Head.Brother := Tail;
          Func_Garb.Get (Temp);
          Temp.all := Node'(Funct, null, Heapf, 0, null, Arrowa, 2, Head);
-         return Makeclause (Temp, E, True);
+         return Make_Clause (Temp, E, True);
       end if;
-   end Makeclause;
+   end Make_Clause;
 
    ------------------
    --  Add_Clause  --
@@ -474,7 +474,7 @@ package body Prolog.Database is
    is
       Cl : Clptr;
    begin
-      Cl := Makeclause (P, E);
+      Cl := Make_Clause (P, E);
       Add_Clause (Cl, Dbase, Asserta);
       return Cl;
    end Add_Clause;

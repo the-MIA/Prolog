@@ -476,9 +476,9 @@ package body Prolog.Ada_Logic is
       Ptr := new Clause_List_Record;
       case C.Typ is
          when Commac =>
-            Ptr.Value := Clause (Makeclause (C.Head, 0));
+            Ptr.Value := Clause (Make_Clause (C.Head, 0));
          when Chainc =>
-            Ptr.Value := Clause (Makeclause (C.Head, C.The_Body, 0));
+            Ptr.Value := Clause (Make_Clause (C.Head, C.The_Body, 0));
          when Madec =>
             Ptr.Value := C;
       end case;
@@ -536,11 +536,11 @@ package body Prolog.Ada_Logic is
 
             when Commac =>
                Ptr.Next :=
-                 new Clause_List_Record'(Clause (Makeclause (C.Head, 0)),
+                 new Clause_List_Record'(Clause (Make_Clause (C.Head, 0)),
                                          null);
             when Chainc =>
                Ptr.Next :=
-                 new Clause_List_Record'(Clause (Makeclause (C.Head,
+                 new Clause_List_Record'(Clause (Make_Clause (C.Head,
                                                              C.The_Body, 0)),
                                          null);
             when Madec =>
@@ -1058,7 +1058,7 @@ package body Prolog.Ada_Logic is
       end loop;
 
       if (T.Tag = Funct) and then (T.Name = Arrowa) then
-         return (Clause (Makeclause (T, 0)));
+         return (Clause (Make_Clause (T, 0)));
       else
          return new Cls'(Head => T, The_Body => null,
                          Nvars => 0, Keyval => 0, Typ => Chainc,

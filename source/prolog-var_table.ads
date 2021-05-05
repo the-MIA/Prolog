@@ -54,7 +54,7 @@ package Prolog.Var_Table is
    procedure Varchar (C : Character);
    --  Add a character to the variable name.
 
-   function Keepvar return Varstring;
+   function Keep_Var return Varstring;
 
    function To_String (V : Varstring) return String;
 

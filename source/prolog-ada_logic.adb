@@ -923,7 +923,7 @@ package body Prolog.Ada_Logic is
          end loop;
          Clause_Garb.Get (Temp);
          Var_Garb.Get (T);
-         T.all := Node'(Vart, null, Heapf, 0, null, null, Keepvar);
+         T.all := Node'(Vart, null, Heapf, 0, null, null, Keep_Var);
          Temp.all :=  (Cls'(Head => T,
                             The_Body => null, Typ => Chainc,
                             Nvars => 0, Keyval => 0,
@@ -1195,7 +1195,7 @@ package body Prolog.Ada_Logic is
                      Varchar (S.Name (I));
                   end loop;
 
-                  Id := Keepvar;
+                  Id := Keep_Var;
                   Get_Term (Val, Dummy1, Dummy2);
 
                   T1 := new Node'(Vart, null, S.Field, S.Scope, null,
@@ -1208,7 +1208,7 @@ package body Prolog.Ada_Logic is
                   Varchar (S.Name (I));
                end loop;
                T1 := new Node'(Skelt, null, S.Field, S.Scope, null,
-                               S.Offset, Keepvar, S.Anont);
+                               S.Offset, Keep_Var, S.Anont);
          end case;
          T := T1;
       end Get_Term;

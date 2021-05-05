@@ -293,7 +293,7 @@ package body Prolog.Read_In is
                         Ch := Getchar;
                      end loop;
 
-                     This_Var := Lookup (Keepvar);
+                     This_Var := Lookup (Keep_Var);
                      return Var_Token;
                   end if;
 
@@ -308,7 +308,7 @@ package body Prolog.Read_In is
                      Ch := Getchar;
                   end loop;
 
-                  This_Var := Lookup (Keepvar);
+                  This_Var := Lookup (Keep_Var);
                   return Var_Token;
 
                when '0' .. '9' =>

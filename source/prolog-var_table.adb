@@ -60,7 +60,11 @@ package body Prolog.Var_Table is
       end if;
    end Samestring;
 
-   function Keepvar return Varstring is
+   ----------------
+   --  Keep_Var  --
+   ----------------
+
+   function Keep_Var return Varstring is
       --  Mark the latest variable name permanent.
    begin
       for N in 1 .. Varcount loop
@@ -73,7 +77,7 @@ package body Prolog.Var_Table is
       Varcount := Varcount + 1;
       Vartable (Varcount) := Newvar;
       return Newvar;
-   end Keepvar;
+   end Keep_Var;
 
    function To_String (V : Varstring) return String is
    begin

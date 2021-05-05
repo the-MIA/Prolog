@@ -106,11 +106,11 @@ package body Prolog.Local_Stack is
    --  Get_Env  --
    ---------------
 
-   function Getenv (E : Env) return Env is
+   function Get_Env (E : Env) return Env is
       --  Return environment for the invoking goal.
    begin
       return Display (E).Fenv;
-   end Getenv;
+   end Get_Env;
 
    ------------------
    --  Get_Clause  --

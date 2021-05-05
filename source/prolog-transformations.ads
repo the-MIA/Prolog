@@ -128,7 +128,7 @@ package Prolog.Transformations is
 
    function Make_Func (A : Atom; M : Integer; S : Term) return Term;
    function Make_Int (I : Integer) return Term;
-   function Makevar (V : Term; S : Varstring) return Term;
+   function Make_Var (V : Term; S : Varstring) return Term;
 
    procedure Killglobal (Newptr : Term);
 

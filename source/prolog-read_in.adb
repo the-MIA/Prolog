@@ -59,14 +59,14 @@ package body Prolog.Read_In is
    begin
       for N in 1 .. Varcount loop
          if Newvar = Vartable (N).Ident then
-            return Makevar (Vartable (N).Rootvar,
-                            Vartable (N).Rootvar.Id);
+            return Make_Var (Vartable (N).Rootvar,
+                             Vartable (N).Rootvar.Id);
          end if;
       end loop;
 
       Varcount := Varcount + 1;
-      Vartable (Varcount).Rootvar := Makevar (null, Newvar);
-      Vartable (Varcount).Ident := Newvar;
+      Vartable (Varcount).Rootvar := Make_Var (null, Newvar);
+      Vartable (Varcount).Ident   := Newvar;
       return Vartable (Varcount).Rootvar;
    end Lookup;
 
@@ -279,7 +279,7 @@ package body Prolog.Read_In is
                     Charclass (Ch) /= Largec or else
                     Charclass (Ch) /= Digitc
                   then
-                     This_Var := Makevar (null, Anon_String);
+                     This_Var := Make_Var (null, Anon_String);
                      return Var_Token;
                   else
                      Startvar;

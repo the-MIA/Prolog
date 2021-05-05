@@ -416,7 +416,7 @@ package body Prolog.Evaluable_Predicates is
                   if Isatom (Argval (2)) and (M >= 0) then
                      X := null;
                      for Ix in reverse 1 .. M loop
-                        Y := Makevar (null, Null_String);
+                        Y := Make_Var (null, Null_String);
                         Y.Brother := X;
                         X := Y;
                      end loop;

@@ -55,7 +55,7 @@ package body Prolog.Transformations is
    --  Make_Var  --
    ----------------
 
-   function Makevar (V : Term; S : Varstring) return Term is
+   function Make_Var (V : Term; S : Varstring) return Term is
       --  Construct a variable node on the global stack.
       X : Term;
    begin
@@ -64,7 +64,7 @@ package body Prolog.Transformations is
       Glotop  := X;
       Glosize := Glosize + 1;
       return X;
-   end Makevar;
+   end Make_Var;
 
    -------------------
    --  Kill_Global  --
@@ -213,11 +213,11 @@ package body Prolog.Transformations is
             when Intt =>
                Z := Make_Int (Y.Ival);
             when Vart =>
-               Z := Makevar (null, Y.Id);
+               Z := Make_Var (null, Y.Id);
                Bindvars (Y, Z);
             when Skelt =>
                if Y.Anont then
-                  Z := Makevar (null, Anon_String);
+                  Z := Make_Var (null, Anon_String);
                else
                   null;
                end if;

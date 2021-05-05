@@ -312,11 +312,11 @@ package body Prolog.Input_Output is
 
    end Set_String;
 
-   ---------------
-   --  Getchar  --
-   ---------------
+   ----------------
+   --  Get_Char  --
+   ----------------
 
-   function Getchar return Character is
+   function Get_Char return Character is
       --  Get the next character of the current input file in 'ch'.
       Ch : Character;
    begin
@@ -336,7 +336,7 @@ package body Prolog.Input_Output is
 
       return Ch;
 
-   end Getchar;
+   end Get_Char;
 
    ------------------
    --  Line_Ended  --

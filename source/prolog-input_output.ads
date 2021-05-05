@@ -100,7 +100,7 @@ package Prolog.Input_Output is
 
    procedure Init_Input;
 
-   function Getchar return Character;
+   function Get_Char return Character;
    --  Get character from input buffer.
 
    function Line_Ended return Boolean;

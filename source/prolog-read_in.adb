@@ -118,7 +118,7 @@ package body Prolog.Read_In is
    begin
       loop
          exit when Ch = ASCII.NUL or Charclass (Ch) /= Spacec;
-         Ch := Getchar;
+         Ch := Get_Char;
       end loop;
    end Skip_White_Space;
 
@@ -141,7 +141,7 @@ package body Prolog.Read_In is
       --  Skip whitespace till end of line
       loop
          exit when Ch = ASCII.LF or Ch = ASCII.NUL;
-         Ch := Getchar;
+         Ch := Get_Char;
       end loop;
 
       if Debug then
@@ -212,7 +212,7 @@ package body Prolog.Read_In is
 
                   loop
                      Atomchar (Ch);
-                     Ch := Getchar;
+                     Ch := Get_Char;
 
                      exit when not (Charclass (Ch) = Smallc or else
                                       Charclass (Ch) = Largec or else
@@ -237,10 +237,10 @@ package body Prolog.Read_In is
                         Moan (Need_Quote_Error, Syntaxz);
                      end if;
 
-                     Ch := Getchar;
+                     Ch := Get_Char;
 
                      if Ch = ''' then
-                        Ch := Getchar;
+                        Ch := Get_Char;
                         exit when Ch /= ''';
                         Atomchar (Ch);
                      else
@@ -259,9 +259,9 @@ package body Prolog.Read_In is
                         Moan (Need_Quote_Error, Syntaxz);
                      end if;
 
-                     Ch := Getchar;
+                     Ch := Get_Char;
                      if Ch = '"' then
-                        Ch := Getchar;
+                        Ch := Get_Char;
                         exit when Ch /= '"';
                         Atomchar (Ch);
                      else
@@ -274,7 +274,7 @@ package body Prolog.Read_In is
                   return List_Token;
 
                when '_' =>
-                  Ch := Getchar;
+                  Ch := Get_Char;
                   if Charclass (Ch) /= Smallc or else
                     Charclass (Ch) /= Largec or else
                     Charclass (Ch) /= Digitc
@@ -290,7 +290,7 @@ package body Prolog.Read_In is
                        Charclass (Ch) = Digitc
                      loop
                         Var_Char (Ch);
-                        Ch := Getchar;
+                        Ch := Get_Char;
                      end loop;
 
                      This_Var := Lookup (Keep_Var);
@@ -305,7 +305,7 @@ package body Prolog.Read_In is
                     Charclass (Ch) = Digitc
                   loop
                      Var_Char (Ch);
-                     Ch := Getchar;
+                     Ch := Get_Char;
                   end loop;
 
                   This_Var := Lookup (Keep_Var);
@@ -316,24 +316,24 @@ package body Prolog.Read_In is
                   loop
                      This_Int := 10 * This_Int + (Character'Pos (Ch) -
                                                     Character'Pos ('0'));
-                     Ch := Getchar;
+                     Ch := Get_Char;
                      exit when Charclass (Ch) /= Digitc;
                   end loop;
 
                   return Int_Token;
 
                when '(' =>
-                  Ch := Getchar;
+                  Ch := Get_Char;
                   return Leftpar;
 
                when ')' =>
-                  Ch := Getchar;
+                  Ch := Get_Char;
                   return Rightpar;
 
                when '[' =>
-                  Ch := Getchar;
+                  Ch := Get_Char;
                   if Ch = ']' then
-                     Ch := Getchar;
+                     Ch := Get_Char;
                      This_Atom := Nila;
                      return Atom_Token;
 
@@ -342,30 +342,30 @@ package body Prolog.Read_In is
                   end if;
 
                when ']' =>
-                  Ch := Getchar;
+                  Ch := Get_Char;
                   return Rightsq;
 
                when '{' =>
-                  Ch := Getchar;
+                  Ch := Get_Char;
                   if Ch = 'K' then
-                     Ch := Getchar;
+                     Ch := Get_Char;
                      This_Atom := Curlya;
                      return Atom_Token;
                   else
-                     Ch := Getchar;
+                     Ch := Get_Char;
                      return Lcurly;
                   end if;
 
                when '}' =>
-                  Ch := Getchar;
+                  Ch := Get_Char;
                   return Rcurly;
 
                when ',' =>
-                  Ch := Getchar;
+                  Ch := Get_Char;
                   if Ch = '.' then
-                     Ch := Getchar;
+                     Ch := Get_Char;
                      if Ch = '.' then
-                        Ch := Getchar;
+                        Ch := Get_Char;
                         return Vbar;
                      else
                         Moan (Bad_Cdd_Error, Syntaxz);
@@ -375,17 +375,17 @@ package body Prolog.Read_In is
                   end if;
 
                when '!' =>
-                  Ch := Getchar;
+                  Ch := Get_Char;
                   This_Atom := Cuta;
                   return Atom_Token;
 
                when ';' =>
-                  Ch := Getchar;
+                  Ch := Get_Char;
                   This_Atom := Semia;
                   return Atom_Token;
 
                when '|' =>
-                  Ch := Getchar;
+                  Ch := Get_Char;
                   return Vbar;
 
                when '%' =>
@@ -395,17 +395,17 @@ package body Prolog.Read_In is
 
                   if Charclass (Ch) = Specialc then
                      Lastch := Ch;
-                     Ch := Getchar;
+                     Ch := Get_Char;
 
                      if (Lastch = '/') and (Ch = '*') then
-                        Ch := Getchar;
+                        Ch := Get_Char;
 
                         loop
-                           Lastch := Ch; Ch := Getchar;
+                           Lastch := Ch; Ch := Get_Char;
                            exit when (Lastch = '*') and (Ch = '/');
                         end loop;
 
-                        Ch := Getchar;
+                        Ch := Get_Char;
                         return Lexan;
 
                      elsif (Lastch = '^') and (Charclass (Ch) = Digitc) then
@@ -413,7 +413,7 @@ package body Prolog.Read_In is
                         loop
                            This_Int := 10 * This_Int + (Character'Pos (Ch) -
                                                           Character'Pos ('0'));
-                           Ch := Getchar;
+                           Ch := Get_Char;
                            exit when Charclass (Ch) /= Digitc;
                         end loop;
 
@@ -429,7 +429,7 @@ package body Prolog.Read_In is
 
                         while Charclass (Ch) = Specialc loop
                            Atomchar (Ch);
-                           Ch := Getchar;
+                           Ch := Get_Char;
                         end loop;
 
                         This_Atom := Lookup;
@@ -438,7 +438,7 @@ package body Prolog.Read_In is
                      end if;
 
                   elsif Charclass (Ch) = Spacec then
-                     Ch := Getchar;
+                     Ch := Get_Char;
 
                   else
                      Moan (Wierd_Ch_Error, Syntaxz);

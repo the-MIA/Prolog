@@ -196,7 +196,7 @@ package body Prolog.Evaluable_Predicates is
             if File_Ended then
                Moan (Eof_Error, Diez);
             end if;
-            Ch := Getchar;
+            Ch := Get_Char;
          end if;
          Result := Intresult (Argval (1), E, Character'Pos (Ch));
       end Doget0;

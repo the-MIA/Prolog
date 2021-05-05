@@ -85,7 +85,7 @@ package Prolog.Local_Stack is
    function Get_Global (E : Env) return Term;
    --  Return global ptr.
 
-   function Gettrail (E : Env) return Trail;
+   function Get_Trail (E : Env) return Trail;
    --  Return trail.
 
    function Envref (Offset : Integer; E : Env) return Term;

@@ -156,11 +156,11 @@ package body Prolog.Local_Stack is
    --  Get_Trail  --
    -----------------
 
-   function Gettrail (E : Env) return Trail is
+   function Get_Trail (E : Env) return Trail is
       --  Return trail.
    begin
       return Display (E).Ftrail;
-   end Gettrail;
+   end Get_Trail;
 
    ---------------
    --  Env_Ref  --

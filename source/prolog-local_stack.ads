@@ -91,7 +91,7 @@ package Prolog.Local_Stack is
    function Env_Ref (Offset : Integer; E : Env) return Term;
    --  Return the OFFSETth variable in environment E.
 
-   procedure Disposeenv;
+   procedure Dispose_Env;
    --  Recover the top frame.
 
    procedure Cut (E : Env);

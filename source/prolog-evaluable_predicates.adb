@@ -177,7 +177,7 @@ package body Prolog.Evaluable_Predicates is
          First_Answer (X, E1, Dbase, Ans, Result);
 
          if E1 > Choicepoint then
-            Disposeenv;
+            Dispose_Env;
          end if;
 
       end Docall;

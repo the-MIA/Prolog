@@ -215,7 +215,7 @@ package body Prolog.Execute is
                   Clausep := Get_Clause (Envp);
                   Listp   := Get_List   (Envp);
                   if Envp > Choicepoint then
-                     Disposeenv;
+                     Dispose_Env;
                   end if;
                   if Tracing then
                      Trace (Provedd, Callp, Callenv);

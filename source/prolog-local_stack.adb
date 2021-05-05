@@ -176,13 +176,13 @@ package body Prolog.Local_Stack is
    --  Dispose_Env  --
    -------------------
 
-   procedure Disposeenv is
+   procedure Dispose_Env is
       --  Recover the top frame on the local stack.
       --  TEMP : ENV;
    begin
       Loctop := Display (Envtop).Fbase;
       Envtop := Envtop - 1;
-   end Disposeenv;
+   end Dispose_Env;
 
    -----------
    --  Cut  --
@@ -229,7 +229,7 @@ package body Prolog.Local_Stack is
          Envtop := Newtop;
       end if;
       for I in reverse Newtop + 1 .. Envtop loop
-         Disposeenv;
+         Dispose_Env;
       end loop;
    end Killlocal;
 
